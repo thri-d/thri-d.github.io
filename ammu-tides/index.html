@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ammu Tides</title>
+<meta name="description" content="Ammu's nightly GATE 2027 check-in, with a whale who loves consistency.">
+<meta name="theme-color" content="#EEF2FD">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" id="favicon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#36406A; --ink-2:#5D6690; --ink-3:#8C93B3;
+  --paper:#FCFCFF; --paper-2:#F4F6FD; --line:#E2E6F6;
+  --tide:#7DB4E6; --tide-deep:#5B7AD3; --foam:#E6F4FB;
+  --shell:#F8C3D0; --shell-deep:#C9617F;
+  --lilac:#DCD2F8; --lilac-deep:#7D68C8;
+  --mint:#CDEFDF; --mint-deep:#2F8A66;
+  --butter:#FFEDBC; --butter-deep:#94700F;
+  --peach:#FFDCCD; --peach-deep:#B4532F;
+  --r-xl:34px; --r-l:26px; --r-m:18px; --r-s:12px;
+  --lift:0 1px 2px rgba(54,64,106,.05),0 18px 44px -18px rgba(91,122,211,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:'Quicksand',ui-rounded,system-ui,sans-serif;color:var(--ink);font-weight:500;line-height:1.5;
+  background:linear-gradient(180deg,#EDF1FD 0%,#F5EFFA 52%,#ECF6F7 100%);min-height:100vh;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #9DB6F2;outline-offset:2px;border-radius:10px}
+.app{max-width:1280px;margin:0 auto;padding:22px 24px 36px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand svg{width:46px;height:46px;flex:none}
+.brand h1{margin:0;font-size:32px;line-height:1.05;font-weight:700;letter-spacing:.2px}
+.brand p{margin:2px 0 0;font-size:14px;color:var(--ink-2)}
+.countdown{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.75);border:1px solid var(--line);
+  border-radius:999px;padding:7px 16px 7px 8px;font-size:14px;color:var(--ink-2)}
+.countdown .num{background:var(--lilac);color:#3E2F7E;font-weight:700;border-radius:999px;padding:4px 12px;font-size:16px}
+.layout{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(370px,1fr);gap:26px;align-items:start}
+.stage{position:sticky;top:16px}
+.tank{position:relative;border-radius:var(--r-xl);overflow:hidden;aspect-ratio:1000/640;background:#E7F0FA;
+  box-shadow:var(--lift);border:7px solid rgba(255,255,255,.85);outline:1px solid var(--line)}
+.tank svg{display:block;width:100%;height:100%}
+.tank::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(115deg,rgba(255,255,255,.28) 0 7%,transparent 7% 12%,rgba(255,255,255,.14) 12% 13.5%,transparent 13.5%)}
+.status{display:flex;align-items:center;gap:12px;margin-top:14px;background:rgba(255,255,255,.8);border:1px solid var(--line);
+  border-radius:20px;padding:12px 18px;font-size:16px;font-weight:600}
+.status .dot{width:12px;height:12px;border-radius:50%;flex:none;background:var(--mint-deep)}
+.status.warn .dot{background:#E2A13A}.status.alert .dot{background:var(--peach-deep)}.status.soft .dot{background:var(--lilac-deep)}
+.status .name{font-weight:700}
+.says{position:absolute;left:50%;top:16px;transform:translate(-50%,-8px);opacity:0;pointer-events:none;max-width:78%;
+  background:#fff;border-radius:22px;padding:10px 18px;font-weight:600;font-size:15px;text-align:center;
+  box-shadow:0 10px 30px -12px rgba(54,64,106,.4);transition:opacity .45s ease,transform .45s ease}
+.says.on{opacity:1;transform:translate(-50%,0)}
+.banner{position:absolute;left:16px;right:16px;top:14px;background:#FFF4E8;border:1px solid #F5D3AE;color:#8A4A1C;
+  border-radius:16px;padding:9px 14px;font-weight:600;font-size:14px;display:none}
+.banner.on{display:block}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.72);border:1px solid var(--line);
+  border-radius:999px;padding:7px 14px 7px 8px;font-size:14px;color:var(--ink-2)}
+.chip .ic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center}
+.chip .ic svg{width:15px;height:15px}
+.chip b{color:var(--ink);font-weight:700;font-size:15px}
+.week{margin-top:14px;background:rgba(255,255,255,.62);border:1px solid var(--line);border-radius:20px;padding:12px 16px;display:grid;grid-template-columns:auto repeat(7,1fr);align-items:center;gap:8px}
+.week .wl{font-weight:700;font-size:14px;margin-right:4px}
+.week .wd{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:var(--ink-3);font-weight:700;min-width:30px}
+.week .wc{width:24px;height:24px;border-radius:50%;background:#EEF1F8;display:grid;place-items:center}
+.week .wc svg{width:13px;height:13px}
+.week .wc.done{background:#CFE6F8;color:#2D5D8C}.week .wc.missed{background:#fff;box-shadow:inset 0 0 0 2px #F3B9A3}
+.week .wc.rest{background:#F1EEFA}.week .wc.open{background:#fff;box-shadow:inset 0 0 0 2px #9DB6F2}
+.week .wd.now{color:var(--tide-deep)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--lift);padding:16px 18px 20px}
+.tabs{display:flex;gap:4px;background:var(--paper-2);padding:5px;border-radius:999px;margin-bottom:16px}
+.tab{flex:1;border:0;background:transparent;font-weight:600;color:var(--ink-2);padding:9px 6px;border-radius:999px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;font-size:14.5px;position:relative;transition:background .2s,color .2s}
+.tab svg{width:17px;height:17px}
+.tab[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 2px 10px -2px rgba(91,122,211,.3)}
+.tab .badge{position:absolute;top:4px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--shell-deep)}
+.view[hidden]{display:none}
+h2{font-size:21px;margin:0 0 4px;font-weight:700}
+h3{font-size:16px;margin:18px 0 8px;font-weight:700}
+.muted{color:var(--ink-2)}.small{font-size:13.5px}
+.datechips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 12px}
+.dchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;font-weight:600;font-size:14px;color:var(--ink-2)}
+.dchip[aria-pressed="true"]{background:var(--foam);border-color:#BFDDF2;color:var(--ink)}
+.dchip .s{font-weight:500;font-size:12.5px;color:var(--ink-3);margin-left:4px}
+.taglist{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.tag{display:inline-block;border-radius:999px;padding:3px 11px;font-size:13px;font-weight:700;background:var(--paper-2);color:var(--ink-2)}
+.tag.t-TEST{background:#E6E3F7;color:#4B3E92}.tag.t-MOCK{background:#DCD6F5;color:#3E2F7E}
+.tag.t-REST,.tag.t-OFF{background:#EEF0F6}.tag.t-STUDY5,.tag.t-STUDY4{background:var(--foam);color:#2D5D8C}
+.tag.t-LIGHT2,.tag.t-LIGHT3,.tag.t-EXAMS{background:var(--mint);color:#24694F}
+.tag.t-TAPER3,.tag.t-TAPER1{background:var(--butter);color:#7A5A0B}.tag.t-EXAM{background:var(--shell);color:#8A2F4B}
+.plan{background:var(--foam);border-radius:var(--r-m);padding:13px 15px;font-size:14.5px;line-height:1.55}
+.plan b{font-weight:700}
+.plan .rev{margin-top:8px;padding-top:8px;border-top:1px dashed #BCD9EE;color:var(--ink-2)}
+.plan .note{margin-top:8px;font-size:13px;color:#5B4BA8;background:#EEEAFB;border-radius:10px;padding:6px 10px}
+.blocks{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.block{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px 9px 14px;border-radius:16px;background:var(--paper-2);flex-wrap:wrap}
+.block .bl{font-weight:700;font-size:15px}.block .bm{font-weight:500;color:var(--ink-3);font-size:13px;margin-left:6px}
+.seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;border-radius:999px;padding:6px 11px;font-size:13px;font-weight:700;color:var(--ink-3);
+  cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .18s,color .18s}
+.seg button svg{width:14px;height:14px}
+.seg button[aria-pressed="true"][data-v="done"]{background:var(--mint);color:var(--mint-deep)}
+.seg button[aria-pressed="true"][data-v="partly"]{background:var(--butter);color:var(--butter-deep)}
+.seg button[aria-pressed="true"][data-v="missed"]{background:var(--peach);color:var(--peach-deep)}
+label.fl{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+textarea,input[type=text],input[type=number],select{width:100%;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:10px 13px;font-size:15px;font-weight:500;resize:vertical}
+textarea:focus,input:focus,select:focus{outline:none;border-color:#9DB6F2;box-shadow:0 0 0 4px rgba(157,182,242,.25)}
+.score{display:flex;gap:10px;align-items:center}.score input{max-width:120px}
+.actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+.btn{border:0;border-radius:999px;padding:12px 22px;font-weight:700;font-size:15.5px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .2s,background .2s}
+.btn svg{width:18px;height:18px}
+.btn-main{background:var(--tide-deep);color:#fff;box-shadow:0 10px 22px -10px rgba(91,122,211,.9)}
+.btn-main:hover:not(:disabled){transform:translateY(-1px);background:#4F6DC6}
+.btn-main:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn-soft{background:var(--paper-2);color:var(--ink);border:1px solid var(--line)}
+.btn-soft:hover{background:#EBEEFA}
+.btn-small{padding:7px 14px;font-size:13.5px}
+.hint{font-size:13.5px;color:var(--ink-3)}
+.intent{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px;align-items:center;margin-top:12px}
+.intent svg{width:16px;height:16px;flex:none;color:var(--tide-deep)}
+.saved{display:flex;gap:8px;align-items:center;background:var(--mint);color:var(--mint-deep);border-radius:14px;padding:9px 13px;font-weight:600;font-size:14px;margin-top:12px}
+.saved svg{width:17px;height:17px}
+.catch{margin-top:20px;border-top:1px solid var(--line);padding-top:6px}
+.citem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.citem:last-child{border-bottom:0}
+.empty{background:var(--paper-2);border-radius:14px;padding:12px 14px;font-size:14px;color:var(--ink-2)}
+/* calendar */
+.calhead{display:flex;align-items:center;justify-content:space-between;margin:4px 0 10px}
+.calhead h2{font-size:19px}
+.iconbtn{border:1px solid var(--line);background:#fff;border-radius:50%;width:36px;height:36px;display:grid;place-items:center;cursor:pointer;color:var(--ink-2)}
+.iconbtn svg{width:16px;height:16px}.iconbtn:disabled{opacity:.35;cursor:default}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.grid .dow{font-size:12.5px;color:var(--ink-3);font-weight:700;padding-bottom:2px}
+.day{aspect-ratio:1;border:0;border-radius:14px;background:var(--paper-2);cursor:pointer;position:relative;font-weight:700;font-size:14px;color:var(--ink-2);display:grid;place-items:center;padding:0}
+.day.out{visibility:hidden}
+.day.none{background:transparent;color:#C5C9DA;cursor:default}
+.day.done{background:#D9EEFB;color:#2D5D8C}
+.day.missed{background:#fff;box-shadow:inset 0 0 0 2px #F3B9A3;color:var(--peach-deep)}
+.day.rest{background:#F1EEFA;color:#8B80B8}
+.day.open{background:#fff;box-shadow:inset 0 0 0 2px #9DB6F2;color:var(--ink)}
+.day.today::after{content:"";position:absolute;bottom:5px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--tide-deep)}
+.day.test{font-style:normal}
+.day .mk{position:absolute;top:4px;right:5px;width:7px;height:7px;border-radius:50%;background:#B9A9EE}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--ink-2)}
+.legend span{display:flex;gap:6px;align-items:center}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:5px}
+/* reef */
+.reefgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.rcard{border-radius:16px;background:var(--paper-2);padding:10px 12px;display:flex;gap:10px;align-items:center}
+.rcard svg{width:44px;height:44px;flex:none}
+.rcard .rn{font-weight:700;font-size:14px;line-height:1.25}.rcard .rs{font-size:12.5px;color:var(--ink-3)}
+.rcard.grown{background:#EEF8F3}
+.rcard.locked svg{opacity:.28;filter:grayscale(1)}
+.mem{background:#F4F1FB;border-radius:16px;padding:12px 14px;font-size:14px;margin-bottom:8px}
+.notecard{background:#FFF8EE;border-radius:16px;padding:12px 14px;font-size:14.5px;margin-bottom:8px;border:1px solid #F6E3C6}
+.notecard .nd{font-size:12.5px;color:#9A7A4A;font-weight:700;margin-bottom:2px}
+/* settings */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.toggle{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600}
+.toggle input{width:20px;height:20px;accent-color:var(--tide-deep)}
+code.bk{display:block;word-break:break-all;font-family:inherit;font-size:12px;background:var(--paper-2);border-radius:12px;padding:10px;max-height:90px;overflow:auto;color:var(--ink-2)}
+/* dialogs */
+dialog{border:0;border-radius:28px;padding:0;max-width:min(520px,92vw);width:100%;box-shadow:0 30px 80px -20px rgba(54,64,106,.5);color:var(--ink)}
+dialog::backdrop{background:rgba(54,64,106,.28);backdrop-filter:blur(3px)}
+.dlg{padding:24px 24px 22px}
+.dlg h2{font-size:23px}
+.dlg .art{display:grid;place-items:center;margin:-4px 0 6px}
+.dlg .art svg{max-width:170px;height:auto}
+.dlg .actions{justify-content:flex-end}
+.foot{text-align:center;color:var(--ink-3);font-size:13.5px;margin-top:26px}
+.noscript,.storewarn{background:#FFF4E8;border:1px solid #F5D3AE;color:#8A4A1C;border-radius:16px;padding:12px 16px;margin-bottom:14px;font-weight:600}
+/* preview bar (only with ?preview) */
+.pbar{position:relative;margin:10px 12px 0;z-index:50;background:#2F375C;color:#fff;border-radius:18px;padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13.5px;box-shadow:0 16px 40px -10px rgba(0,0,0,.4)}
+.pbar input,.pbar select{width:auto;padding:6px 10px;border-radius:10px;border:0;font-size:13.5px;color:var(--ink)}
+.pbar button{border:0;border-radius:999px;padding:7px 13px;font-weight:700;cursor:pointer;background:#fff;color:#2F375C}
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr}.stage{position:relative;top:0}
+}
+@media (max-width:560px){
+  .app{padding:14px 12px 28px}.brand h1{font-size:26px}.tank{border-width:5px;border-radius:26px}
+  .status{font-size:14.5px;padding:10px 14px}
+  .tab{font-size:13.5px;padding:9px 2px}.tab svg{display:none}.tab .badge{right:6px}
+  .block{padding:9px 10px}.seg button{padding:6px 9px}
+  .row2{grid-template-columns:1fr}
+  .week{grid-template-columns:repeat(7,1fr)}.week .wl{grid-column:1/-1}.week .wd{min-width:0}
+}
+.twk{animation:twk 3.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}.twk.t2{animation-delay:1.2s}.twk.t3{animation-delay:2.3s}
+@keyframes twk{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <noscript><div class="noscript">Ammu Tides needs JavaScript turned on in Chrome.</div></noscript>
+  <div class="storewarn" id="storeWarn" hidden>This browser is blocking saved data, so check-ins would be lost. Open the page in a normal Chrome window, not incognito.</div>
+  <header class="top">
+    <div class="brand">
+      <svg id="brandWhale" viewBox="0 0 64 64" aria-hidden="true"></svg>
+      <div><h1>Ammu Tides</h1><p>Study, then feed the tide.</p></div>
+    </div>
+    <div class="countdown" id="countdown"></div>
+  </header>
+
+  <main class="layout">
+    <section class="stage" aria-label="Your tide">
+      <div class="tank" id="tank">
+        <svg id="scene" viewBox="0 0 1000 640" role="img" aria-labelledby="sceneTitle">
+          <title id="sceneTitle">Your whale's tide</title>
+          <defs>
+            <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E4DDF8"/><stop offset=".6" stop-color="#EEEAFA"/><stop offset="1" stop-color="#F0F5FC"/></linearGradient>
+            <filter id="fSoft" x="-30%" y="-10%" width="160%" height="120%"><feGaussianBlur stdDeviation="9"/></filter>
+            <linearGradient id="gWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFE5F6"/><stop offset=".55" stop-color="#92C4EC"/><stop offset="1" stop-color="#7BA7DE"/></linearGradient>
+            <linearGradient id="gWaterBack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D7EFFA"/><stop offset="1" stop-color="#A8CFEF"/></linearGradient>
+            <linearGradient id="gSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8E8CF"/><stop offset="1" stop-color="#EED6B3"/></linearGradient>
+            <linearGradient id="gRay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <radialGradient id="gEgg" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#FFFDF7"/><stop offset="1" stop-color="#F3E6D3"/></radialGradient>
+            <linearGradient id="gWhale" gradientUnits="userSpaceOnUse" x1="0" y1="-78" x2="0" y2="66"><stop id="wg1" offset="0" stop-color="#7F9BE6"/><stop id="wg2" offset=".55" stop-color="#9DB5F0"/><stop id="wg3" offset="1" stop-color="#BCCDF6"/></linearGradient>
+            <linearGradient id="gBelly" gradientUnits="userSpaceOnUse" x1="0" y1="10" x2="0" y2="64"><stop offset="0" stop-color="#F6F8FF"/><stop offset="1" stop-color="#DCE5FB"/></linearGradient>
+            <radialGradient id="gShine"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+            <filter id="fShadow" x="-20%" y="-100%" width="140%" height="300%"><feGaussianBlur stdDeviation="5"/></filter>
+            <clipPath id="clipWater"><path id="waterClipPath" d=""/></clipPath>
+          </defs>
+          <rect width="1000" height="640" fill="url(#gSky)"/>
+          <g id="sky"><circle cx="872" cy="76" r="58" fill="#FFF3D4" opacity=".55"/><path d="M886,46 A32,32 0 1 0 886,106 A25,25 0 1 1 886,46 Z" fill="#FFE7A6"/>
+            <path class="twk" d="M712,52 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 z" fill="#FFFFFF"/><path class="twk t2" d="M780,118 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 z" fill="#FFF7E0"/>
+            <path class="twk t3" d="M640,92 l2,5 5,2 -5,2 -2,5 -2,-5 -5,-2 5,-2 z" fill="#FFFFFF"/><path class="twk t2" d="M120,64 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2 z" fill="#FFFFFF"/></g>
+          <path id="waveBack" fill="url(#gWaterBack)" d=""/>
+          <path id="waveFront" fill="url(#gWater)" d=""/>
+          <g clip-path="url(#clipWater)">
+            <g id="rays" filter="url(#fSoft)"></g>
+            <g id="grassBg"></g>
+            <g id="friends"></g>
+            <g id="bubbles"></g>
+            <g id="whaleWrap" style="cursor:pointer"><g id="whale"></g></g>
+            <g id="eggWrap"></g>
+            <rect id="haze" x="0" y="0" width="1000" height="640" fill="#C9C2B4" opacity="0" pointer-events="none"/>
+          </g>
+          <path id="sand" d="M0,566 C120,552 240,576 380,562 C520,550 640,575 780,561 C880,552 950,567 1000,560 L1000,640 L0,640 Z" fill="url(#gSand)"/>
+          <ellipse id="wShadow" cx="500" cy="578" rx="80" ry="8" fill="#C9AE86" opacity="0" filter="url(#fShadow)"/>
+          <g id="pebbles"></g>
+          <g id="reefFront"></g>
+          <g id="memorial"></g>
+          <g id="spout" opacity="0" pointer-events="none"></g>
+          <g id="hearts" pointer-events="none"></g>
+          <g id="bottle" style="cursor:pointer" display="none"></g>
+        </svg>
+        <div class="banner" id="banner" role="status"></div>
+        <div class="says" id="says" aria-live="polite"></div>
+      </div>
+      <div class="status" id="status" aria-live="polite"><span class="dot"></span><span id="statusText"></span></div>
+      <div class="chips" id="chips"></div>
+      <div class="week" id="week" aria-label="This week"></div>
+    </section>
+
+    <section class="panel" aria-label="Check-in and more">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="t-tonight" aria-selected="true" data-tab="tonight"></button>
+        <button class="tab" role="tab" id="t-calendar" aria-selected="false" data-tab="calendar"></button>
+        <button class="tab" role="tab" id="t-reef" aria-selected="false" data-tab="reef"></button>
+        <button class="tab" role="tab" id="t-keep" aria-selected="false" data-tab="keep"></button>
+      </div>
+      <div class="view" id="v-tonight" role="tabpanel"></div>
+      <div class="view" id="v-calendar" role="tabpanel" hidden></div>
+      <div class="view" id="v-reef" role="tabpanel" hidden></div>
+      <div class="view" id="v-keep" role="tabpanel" hidden></div>
+    </section>
+  </main>
+</div>
+
+<dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+<input type="file" id="fileIn" accept=".json,application/json,text/plain" hidden>
+
+<script>
+/* ============================================================
+   Ammu Tides. Everything lives in this one file.
+   Plan data below is generated from the verified GATE 2027 study plan
+   (the same source as the Word document). Do not edit it by hand.
+   ============================================================ */
+const DAYS = [{"d":"2026-10-01","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: C Programming 1/3. Data types, operators and precedence, type conversion, if/switch/loops, functions and parameter passing.","rev":"30: Set up error notebook and trackers","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"C","b":"learn","p":"1/3"}]},{"d":"2026-10-02","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: C Programming 2/3. Storage classes (auto, static, extern, register), scope and lifetime, recursion (tracing calls, recursion trees). Practice: output questions.","rev":"30: Redo 3 error-notebook questions","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"C","b":"learn","p":"2/3"}]},{"d":"2026-10-03","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: C Programming. GA 90: Verbal: basic grammar (tenses, articles, adjectives, prepositions, conjunctions, verb-noun agreement, other parts of speech).","rev":"30: Write the C Programming formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2026-10-04","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-10-05","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: C Programming 3/3. Pointers, arrays and pointer arithmetic, 2-D arrays, strings, structures and unions, malloc/free.","rev":"30: C basics + Storage classes, recursion","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"C","b":"learn","p":"3/3"}]},{"d":"2026-10-06","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Data Structures 1/3. Arrays (row/column-major address), stacks (infix to postfix, postfix evaluation), queues (circular queue, deque).","rev":"30: Redo 3 error-notebook questions","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DS","b":"learn","p":"1/3"}]},{"d":"2026-10-07","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Data Structures 2/3. Linked lists (singly, doubly, circular: insert, delete, reverse), binary trees (terms, traversals, building a tree from traversals).","rev":"30: Redo 3 error-notebook questions","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DS","b":"learn","p":"2/3"}]},{"d":"2026-10-08","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Data Structures 3/3. Binary search trees or BST (search, insert, delete), binary heaps (array form, build-heap, insert, delete), graphs (adjacency matrix and list).","rev":"30: C pointers, arrays, strings","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DS","b":"learn","p":"3/3"}]},{"d":"2026-10-09","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Discrete Maths 1/5. Propositional logic (truth tables, equivalences, normal forms, inference) and first-order logic (quantifiers, negation, English to logic).","rev":"30: Arrays, stacks, queues","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DM","b":"learn","p":"1/5"}]},{"d":"2026-10-10","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: Data Structures + C. GA 90: Verbal: vocabulary (words, idioms, phrases in context).","rev":"30: Write the Data Structures formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2026-10-11","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-10-12","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Discrete Maths 2/5. Sets, relations, functions: relation properties, equivalence relations, closures, one-one and onto functions, counting relations and functions.","rev":"30: BST, heaps, graph storage + Logic","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DM","b":"learn","p":"2/5"}]},{"d":"2026-10-13","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Discrete Maths 3/5. Partial orders and lattices (Hasse diagrams, lub/glb, lattice types). Monoids and groups [NEW]: semigroup, monoid, group, subgroup, Lagrange's theorem, cyclic groups.","rev":"30: Redo 3 error-notebook questions","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DM","b":"learn","p":"3/5"}]},{"d":"2026-10-14","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Discrete Maths 4/5. Graphs: degree and handshaking, connectivity (components, cut vertex and edge), bipartite graphs, matching [NEW], colouring and chromatic number, planar graphs, Euler's formula.","rev":"30: Redo 3 error-notebook questions","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DM","b":"learn","p":"4/5"}]},{"d":"2026-10-15","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Discrete Maths 5/5. Combinatorics: counting, permutations and combinations, pigeonhole, inclusion-exclusion, recurrence relations [NEW], generating functions [NEW].","rev":"30: Sets, relations, functions + C basics","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DM","b":"learn","p":"5/5"}]},{"d":"2026-10-16","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Linear Algebra 1/3. Matrices (types, rank), determinants and their properties, systems of linear equations (consistency, Gaussian elimination).","rev":"30: Posets, lattices, groups + Storage classes, recursion","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"LA","b":"learn","p":"1/3"}]},{"d":"2026-10-17","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: Discrete Mathematics. GA 90: Verbal: reading comprehension, narrative sequencing.","rev":"30: Write the Discrete Maths formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2026-10-18","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-10-19","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Linear Algebra 2/3. Eigenvalues and eigenvectors: characteristic equation, trace and determinant properties, eigenvalues of special matrices.","rev":"30: Combinatorics + Matrices, linear systems","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"LA","b":"learn","p":"2/3"}]},{"d":"2026-10-20","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Linear Algebra 3/3. LU decomposition [NEW] (factor A = LU, forward and back substitution), then a mixed linear algebra set.","rev":"30: C pointers, arrays, strings + Arrays, stacks, queues","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"LA","b":"learn","p":"3/3"}]},{"d":"2026-10-21","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Calculus 1/2. Limits (standard limits, L'Hopital's rule), continuity, differentiability, maxima and minima.","rev":"30: Linked lists, binary trees","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CA","b":"learn","p":"1/2"}]},{"d":"2026-10-22","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Calculus 2/2. Mean value theorems (Rolle, Lagrange), integration (definite integrals, properties, substitution, by parts).","rev":"30: Eigenvalues, eigenvectors + BST, heaps, graph storage","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CA","b":"learn","p":"2/2"}]},{"d":"2026-10-23","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Probability 1/3. Sample space, conditional probability, independence, total probability, Bayes' theorem.","rev":"30: LU decomposition + Logic","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"PR","b":"learn","p":"1/3"}]},{"d":"2026-10-24","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: Linear Algebra + Calculus. GA 90: Quantitative: ratios, percentages, powers, exponents, logarithms, permutations and combinations, series.","rev":"30: Write the Linear Algebra + Calculus formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2026-10-25","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-10-26","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Probability 2/3. Random variables (PMF, PDF, CDF), mean, median, mode, variance, standard deviation, binomial and Poisson distributions.","rev":"30: MVT, integration + Conditional probability, Bayes","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"PR","b":"learn","p":"2/3"}]},{"d":"2026-10-27","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Probability 3/3. Uniform, exponential [NEW] and normal distributions (standardising), then a mixed probability set.","rev":"30: Sets, relations, functions + Posets, lattices, groups","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"PR","b":"learn","p":"3/3"}]},{"d":"2026-10-28","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Algorithms 1/6. Asymptotic notation (O, Omega, Theta), worst-case time and space complexity of loops, recurrences (recursion tree, master theorem).","rev":"30: Graph theory","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"AL","b":"learn","p":"1/6"}]},{"d":"2026-10-29","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Algorithms 2/6. Searching (linear, binary) and sorting: bubble, selection, insertion, merge, quick, heap sort (time, space, stable, in-place).","rev":"30: Random variables, distributions 1 + Combinatorics","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"AL","b":"learn","p":"2/6"}]},{"d":"2026-10-30","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Algorithms 3/6. Hashing (hash functions, chaining, linear and quadratic probing, double hashing, load factor), divide-and-conquer recurrences.","rev":"30: Distributions 2 + Matrices, linear systems","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"AL","b":"learn","p":"3/6"}]},{"d":"2026-10-31","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: Probability + Algorithms so far. GA 90: Quantitative: data interpretation (bar and pie charts, 2-D and 3-D plots, maps, tables).","rev":"30: Write the Probability formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2026-11-01","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-11-02","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Algorithms 4/6. Greedy method: activity selection, fractional knapsack, Huffman coding, job sequencing with deadlines.","rev":"30: Searching and sorting + Hashing, divide-and-conquer","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"AL","b":"learn","p":"4/6"}]},{"d":"2026-11-03","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Algorithms 5/6. Dynamic programming: overlapping subproblems, 0/1 knapsack, longest common subsequence, matrix-chain multiplication, Floyd-Warshall (all-pairs shortest paths).","rev":"30: Eigenvalues, eigenvectors + LU decomposition","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"AL","b":"learn","p":"5/6"}]},{"d":"2026-11-04","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Algorithms 6/6. Graph traversals (BFS, DFS, topological sort), minimum spanning trees or MST (Prim, Kruskal), shortest paths from one source (Dijkstra, Bellman-Ford).","rev":"30: Limits, maxima, minima","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"AL","b":"learn","p":"6/6"}]},{"d":"2026-11-05","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Theory of Computation 1/5. Regular expressions and finite automata: DFA, NFA, epsilon-NFA, NFA to DFA, regex to automaton and back, DFA minimisation.","rev":"30: Greedy method + MVT, integration","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"TC","b":"learn","p":"1/5"}]},{"d":"2026-11-06","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Theory of Computation 2/5. Regular languages: closure properties, pumping lemma, spotting regular vs non-regular languages.","rev":"30: Dynamic programming + Conditional probability, Bayes","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"TC","b":"learn","p":"2/5"}]},{"d":"2026-11-07","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: Algorithms (all). GA 90: Quantitative: mensuration and geometry.","rev":"30: Write the Algorithms formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2026-11-08","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-11-09","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Theory of Computation 3/5. Context-free grammars or CFG (derivations, parse trees, ambiguity, simplification, Chomsky normal form) and push-down automata or PDA (deterministic vs non-deterministic).","rev":"30: Finite automata, regex + Regular languages","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"TC","b":"learn","p":"3/5"}]},{"d":"2026-11-10","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Theory of Computation 4/5. Context-free languages or CFLs: closure properties, pumping lemma for CFLs, spotting CFL vs non-CFL, deterministic CFLs.","rev":"30: Random variables, distributions 1 + Distributions 2","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"TC","b":"learn","p":"4/5"}]},{"d":"2026-11-11","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Theory of Computation 5/5. Turing machines and undecidability: recursive vs recursively enumerable languages, halting problem, Rice's theorem, decidable problems.","rev":"30: Asymptotics, recurrences","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"TC","b":"learn","p":"5/5"}]},{"d":"2026-11-12","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Digital Logic 1/5. Boolean algebra and minimisation: laws, SOP/POS, minterms and maxterms, algebraic technique, K-map with don't-cares, tabular method [NEW].","rev":"30: CFG and PDA + Searching and sorting","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DL","b":"learn","p":"1/5"}]},{"d":"2026-11-13","t":"STUDY4","tag":"STUDY 4h","main":"Learn 120 + Practice 90: Digital Logic 2/5. Combinational circuit design: adders/subtractors, multiplexers, decoders, encoders, comparators, functions from MUX or decoder.","rev":"30: Context-free languages + Hashing, divide-and-conquer","b":[{"k":"learn","l":"Learn","m":120},{"k":"practice","l":"Practice","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DL","b":"learn","p":"2/5"}]},{"d":"2026-11-14","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: Theory of Computation + Digital Logic so far. GA 90: Quantitative: elementary statistics and probability.","rev":"30: Write the Theory of Computation formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2026-11-15","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-11-16","t":"LIGHT2","tag":"LIGHT 2h","main":"Compiler Design 60: Phases of a compiler; lexical analysis (tokens, lexemes, counting tokens). Recall set 60: C Programming + Data Structures.","rev":"","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"recall","l":"Recall set","m":60}],"fp":[{"s":"CD","b":"compiler","p":""}]},{"d":"2026-11-17","t":"LIGHT2","tag":"LIGHT 2h","main":"Compiler Design 60: Parsing 1: removing left recursion, left factoring, FIRST and FOLLOW. Recall set 60: Discrete Maths (logic, sets, relations, functions).","rev":"","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"recall","l":"Recall set","m":60}],"fp":[{"s":"CD","b":"compiler","p":""}]},{"d":"2026-11-18","t":"LIGHT2","tag":"LIGHT 2h","main":"Compiler Design 60: Parsing 2: top-down parsing (LL(1) table, recursive descent). Recall set 60: Discrete Maths (posets, groups, graphs, combinatorics).","rev":"","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"recall","l":"Recall set","m":60}],"fp":[{"s":"CD","b":"compiler","p":""}]},{"d":"2026-11-19","t":"LIGHT2","tag":"LIGHT 2h","main":"Compiler Design 60: Parsing 3: bottom-up parsing (LR(0) items, SLR(1) table). Recall set 60: Linear Algebra.","rev":"","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"recall","l":"Recall set","m":60}],"fp":[{"s":"CD","b":"compiler","p":""}]},{"d":"2026-11-20","t":"LIGHT2","tag":"LIGHT 2h","main":"Compiler Design 60: Parsing 4: CLR(1) and LALR(1) items and tables (conflicts come in tomorrow's set). Recall set 60: Calculus + Probability.","rev":"","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"recall","l":"Recall set","m":60}],"fp":[{"s":"CD","b":"compiler","p":""}]},{"d":"2026-11-21","t":"LIGHT2","tag":"LIGHT 2h","main":"Compiler Design 60: Parsing past-paper set: shift-reduce and reduce-reduce conflicts, comparing parser power, mixed questions. Recall set 60: Algorithms (sorting, hashing, greedy, dynamic programming).","rev":"","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"recall","l":"Recall set","m":60}],"fp":[{"s":"CD","b":"compiler","p":""}]},{"d":"2026-11-22","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-11-23","t":"LIGHT3","tag":"LIGHT 3h","main":"Compiler Design 60: Syntax-directed translation (SDT) 1: synthesised vs inherited attributes, S- and L-attributed definitions. Second subject 90: Digital Logic 3/5: sequential circuits: latches, SR/JK/D/T flip-flops, characteristic and excitation tables.","rev":"30: Boolean minimisation + Combinational circuits","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"second","l":"Second subject","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CD","b":"compiler","p":""},{"s":"DL","b":"second","p":"3/5"}]},{"d":"2026-11-24","t":"LIGHT3","tag":"LIGHT 3h","main":"Compiler Design 60: Syntax-directed translation 2: translation schemes, evaluation order, annotated parse trees. Second subject 90: Digital Logic 4/5: sequential circuit design: counters (ripple, synchronous, mod-N), shift registers, state diagrams.","rev":"30: Lexical analysis + LR(0), SLR parsing","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"second","l":"Second subject","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CD","b":"compiler","p":""},{"s":"DL","b":"second","p":"4/5"}]},{"d":"2026-11-25","t":"LIGHT3","tag":"LIGHT 3h","main":"Compiler Design 60: Intermediate code generation: syntax trees, DAGs, three-address code, quadruples, triples. Second subject 90: Digital Logic 5/5: number representation and arithmetic: 1's and 2's complement, overflow, fixed point, IEEE 754 floating point.","rev":"30: CLR, LALR parsing + Graph algorithms","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"second","l":"Second subject","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CD","b":"compiler","p":""},{"s":"DL","b":"second","p":"5/5"}]},{"d":"2026-11-26","t":"LIGHT3","tag":"LIGHT 3h","main":"Compiler Design 60: Runtime environments: activation records, stack allocation, static vs dynamic scope, parameter passing. Second subject 90: Computer Organization 1/8: instruction set, instruction formats, addressing modes (with calculations).","rev":"30: Flip-flops + SDT attributes","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"second","l":"Second subject","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CD","b":"compiler","p":""},{"s":"CO","b":"second","p":"1/8"}]},{"d":"2026-11-27","t":"LIGHT3","tag":"LIGHT 3h","main":"Compiler Design 60: Local optimisation: basic blocks, flow graphs, DAG of a basic block, constant folding, dead code. Second subject 90: Computer Organization 2/8: design of the ALU (ripple-carry vs carry-lookahead adders, Booth's multiplication).","rev":"30: Counters, registers + SDT schemes","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"second","l":"Second subject","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CD","b":"compiler","p":""},{"s":"CO","b":"second","p":"2/8"}]},{"d":"2026-11-28","t":"LIGHT3","tag":"LIGHT 3h","main":"Compiler Design 60: Data flow analyses: constant propagation, liveness analysis. Second subject 90: Computer Organization 3/8: design of the control unit, hardwired vs microprogrammed (microinstruction formats, control memory size).","rev":"30: Number representation + Intermediate code","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"second","l":"Second subject","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CD","b":"compiler","p":""},{"s":"CO","b":"second","p":"3/8"}]},{"d":"2026-11-29","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-11-30","t":"LIGHT3","tag":"LIGHT 3h","main":"Compiler Design 60: Common subexpression elimination, then a mixed Compiler Design set. Second subject 90: Computer Organization 4/8: memory hierarchy (hit ratio, average access time, performance).","rev":"30: Addressing modes + ALU design","b":[{"k":"compiler","l":"Compiler Design","m":60},{"k":"second","l":"Second subject","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CD","b":"compiler","p":""},{"s":"CO","b":"second","p":"4/8"}]},{"d":"2026-12-01","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Compiler Design (lexical analysis, parsing). On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-02","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Digital Logic. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-03","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Theory of Computation. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-04","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Algorithms. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-05","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Discrete Mathematics. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-06","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-12-07","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Computer Organization parts 1-4. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-08","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Probability and Statistics. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-09","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Linear Algebra + Calculus. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-10","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Compiler Design (translation, runtime, optimisation). Then write the Compiler Design formula sheet. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-11","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: C Programming + Data Structures. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-12","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Theory of Computation (CFLs, Turing machines). On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-13","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-12-14","t":"EXAMS","tag":"UNI EXAMS 1h","main":"Recall set 60: Digital Logic + Discrete Mathematics (mixed). Then write the Digital Logic formula sheet. On a day you write a college paper: only read your error notebook for 20 min.","rev":"","b":[{"k":"recall","l":"Recall set","m":60}],"fp":[]},{"d":"2026-12-15","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Computer Organization 5/8: memory interfacing (arranging chips, address decoding); cache 1 (locality, direct mapping, address fields). Practice 105 + GA drill 15.","rev":"30: LL(1) parsing + LR(0), SLR parsing","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CO","b":"main","p":"5/8"}]},{"d":"2026-12-16","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Computer Organization 6/8: cache memory mapping 2 (set-associative, fully associative, LRU/FIFO, write-through vs write-back, multi-level access time). Practice 105 + GA drill 15.","rev":"30: CLR, LALR parsing + Addressing modes","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CO","b":"main","p":"6/8"}]},{"d":"2026-12-17","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Computer Organization 7/8: I/O interface (programmed I/O, interrupt, DMA, CPU-time sums); instruction pipelining 1 (stages, speed-up, throughput). Practice 105 + GA drill 15.","rev":"30: Local optimisation + ALU design","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CO","b":"main","p":"7/8"}]},{"d":"2026-12-18","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Computer Organization 8/8: pipeline hazards [NEW] (structural, data, control; forwarding, stalls, branch penalty, CPI with stalls); mixed COA set. Practice 105 + GA drill 15.","rev":"30: Memory interfacing, cache 1 + Data flow analyses","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CO","b":"main","p":"8/8"}]},{"d":"2026-12-19","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: Computer Organization. GA 90: Analytical: logic (deduction and induction), analogy, numerical relations and reasoning.","rev":"30: Write the Computer Organization formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2026-12-20","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-12-21","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Databases 1/4: ER-model (attributes, cardinality, weak entities, fewest tables); relational model, integrity constraints; file organization and indexing (B and B+ trees). Practice 105 + GA drill 15.","rev":"30: I/O, DMA, pipelining + Pipeline hazards","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DB","b":"main","p":"1/4"}]},{"d":"2026-12-22","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Databases 2/4: relational algebra (selection, projection, joins, division), tuple calculus, SQL (nested, aggregates, GROUP BY/HAVING, NULL, outer joins). Practice 105 + GA drill 15.","rev":"30: Common subexpressions","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DB","b":"main","p":"2/4"}]},{"d":"2026-12-23","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Databases 3/4: functional dependencies, closure, candidate keys, minimal cover; normal forms 1NF to BCNF; lossless and dependency-preserving decomposition. Practice 105 + GA drill 15.","rev":"30: Redo 3 error-notebook questions","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DB","b":"main","p":"3/4"}]},{"d":"2026-12-24","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Databases 4/4: transactions and concurrency control (ACID, schedules, conflict and view serializability, recoverability, 2PL, timestamp ordering). Practice 105 + GA drill 15.","rev":"30: ER-model, indexing","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"DB","b":"main","p":"4/4"}]},{"d":"2026-12-25","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Operating System 1/5: system calls, processes (states, PCB, context switch), threads (user vs kernel), counting fork() processes. Practice 105 + GA drill 15.","rev":"30: Relational algebra, SQL","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"OS","b":"main","p":"1/5"}]},{"d":"2026-12-26","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: Databases. GA 90: Spatial: transformation of shapes (translation, rotation, scaling, mirroring, assembling, grouping), paper folding, cutting and patterns in 2 and 3 dimensions.","rev":"30: Write the Databases formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2026-12-27","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2026-12-28","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Operating System 2/5: CPU scheduling (FCFS, SJF, SRTF, round robin, priority; waiting and turnaround time); I/O (disk) scheduling [NEW]. Practice 105 + GA drill 15.","rev":"30: Transactions + Processes, threads","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"OS","b":"main","p":"2/5"}]},{"d":"2026-12-29","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Operating System 3/5: inter-process communication, concurrency and synchronization (critical section, Peterson, semaphores, mutex, monitors, classic problems). Practice 105 + GA drill 15.","rev":"30: Memory interfacing, cache 1","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"OS","b":"main","p":"3/5"}]},{"d":"2026-12-30","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Operating System 4/5: deadlock (conditions, resource graph, banker's algorithm, prevention, detection); memory management (paging, TLB access time, multi-level tables). Practice 105 + GA drill 15.","rev":"30: Cache mapping 2","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"OS","b":"main","p":"4/5"}]},{"d":"2026-12-31","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Operating System 5/5: virtual memory (demand paging, FIFO/LRU/optimal, Belady's anomaly, thrashing); file systems (allocation, directories, free space, inode sums). Practice 105 + GA drill 15.","rev":"30: CPU and disk scheduling + I/O, DMA, pipelining","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"OS","b":"main","p":"5/5"}]},{"d":"2027-01-01","t":"OFF","tag":"OFF","main":"New Year holiday. No study.","rev":"","b":[],"fp":[]},{"d":"2027-01-02","t":"TEST","tag":"TEST","main":"Test 60 + Check 60: Operating System. GA 90: One full 10-question GA section, timed at 30 min.","rev":"30: Write the Operating System formula sheet","b":[{"k":"test","l":"Test","m":60},{"k":"check","l":"Check","m":60},{"k":"ga","l":"GA","m":90},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-03","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2027-01-04","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Computer Networks 1/5: principles of layering (OSI, TCP/IP); circuit, packet and virtual-circuit switching; performance metrics (delays, throughput, bandwidth-delay product). Practice 105 + GA drill 15.","rev":"30: Virtual memory, file systems + Pipeline hazards","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CN","b":"main","p":"1/5"}]},{"d":"2027-01-05","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Computer Networks 2/5: data link layer: error detection (parity, checksum, CRC), Medium Access Control or MAC (ALOHA, CSMA/CD, minimum frame size), Ethernet. Practice 105 + GA drill 15.","rev":"30: ER-model, indexing + Relational algebra, SQL","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CN","b":"main","p":"2/5"}]},{"d":"2027-01-06","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Computer Networks 3/5: distance vector routing (count-to-infinity), link state routing [NEW]; IPv4 addressing, CIDR notation (subnetting, longest-prefix match). Practice 105 + GA drill 15.","rev":"30: Normal forms","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CN","b":"main","p":"3/5"}]},{"d":"2027-01-07","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Computer Networks 4/5: IPv4 fragmentation, Network Address Translation; TCP connection, flow control and congestion control (slow start, AIMD); UDP. Practice 105 + GA drill 15.","rev":"30: Layering, switching + Transactions","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CN","b":"main","p":"4/5"}]},{"d":"2027-01-08","t":"STUDY5","tag":"STUDY 5h","main":"Learn 150: Computer Networks 5/5: socket API (socket, bind, listen, accept, connect), DNS and HTTP. FIRST PASS COMPLETE. Practice 105: Mixed Computer Networks set. GA drill 15.","rev":"30: Data link, MAC + Processes, threads","b":[{"k":"main","l":"Learn","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[{"s":"CN","b":"main","p":"5/5"}]},{"d":"2027-01-09","t":"MOCK","tag":"MOCK 5h","main":"Mock 180 (9:30 AM to 12:30 PM) + Check 120 (2:00 to 4:00 PM): Mock 1: your starting score. Do not judge it harshly.","rev":"","b":[{"k":"mock","l":"Mock","m":180},{"k":"check","l":"Check","m":120}],"fp":[]},{"d":"2027-01-10","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2027-01-11","t":"STUDY5","tag":"STUDY 5h","main":"Rework 150: Engineering Maths: Discrete Maths, Linear Algebra, Calculus, Probability. Practice 105 + GA drill 15.","rev":"30: Write the Computer Networks formula sheet","b":[{"k":"main","l":"Rework","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-12","t":"STUDY5","tag":"STUDY 5h","main":"Rework 150: C Programming, Data Structures, Algorithms. Practice 105 + GA drill 15.","rev":"30: Routing, CIDR + IPv4, TCP","b":[{"k":"main","l":"Rework","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-13","t":"STUDY5","tag":"STUDY 5h","main":"Rework 150: Computer Organization, Digital Logic. Practice 105 + GA drill 15.","rev":"30: Sockets, DNS, HTTP + CPU and disk scheduling","b":[{"k":"main","l":"Rework","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-14","t":"STUDY5","tag":"STUDY 5h","main":"Rework 150: Theory of Computation, Compiler Design. Practice 105 + GA drill 15.","rev":"30: Synchronization + Deadlock, paging","b":[{"k":"main","l":"Rework","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-15","t":"STUDY5","tag":"STUDY 5h","main":"Rework 150: Operating System, Databases, Computer Networks. Practice 105 + GA drill 15.","rev":"30: Virtual memory, file systems","b":[{"k":"main","l":"Rework","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-16","t":"MOCK","tag":"MOCK 5h","main":"Mock 180 (9:30 AM to 12:30 PM) + Check 120 (2:00 to 4:00 PM): Mock 2. Phase 2 exit test: Mock 2 score is at least Mock 1 score.","rev":"","b":[{"k":"mock","l":"Mock","m":180},{"k":"check","l":"Check","m":120}],"fp":[]},{"d":"2027-01-17","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2027-01-18","t":"STUDY5","tag":"STUDY 5h","main":"Fix errors 150: Engineering Maths + the wrong answers from your latest mock. Practice 105 + GA drill 15.","rev":"30: Layering, switching","b":[{"k":"main","l":"Fix errors","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-19","t":"STUDY5","tag":"STUDY 5h","main":"Fix errors 150: Algorithms, Data Structures, C Programming. Practice 105 + GA drill 15.","rev":"30: Data link, MAC","b":[{"k":"main","l":"Fix errors","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-20","t":"STUDY5","tag":"STUDY 5h","main":"Fix errors 150: Theory of Computation, Compiler Design. Practice 105 + GA drill 15.","rev":"30: Routing, CIDR","b":[{"k":"main","l":"Fix errors","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-21","t":"STUDY5","tag":"STUDY 5h","main":"Fix errors 150: Computer Organization, Digital Logic. Practice 105 + GA drill 15.","rev":"30: IPv4, TCP","b":[{"k":"main","l":"Fix errors","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-22","t":"STUDY5","tag":"STUDY 5h","main":"Fix errors 150: Operating System, Databases, Computer Networks. Practice 105 + GA drill 15.","rev":"30: Sockets, DNS, HTTP","b":[{"k":"main","l":"Fix errors","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-23","t":"MOCK","tag":"MOCK 5h","main":"Mock 180 (9:30 AM to 12:30 PM) + Check 120 (2:00 to 4:00 PM): Mock 3.","rev":"","b":[{"k":"mock","l":"Mock","m":180},{"k":"check","l":"Check","m":120}],"fp":[]},{"d":"2027-01-24","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2027-01-25","t":"STUDY5","tag":"STUDY 5h","main":"Fix errors 150: Engineering Maths + General Aptitude (make your GA shortcuts sheet) + the wrong answers from your latest mock. Practice 105 + GA drill 15.","rev":"30: Computer Organization formula sheet","b":[{"k":"main","l":"Fix errors","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-26","t":"STUDY5","tag":"STUDY 5h","main":"Fix errors 150: Algorithms, Data Structures, C Programming. Practice 105 + GA drill 15.","rev":"30: Operating System formula sheet","b":[{"k":"main","l":"Fix errors","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-27","t":"MOCK","tag":"MOCK 5h","main":"Mock 180 (9:30 AM to 12:30 PM) + Check 120 (2:00 to 4:00 PM): Mock 4.","rev":"","b":[{"k":"mock","l":"Mock","m":180},{"k":"check","l":"Check","m":120}],"fp":[]},{"d":"2027-01-28","t":"STUDY5","tag":"STUDY 5h","main":"Fix errors 150: Computer Organization, Digital Logic, Operating System. Practice 105 + GA drill 15.","rev":"30: Databases formula sheet","b":[{"k":"main","l":"Fix errors","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-29","t":"STUDY5","tag":"STUDY 5h","main":"Fix errors 150: Theory of Computation, Compiler Design, Databases, Computer Networks. Practice 105 + GA drill 15.","rev":"30: Computer Networks formula sheet","b":[{"k":"main","l":"Fix errors","m":150},{"k":"practice","l":"Practice","m":105},{"k":"gadrill","l":"GA drill","m":15},{"k":"revise","l":"Revise","m":30}],"fp":[]},{"d":"2027-01-30","t":"MOCK","tag":"MOCK 5h","main":"Mock 180 (9:30 AM to 12:30 PM) + Check 120 (2:00 to 4:00 PM): Mock 5. Phase 3 exit test: Mocks 4 and 5 at or near 48 marks.","rev":"","b":[{"k":"mock","l":"Mock","m":180},{"k":"check","l":"Check","m":120}],"fp":[]},{"d":"2027-01-31","t":"REST","tag":"REST","main":"Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).","rev":"","b":[],"fp":[]},{"d":"2027-02-01","t":"MOCK","tag":"MOCK 5h","main":"Mock 180 (9:30 AM to 12:30 PM) + Check 120 (2:00 to 4:00 PM): Mock 6: final dress rehearsal. Start 9:30 AM, same breakfast, no phone, on-screen calculator only.","rev":"","b":[{"k":"mock","l":"Mock","m":180},{"k":"check","l":"Check","m":120}],"fp":[]},{"d":"2027-02-02","t":"TAPER3","tag":"TAPER 3h","main":"First 90: Check Mock 6. Next 90: Formula sheets: Engineering Maths + GA shortcuts.","rev":"","b":[{"k":"first","l":"First","m":90},{"k":"next","l":"Next","m":90}],"fp":[]},{"d":"2027-02-03","t":"TAPER3","tag":"TAPER 3h","main":"First 90: Read error notebook: Algorithms, Data Structures, C, TOC, Compiler Design. Next 90: 20 easy past-paper questions, untimed.","rev":"","b":[{"k":"first","l":"First","m":90},{"k":"next","l":"Next","m":90}],"fp":[]},{"d":"2027-02-04","t":"TAPER3","tag":"TAPER 3h","main":"First 90: Read error notebook: COA, Digital Logic, OS, Databases, CN. Next 90: All formula sheets.","rev":"","b":[{"k":"first","l":"First","m":90},{"k":"next","l":"Next","m":90}],"fp":[]},{"d":"2027-02-05","t":"TAPER1","tag":"TAPER 1.5h","main":"Light review 90: One-page summaries only. Print admit card, pack ID, plan the route, sleep early.","rev":"","b":[{"k":"light","l":"Light review","m":90}],"fp":[]},{"d":"2027-02-06","t":"EXAM","tag":"GATE?","main":"Earliest possible GATE CS exam day. Your admit card shows your real date and session. If your exam is on Sun 7 Feb, today repeats the Fri 5 Feb plan.","rev":"","b":[],"fp":[]}];
+
+/* ---------- Notes from Thrinath: edit these freely. Format: "YYYY-MM-DD": "message" ---------- */
+const NOTES = {
+  "2026-10-02": "Your tide starts tonight. Do the day, then check in. That is all it asks. Thrinath",
+  "2026-10-03": "First Saturday test. The score is information, not a judgement. Every mistake you log makes January easier. Thrinath",
+  "2026-11-16": "College exams come first now. The short GATE days are on purpose, so keep the flow and nothing more. Thrinath",
+  "2026-12-15": "Semester done. Five-hour days start today. Steady beats heroic. Thrinath",
+  "2027-01-08": "First pass complete. Every chapter, once. Take a moment to notice how far you have come. Thrinath",
+  "2027-01-09": "Mock 1 is a starting map, not a mark. Read it calmly and let it guide your rework. Thrinath",
+  "2027-02-01": "Dress rehearsal today. Same time, same calm. You know how to do this. Thrinath"
+};
+
+/* ---------- settings ---------- */
+const START = "2026-10-02";            // first day the tide counts
+const DIE_AFTER = 5;                    // missed study days in a row before the whale is lost
+const HATCH_AFTER = 3;                  // check-ins in a row to hatch a new egg
+const EXAM_OPTIONS = ["2027-02-06","2027-02-07","2027-02-13","2027-02-14","2027-02-20","2027-02-21"];
+const PARAMS = new URLSearchParams(location.search);
+let PREVIEW = PARAMS.has("preview");
+const REAL_KEY = "ammu-tides-v1", PRACTICE_KEY = "ammu-tides-preview-v1";
+let KEY = PREVIEW ? PRACTICE_KEY : REAL_KEY;
+
+/* ---------- dates (always local time on her laptop) ---------- */
+const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const pad = n => String(n).padStart(2, "0");
+const iso = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+const parse = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const addDays = (s, n) => { const d = parse(s); d.setDate(d.getDate() + n); return iso(d); };
+const fmt = s => { const d = parse(s); return DOW[d.getDay()] + " " + d.getDate() + " " + MON[d.getMonth()]; };
+const daysBetween = (a, b) => Math.round((parse(b) - parse(a)) / 864e5);
+const deadline = s => { const d = parse(s); d.setDate(d.getDate() + 1); d.setHours(12, 0, 0, 0); return d; };
+let pretend = PREVIEW && PARAMS.get("now") ? new Date(PARAMS.get("now")) : null;
+const now = () => pretend ? new Date(pretend.getTime()) : new Date();
+
+/* ---------- storage ---------- */
+let storageOK = true;
+function blank() { return { v: 1, whales: [], checkins: {}, examDate: null, calm: false, lastBackup: null, ackDeaths: 0, seenNotes: [], seenCoral: [], seenFriends: [] }; }
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return blank();
+    const d = JSON.parse(raw); return Object.assign(blank(), d);
+  } catch (e) {
+    try { const prev = localStorage.getItem(KEY + "-prev"); if (prev) return Object.assign(blank(), JSON.parse(prev)); } catch (e2) {}
+    return blank();
+  }
+}
+function save() {
+  try {
+    const cur = localStorage.getItem(KEY);
+    if (cur) localStorage.setItem(KEY + "-prev", cur);
+    localStorage.setItem(KEY, JSON.stringify(db));
+  } catch (e) { storageOK = false; document.getElementById("storeWarn").hidden = false; }
+}
+try { localStorage.setItem("ammu-probe", "1"); localStorage.removeItem("ammu-probe"); } catch (e) { storageOK = false; }
+let db = load();
+
+/* ---------- plan schedule, including the extension rule from page 3 of the plan ---------- */
+const BASE = new Map(DAYS.map(r => [r.d, r]));
+const REST_ROW = d => ({ d, t: "REST", tag: "REST", main: "Rest day. Only if you missed a day this week: redo its Learn block (max 2 h).", rev: "", b: [], fp: [] });
+const EXAM_ROW = d => ({ d, t: "EXAM", tag: "GATE", main: "Your GATE CS exam day. Carry your admit card and ID, breathe slowly, and trust the work you have done.", rev: "", b: [], fp: [] });
+const MOCK7_ROW = d => { const m = BASE.get("2027-01-09"); return { d, t: "MOCK", tag: "MOCK 5h", main: "Mock 180 (9:30 AM to 12:30 PM) + Check 120 (2:00 to 4:00 PM): Mock 7.", rev: "", b: m.b, fp: [], note: "Extension rule for a 13 or 14 Feb exam: Mock 7." }; };
+function copyFrom(d, src, note) { const r = BASE.get(src); return Object.assign({}, r, { d, fp: [], note: note + (r.main.indexOf("latest mock") >= 0 ? " Your latest mock means your most recent one." : "") }); }
+function schedule() {
+  const ex = db.examDate || "2027-02-06";
+  const m = new Map(BASE);
+  const rule = s => "Extension rule (page 3): this is the " + fmt(s) + " plan.";
+  const sundayRule = (d, exam) => { m.set(d, copyFrom(d, "2027-02-05", "Your exam is on Sunday, so today repeats the Fri 5 Feb plan.")); m.set(exam, EXAM_ROW(exam)); };
+  if (ex === "2027-02-06") m.set("2027-02-06", Object.assign({}, BASE.get("2027-02-06"), { t: "EXAM", tag: "GATE?" }));
+  if (ex === "2027-02-07") sundayRule("2027-02-06", "2027-02-07");
+  if (ex === "2027-02-13" || ex === "2027-02-14") {
+    [["2027-02-02","2027-01-25"],["2027-02-03","2027-01-26"],["2027-02-04","2027-01-28"],["2027-02-05","2027-01-29"]].forEach(([d, s]) => m.set(d, copyFrom(d, s, rule(s))));
+    m.set("2027-02-06", MOCK7_ROW("2027-02-06")); m.set("2027-02-07", REST_ROW("2027-02-07"));
+    m.set("2027-02-08", copyFrom("2027-02-08", "2027-02-01", "Extension rule (page 3): dress-rehearsal mock, the Mon 1 Feb plan."));
+    [["2027-02-09","2027-02-02"],["2027-02-10","2027-02-03"],["2027-02-11","2027-02-04"],["2027-02-12","2027-02-05"]].forEach(([d, s]) => m.set(d, copyFrom(d, s, "Extension rule (page 3): taper day, the " + fmt(s) + " plan.")));
+    if (ex === "2027-02-13") m.set("2027-02-13", EXAM_ROW("2027-02-13")); else sundayRule("2027-02-13", "2027-02-14");
+  }
+  if (ex === "2027-02-20" || ex === "2027-02-21") {
+    for (let w = 0; w < 2; w++) for (let i = 0; i < 7; i++) {
+      const d = addDays("2027-02-01", w * 7 + i), s = addDays("2027-01-25", i);
+      const src = BASE.get(s);
+      m.set(d, src.t === "REST" ? REST_ROW(d) : copyFrom(d, s, rule(s) + (src.t === "MOCK" ? " Treat it as your next full mock." : "")));
+    }
+    m.set("2027-02-15", copyFrom("2027-02-15", "2027-02-01", "Extension rule (page 3): dress-rehearsal mock, the Mon 1 Feb plan."));
+    [["2027-02-16","2027-02-02"],["2027-02-17","2027-02-03"],["2027-02-18","2027-02-04"],["2027-02-19","2027-02-05"]].forEach(([d, s]) => m.set(d, copyFrom(d, s, "Extension rule (page 3): taper day, the " + fmt(s) + " plan.")));
+    if (ex === "2027-02-20") m.set("2027-02-20", EXAM_ROW("2027-02-20")); else sundayRule("2027-02-20", "2027-02-21");
+  }
+  return { map: m, exam: ex };
+}
+const isStudyDay = r => !!r && ["REST", "OFF", "EXAM"].indexOf(r.t) < 0;
+
+function phaseOf(d) {
+  if (d < "2026-10-01") return "";
+  if (d >= "2026-11-16" && d <= "2026-12-14") return "Phase 1: first pass, college exam season";
+  if (d <= "2027-01-08") return "Phase 1: first pass";
+  if (d <= "2027-01-17") return "Phase 2: deepen and practice";
+  if (d <= "2027-01-31") return "Phase 3: mocks and consolidation";
+  return "Taper";
+}
+
+/* ---------- the tide engine: replays every day from the start ---------- */
+const SUBJECTS = [
+  ["C","C Programming"],["DS","Data Structures"],["DM","Discrete Mathematics"],["LA","Linear Algebra"],["CA","Calculus"],
+  ["PR","Probability and Statistics"],["AL","Algorithms"],["TC","Theory of Computation"],["DL","Digital Logic"],["CD","Compiler Design"],
+  ["CO","Computer Organization"],["DB","Databases"],["OS","Operating System"],["CN","Computer Networks"]];
+function compute() {
+  const S = schedule(), t = now(), today = iso(t);
+  const st = { phase: "alive", whale: 0, missed: 0, swim: 0, streak: 0, best: 0, egg: 0, total: 0, memorials: [], hatched: [START],
+               friends: {}, missedDays: [], before: today < START, today, exam: S.exam, sched: S.map, ended: false };
+  const end = addDays(S.exam, -1);
+  if (today > S.exam) st.ended = true;
+  for (let d = START; d <= today && d <= end; d = addDays(d, 1)) {
+    const row = S.map.get(d), ci = db.checkins[d], study = isStudyDay(row);
+    if (ci) {
+      st.total++;
+      if (study) { st.streak++; st.best = Math.max(st.best, st.streak); }
+      if (st.phase === "alive") { st.missed = 0; st.swim++; }
+      else { st.egg++; st.missed = 0; if (st.egg >= HATCH_AFTER) { st.phase = "alive"; st.whale++; st.swim = 0; st.egg = 0; st.hatched[st.whale] = d; } }
+      if (st.streak >= 7 && !st.friends.fish) st.friends.fish = d;
+      if (st.streak >= 21 && !st.friends.turtle) st.friends.turtle = d;
+      if (d >= "2027-01-08" && !st.friends.dolphin) st.friends.dolphin = d;
+    } else if (study && t > deadline(d)) {
+      st.missed++; st.streak = 0; st.missedDays.push(d);
+      if (st.phase === "alive" && st.missed >= DIE_AFTER) {
+        st.memorials.push({ whale: st.whale, days: st.swim, from: st.hatched[st.whale], to: d });
+        st.phase = "egg"; st.egg = 0; st.missed = 0;
+      } else if (st.phase === "egg") st.egg = 0;
+    }
+  }
+  // reef: a subject grows when every first-pass day is checked in as Done or Partly (or caught up)
+  st.reef = {};
+  const fpBy = {};
+  for (const r of DAYS) for (const f of r.fp) (fpBy[f.s] = fpBy[f.s] || []).push([r.d, f.b]);
+  for (const [k] of SUBJECTS) {
+    const list = fpBy[k] || []; let ok = 0;
+    for (const [d, b] of list) {
+      if (d < START) { ok++; continue; }
+      const ci = db.checkins[d], v = ci && ci.blocks && ci.blocks[b];
+      if (v === "done" || v === "partly" || (ci && ci.caught && ci.caught[b])) ok++;
+    }
+    st.reef[k] = { ok, n: list.length, grown: list.length > 0 && ok === list.length, last: list.length ? list[list.length - 1][0] : null };
+  }
+  st.grownCount = Object.values(st.reef).filter(x => x.grown).length;
+  st.mood = st.phase === "egg" ? "egg" : st.before ? "happy" : ["happy", "happy", "glance", "sad", "struggle"][Math.min(st.missed, 4)];
+  st.level = st.phase === "egg" ? 0.2 + st.egg * 0.16 : { happy: 0.83, glance: 0.67, sad: 0.5, struggle: 0.33 }[st.mood];
+  st.haze = st.phase === "egg" ? 0.1 : { happy: 0, glance: 0.06, sad: 0.15, struggle: 0.26 }[st.mood];
+  st.whaleName = (db.whales[st.whale] && db.whales[st.whale].name) || "";
+  return st;
+}
+
+/* ---------- which days can be checked in right now ---------- */
+function openDays(st) {
+  const t = now(), today = iso(t), y = addDays(today, -1), out = [];
+  const last = addDays(st.exam, -1);
+  if (y >= START && y <= last && t < deadline(y)) out.push(y);
+  if (today >= START && today <= last) out.push(today);
+  return out;
+}
+
+/* ---------- icons (simple SVG, no emoji) ---------- */
+const I = {
+  drop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3.5 4.3 6 7.6 6 10.6A6 6 0 0 1 6 13.6C6 10.6 8.5 7.3 12 3z"/></svg>',
+  cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="4"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>',
+  shell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15a8 8 0 0 1 16 0l-3 4H7z"/><path d="M12 7v12M8.5 8.5 10 19M15.5 8.5 14 19"/></svg>',
+  keep: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+  half: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></svg>',
+  cross: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg>',
+  flame: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a6 6 0 0 0 6-6c0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-3-2 2-3 4-3 7a6 6 0 0 0 6 6z"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>',
+  wave: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9c2 0 2-2 4.5-2S10 9 12 9s2.5-2 4.5-2S19 9 21 9M3 15c2 0 2-2 4.5-2S10 15 12 15s2.5-2 4.5-2S19 15 21 15"/></svg>',
+  left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>',
+  right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>',
+  down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>',
+  up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5M7 9l5-5 5 5M5 20h14"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>'
+};
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const BOLD = /(Learn 120 \+ Practice 90:|Learn 150:|Rework 150:|Fix errors 150:|Practice 105 \+ GA drill 15\.|Practice 105:|GA drill 15\.|Test 60 \+ Check 60:|GA 90:|Compiler Design 60:|Recall set 60:|Second subject 90:|First 90:|Next 90:|Light review 90:|Mock 180 \(9:30 AM to 12:30 PM\) \+ Check 120 \(2:00 to 4:00 PM\):|\[NEW\]|FIRST PASS COMPLETE\.)/g;
+const planHTML = s => esc(s).replace(BOLD, "<b>$1</b>");
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+/* ============================================================
+   UI
+   ============================================================ */
+let tab = "tonight", selDay = null, drafts = {}, calMonth = null, ST = null;
+function setTab(t) {
+  tab = t;
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === t)));
+  ["tonight", "calendar", "reef", "keep"].forEach(v => $("v-" + v).hidden = v !== t);
+  renderPanel();
+}
+function renderTabs() {
+  const catchN = catchList().length;
+  const needBackup = backupDue();
+  $("t-tonight").innerHTML = I.moon + "<span>Tonight</span>" + (catchN ? '<i class="badge" title="Catch-up items"></i>' : "");
+  $("t-calendar").innerHTML = I.cal + "<span>Calendar</span>";
+  $("t-reef").innerHTML = I.shell + "<span>Reef</span>";
+  $("t-keep").innerHTML = I.keep + "<span>Backup</span>" + (needBackup ? '<i class="badge" title="Time for a backup"></i>' : "");
+}
+function renderAll() {
+  ST = compute();
+  renderHeader(); renderStatus(); renderChips(); renderWeek(); renderTabs(); renderPanel(); scene.update(ST);
+  maybeDialogs();
+}
+function renderHeader() {
+  const d = daysBetween(ST.today, ST.exam);
+  const label = db.examDate ? "to your GATE day" : "to the earliest GATE date";
+  $("countdown").innerHTML = d > 0 ? `<span class="num">${d}</span><span>days ${label}</span>` : d === 0 ? `<span class="num">Today</span><span>GATE day. You are ready.</span>` : `<span class="num">Done</span><span>GATE is behind you</span>`;
+}
+function renderStatus() {
+  const n = ST.whaleName ? `<span class="name">${esc(ST.whaleName)}</span>` : "Your whale";
+  const el = $("status"); let cls = "", txt = "";
+  const todayRow = ST.sched.get(ST.today);
+  if (ST.ended) { txt = `${n} is proud of you. Your tide carried you all the way to GATE.`; }
+  else if (ST.before) { txt = `${n} is waiting. Your tide starts on ${fmt(START)}.`; cls = "soft"; }
+  else if (ST.phase === "egg") { const left = HATCH_AFTER - ST.egg; txt = `A new egg rests in the sand. ${left} check-in${left === 1 ? "" : "s"} in a row and it hatches.`; cls = "soft"; }
+  else if (ST.missed === 0) txt = todayRow && todayRow.t === "REST" ? `${n} is resting with you. Sunday keeps the tide full.` : `${n} is happy. The tide is full.`;
+  else if (ST.missed === 1) txt = `${n} missed you yesterday. A one-day slip is safe.`;
+  else if (ST.missed === 2) { txt = `The water is dropping a little. ${n} keeps looking up for you.`; cls = "warn"; }
+  else if (ST.missed === 3) { txt = `The water is low and cloudy. ${n} feels sad.`; cls = "warn"; }
+  else { txt = `${n} is struggling in very shallow water.`; cls = "alert"; }
+  el.className = "status " + cls; $("statusText").innerHTML = txt;
+  const b = $("banner");
+  if (!ST.ended && ST.phase === "alive" && ST.missed >= 4) { b.textContent = "One day left. Check in by noon tomorrow to bring the tide back."; b.classList.add("on"); }
+  else b.classList.remove("on");
+}
+function renderChips() {
+  const chip = (ic, bg, col, val, lab) => `<div class="chip"><span class="ic" style="background:${bg};color:${col}">${ic}</span><span><b>${val}</b> ${lab}</span></div>`;
+  $("chips").innerHTML =
+    chip(I.flame, "#FFE3D6", "#C06A44", ST.streak, ST.streak === 1 ? "day in a row" : "days in a row") +
+    chip(I.star, "#FFF0C7", "#9A7614", ST.best, "best run") +
+    chip(I.drop, "#DDF0FB", "#3F78B5", ST.total, ST.total === 1 ? "check-in" : "check-ins") +
+    chip(I.shell, "#E4F5EC", "#2F8A66", ST.grownCount + " of 14", "reef grown");
+}
+function renderWeek() {
+  const t = ST.today, d0 = parse(t); const mon = addDays(t, -((d0.getDay() + 6) % 7));
+  const open = openDays(ST), missed = new Set(ST.missedDays); let h = '<span class="wl">This week</span>';
+  for (let i = 0; i < 7; i++) {
+    const d = addDays(mon, i), r = ST.sched.get(d); let c = "wc", ic = "";
+    if (db.checkins[d]) { c += " done"; ic = I.check; }
+    else if (open.indexOf(d) >= 0) c += " open";
+    else if (r && (r.t === "REST" || r.t === "OFF")) c += " rest";
+    else if (missed.has(d)) c += " missed";
+    h += `<span class="wd${d === t ? " now" : ""}" title="${fmt(d)}"><span class="${c}">${ic}</span>${DOW[parse(d).getDay()].slice(0, 2)}</span>`;
+  }
+  $("week").innerHTML = h;
+}
+function renderPanel() {
+  if (tab === "tonight") renderTonight();
+  if (tab === "calendar") renderCalendar();
+  if (tab === "reef") renderReef();
+  if (tab === "keep") renderKeep();
+}
+
+/* ---------- Tonight ---------- */
+function defaultDay(open) {
+  if (!open.length) return null;
+  if (selDay && open.indexOf(selDay) >= 0) return selDay;
+  const today = ST.today, y = addDays(today, -1);
+  if (open.indexOf(y) >= 0 && !db.checkins[y] && isStudyDay(ST.sched.get(y)) && now().getHours() < 12) return y;
+  return open[open.length - 1];
+}
+function renderTonight() {
+  const v = $("v-tonight"); const open = openDays(ST);
+  if (ST.ended) { v.innerHTML = `<h2>You made it</h2><p class="muted">Every check-in is saved in your calendar. Wishing you a calm, clear exam.</p>`; return; }
+  if (!open.length && ST.today === ST.exam) { v.innerHTML = `<h2>GATE day</h2><p class="muted">No check-in today. Carry your admit card and ID, breathe slowly, and trust the work you have done.</p>${dayPlanHTML(ST.sched.get(ST.today))}`; return; }
+  if (!open.length) {
+    const r = ST.sched.get(START);
+    v.innerHTML = `<h2>Your tide starts ${fmt(START)}</h2><p class="muted">Check-ins open on ${fmt(START)} by this device's clock. Here is the plan for that day.</p>${dayPlanHTML(r)}
+      <div class="actions"><button class="btn btn-soft" id="tryPractice">${I.drop}Try practice mode</button></div><p class="hint">Practice mode uses a pretend date and separate data, so the real tide is never touched.</p>`;
+    $("tryPractice").onclick = startPractice;
+    return;
+  }
+  selDay = defaultDay(open);
+  const r = ST.sched.get(selDay), ci = db.checkins[selDay];
+  const dlabel = d => d === ST.today ? "Today" : "Yesterday";
+  const chips = open.map(d => `<button class="dchip" data-day="${d}" aria-pressed="${d === selDay}">${dlabel(d)}, ${fmt(d)}${d !== ST.today ? '<span class="s">open till noon</span>' : ""}${db.checkins[d] ? '<span class="s">checked in</span>' : ""}</button>`).join("");
+  const dr = drafts[selDay] || (drafts[selDay] = ci ? JSON.parse(JSON.stringify(ci)) : { blocks: {}, recall: "", note: "", score: "" });
+  let html = `<h2>${selDay === ST.today ? "Tonight's check-in" : "Yesterday's check-in"}</h2>
+    <div class="datechips">${chips}</div>${dayPlanHTML(r)}`;
+  if (r.b.length) {
+    html += `<label class="fl" id="blkLab">How did each block go?</label><div class="blocks" role="group" aria-labelledby="blkLab">` +
+      r.b.map(b => `<div class="block"><div><span class="bl">${esc(b.l)}</span><span class="bm">${b.m} min</span></div>
+        <div class="seg" role="group" aria-label="${esc(b.l)}">${["done", "partly", "missed"].map(val =>
+          `<button type="button" data-k="${b.k}" data-v="${val}" aria-pressed="${dr.blocks[b.k] === val}">${val === "done" ? I.check + "Done" : val === "partly" ? I.half + "Partly" : I.cross + "Missed"}</button>`).join("")}</div></div>`).join("") + `</div>`;
+    if (r.t === "TEST") html += `<label class="fl" for="score">Test score <span class="muted small">(optional, in %)</span></label><div class="score"><input id="score" type="number" min="0" max="100" step="1" value="${esc(dr.score)}"></div>`;
+    if (r.t === "MOCK") html += `<label class="fl" for="score">Mock score <span class="muted small">(optional, out of 100)</span></label><div class="score"><input id="score" type="number" min="-34" max="100" step="0.01" value="${esc(dr.score)}"></div>`;
+    html += `<label class="fl" for="recall">One thing you remember, without looking</label>
+      <textarea id="recall" rows="2" maxlength="400" placeholder="For example: a static variable keeps its value between function calls.">${esc(dr.recall)}</textarea>`;
+  } else {
+    html += `<p class="muted">${r.t === "OFF" ? "A day off. The tide stays full." : "A rest day. The tide stays full while you rest."} You can leave a short note if you like, or tick off catch-up items below.</p>
+      <label class="fl" for="note">A note for today <span class="muted small">(optional)</span></label><textarea id="note" rows="2" maxlength="400">${esc(dr.note)}</textarea>`;
+  }
+  const ready = formReady(r, dr);
+  const missN = r.b.filter(b => dr.blocks[b.k] === "missed").length;
+  html += `<div class="actions"><button class="btn btn-main" id="feed" ${ready ? "" : "disabled"}>${I.drop}${ci ? "Update check-in" : r.b.length ? "Feed the tide" : "Save rest-day note"}</button>
+    <span class="hint" id="feedHint">${ready ? (missN ? "Honest check-ins keep the tide full too. Missed blocks go to your catch-up list." : "") : r.b.length ? "Mark every block and write one line from memory." : ""}</span></div>`;
+  if (ci) html += `<div class="saved">${I.check}Checked in ${timeStr(ci.at)}. You can still edit it ${selDay === ST.today ? "until noon tomorrow" : "until noon today"}.</div>`;
+  html += `<div class="intent">${I.moon}<span>After I close my books, I feed the tide.</span></div>`;
+  html += catchHTML();
+  v.innerHTML = html;
+  // events
+  v.querySelectorAll(".dchip").forEach(b => b.onclick = () => { selDay = b.dataset.day; renderTonight(); });
+  v.querySelectorAll(".seg button").forEach(b => b.onclick = () => { dr.blocks[b.dataset.k] = b.dataset.v; renderTonight(); });
+  const rc = $("recall"); if (rc) rc.oninput = () => { dr.recall = rc.value; refreshFeed(r, dr); };
+  const nt = $("note"); if (nt) nt.oninput = () => { dr.note = nt.value; };
+  const sc = $("score"); if (sc) sc.oninput = () => { dr.score = sc.value; };
+  $("feed").onclick = () => submit(selDay, r, dr);
+  bindCatch(v);
+}
+function refreshFeed(r, dr) { const ok = formReady(r, dr); $("feed").disabled = !ok; const h = $("feedHint"); if (h && ok && h.textContent.indexOf("Mark every") === 0) h.textContent = ""; if (h && !ok) h.textContent = "Mark every block and write one line from memory."; }
+function formReady(r, dr) { if (!r.b.length) return true; return r.b.every(b => dr.blocks[b.k]) && (dr.recall || "").trim().length >= 8; }
+function timeStr(s) { if (!s) return ""; const d = new Date(s); let h = d.getHours(), m = pad(d.getMinutes()); const ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12; return `on ${fmt(iso(d))} at ${h}:${m} ${ap}`; }
+function dayPlanHTML(r) {
+  if (!r) return "";
+  return `<div class="taglist"><span class="tag t-${r.t}">${esc(r.tag)}</span><span class="muted small">${esc(fmt(r.d))}${phaseOf(r.d) ? ", " + esc(phaseOf(r.d)) : ""}</span></div>
+    <div class="plan"><div>${planHTML(r.main)}</div>${r.rev ? `<div class="rev"><b>Revise</b> ${planHTML(r.rev)}</div>` : ""}${r.note ? `<div class="note">${esc(r.note)}</div>` : ""}</div>`;
+}
+const MSGS = [
+  "The tide is full again. Thank you for coming back tonight.",
+  "{n} did a little happy flip.",
+  "Small steps every night. That is how oceans fill.",
+  "Logged and safe. Sleep well, the tide will be here tomorrow.",
+  "You showed up today. That is the whole trick.",
+  "{n} found a shiny pebble and wants you to have it.",
+  "One more day of the plan, done honestly.",
+  "Your future self just smiled."
+];
+function submit(d, r, dr) {
+  const prev = compute();
+  const rec = { blocks: {}, recall: (dr.recall || "").trim(), note: (dr.note || "").trim(), score: dr.score === "" || dr.score == null ? null : Number(dr.score), at: now().toISOString(), caught: (db.checkins[d] && db.checkins[d].caught) || {} };
+  r.b.forEach(b => rec.blocks[b.k] = dr.blocks[b.k]);
+  db.checkins[d] = rec; save(); delete drafts[d];
+  renderAll();
+  const n = ST.whaleName || "Your whale";
+  if (prev.phase === "egg" && ST.phase === "alive") return; // hatch dialog takes over
+  const missN = r.b.filter(b => rec.blocks[b.k] === "missed").length;
+  let m = ST.phase === "egg" ? `The egg felt that. ${HATCH_AFTER - ST.egg} more in a row.` : missN ? "Honest check-ins keep the tide full too. Your catch-up list has the rest." : pick(MSGS).replace("{n}", n);
+  scene.say(m, 4200); scene.celebrate();
+}
+
+/* ---------- catch-up list ---------- */
+function catchList() {
+  const out = [];
+  Object.keys(db.checkins).sort().forEach(d => {
+    const ci = db.checkins[d], row = schedule().map.get(d); if (!row) return;
+    row.b.forEach(b => { if (ci.blocks && ci.blocks[b.k] === "missed" && !(ci.caught && ci.caught[b.k])) out.push({ d, k: b.k, l: b.l, m: b.m }); });
+  });
+  return out;
+}
+function catchHTML() {
+  const L = catchList();
+  return `<div class="catch"><h3>Catch-up list</h3>` + (L.length ? `<p class="hint">Your plan's rule: redo a missed Learn block on Sunday, 2 hours at most. Tick it here when it is done.</p>` +
+    L.map(x => `<div class="citem"><span><b>${esc(x.l)}</b> ${x.m} min <span class="muted">from ${fmt(x.d)}</span></span><button class="btn btn-soft btn-small" data-cd="${x.d}" data-ck="${x.k}">${I.check}Caught up</button></div>`).join("")
+    : `<div class="empty">Nothing to catch up. Lovely.</div>`) + `</div>`;
+}
+function bindCatch(root) {
+  root.querySelectorAll("[data-cd]").forEach(b => b.onclick = () => {
+    const ci = db.checkins[b.dataset.cd]; ci.caught = ci.caught || {}; ci.caught[b.dataset.ck] = true; save(); renderAll();
+    scene.say("Caught up. The reef noticed.", 2600);
+  });
+}
+
+/* ---------- Calendar ---------- */
+function monthsRange() { const out = []; let m = "2026-10"; const last = ST.exam.slice(0, 7); while (m <= last) { out.push(m); const [y, mo] = m.split("-").map(Number); m = mo === 12 ? (y + 1) + "-01" : y + "-" + pad(mo + 1); } return out; }
+function renderCalendar() {
+  const months = monthsRange();
+  if (!calMonth || months.indexOf(calMonth) < 0) calMonth = months.indexOf(ST.today.slice(0, 7)) >= 0 ? ST.today.slice(0, 7) : months[0];
+  const [y, mo] = calMonth.split("-").map(Number), first = new Date(y, mo - 1, 1), days = new Date(y, mo, 0).getDate();
+  const lead = (first.getDay() + 6) % 7; // Monday first
+  const open = openDays(ST), missed = new Set(ST.missedDays);
+  let cells = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(d => `<div class="dow">${d}</div>`).join("");
+  for (let i = 0; i < lead; i++) cells += `<div class="day out" aria-hidden="true"></div>`;
+  for (let dd = 1; dd <= days; dd++) {
+    const d = y + "-" + pad(mo) + "-" + pad(dd), r = ST.sched.get(d);
+    let c = "day";
+    if (!r) c += " none";
+    else if (db.checkins[d]) c += " done";
+    else if (open.indexOf(d) >= 0) c += " open";
+    else if (r.t === "REST" || r.t === "OFF") c += " rest";
+    else if (missed.has(d)) c += " missed";
+    if (d === ST.today) c += " today";
+    const mk = r && (r.t === "TEST" || r.t === "MOCK") ? '<span class="mk"></span>' : "";
+    cells += r ? `<button class="${c}" data-cal="${d}" aria-label="${fmt(d)}">${dd}${mk}</button>` : `<div class="${c}">${dd}</div>`;
+  }
+  const i = months.indexOf(calMonth);
+  $("v-calendar").innerHTML = `<div class="calhead"><button class="iconbtn" id="calPrev" aria-label="Previous month" ${i <= 0 ? "disabled" : ""}>${I.left}</button>
+    <h2>${MON[mo - 1]} ${y}</h2><button class="iconbtn" id="calNext" aria-label="Next month" ${i >= months.length - 1 ? "disabled" : ""}>${I.right}</button></div>
+    <div class="grid">${cells}</div>
+    <div class="legend"><span><i style="background:#D9EEFB"></i>Checked in</span><span><i style="box-shadow:inset 0 0 0 2px #F3B9A3;background:#fff"></i>Missed</span>
+    <span><i style="background:#F1EEFA"></i>Rest day</span><span><i style="box-shadow:inset 0 0 0 2px #9DB6F2;background:#fff"></i>Open to check in</span>
+    <span><i style="background:#B9A9EE;border-radius:50%;width:9px;height:9px"></i>Test or mock</span></div>
+    <p class="hint" style="margin-top:12px">Tap any day to see its plan. You can check in for today, and for yesterday until noon.</p>`;
+  $("calPrev").onclick = () => { calMonth = months[i - 1]; renderCalendar(); };
+  $("calNext").onclick = () => { calMonth = months[i + 1]; renderCalendar(); };
+  document.querySelectorAll("[data-cal]").forEach(b => b.onclick = () => showDay(b.dataset.cal));
+}
+function showDay(d) {
+  const r = ST.sched.get(d), ci = db.checkins[d], open = openDays(ST).indexOf(d) >= 0;
+  let h = `<h2>${fmt(d)}</h2>${dayPlanHTML(r)}`;
+  if (ci) {
+    h += `<h3>Your check-in</h3><div class="blocks">` + r.b.map(b => { const v = ci.blocks[b.k]; const caught = ci.caught && ci.caught[b.k];
+      return `<div class="block"><span><span class="bl">${esc(b.l)}</span><span class="bm">${b.m} min</span></span><span class="tag" style="background:${v === "done" ? "var(--mint)" : v === "partly" ? "var(--butter)" : "var(--peach)"}">${v === "done" ? "Done" : v === "partly" ? "Partly" : caught ? "Missed, caught up" : "Missed"}</span></div>`; }).join("") + `</div>`;
+    if (ci.score != null) h += `<p><b>Score:</b> ${esc(ci.score)}</p>`;
+    if (ci.recall) h += `<p><b>You remembered:</b> ${esc(ci.recall)}</p>`;
+    if (ci.note) h += `<p><b>Note:</b> ${esc(ci.note)}</p>`;
+  } else if (d < START) h += `<p class="muted">Before your tide started.</p>`;
+  else if (d > ST.today) h += `<p class="muted">Coming up.</p>`;
+  h += `<div class="actions">${open ? `<button class="btn btn-main" id="goCheck">${I.drop}Check in for this day</button>` : ""}<button class="btn btn-soft" id="dlgClose">Close</button></div>`;
+  openDlg(h);
+  $("dlgClose").onclick = closeDlg;
+  if (open) $("goCheck").onclick = () => { selDay = d; closeDlg(); setTab("tonight"); };
+}
+
+/* ---------- Reef ---------- */
+const FRIENDS = [["fish", "Little fish", "Joins you at a 7-day run"], ["turtle", "Sea turtle", "Joins you at a 21-day run"], ["dolphin", "Dolphin", "Arrives when your first pass ends on Fri 8 Jan"]];
+function renderReef() {
+  let h = `<h2>Your reef</h2><p class="muted small">Each subject grows a coral when every first-pass day of it is checked in as Done or Partly. Caught-up blocks count too.</p><div class="reefgrid">`;
+  SUBJECTS.forEach(([k, name], i) => { const r = ST.reef[k];
+    h += `<div class="rcard ${r.grown ? "grown" : "locked"}">${coralIcon(i)}<div><div class="rn">${esc(name)}</div><div class="rs">${r.grown ? "Grown" : r.ok + " of " + r.n + " days"}</div></div></div>`; });
+  h += `</div><h3>Friends of the tide</h3><div class="reefgrid">`;
+  FRIENDS.forEach(([k, name, how]) => { const got = ST.friends[k];
+    h += `<div class="rcard ${got ? "grown" : "locked"}">${friendIcon(k)}<div><div class="rn">${name}</div><div class="rs">${got ? "With you since " + fmt(got) : how}</div></div></div>`; });
+  h += `</div>`;
+  const notes = Object.keys(NOTES).filter(d => d <= ST.today).sort().reverse();
+  h += `<h3>Notes in a bottle</h3>` + (notes.length ? notes.map(d => `<div class="notecard"><div class="nd">${fmt(d)}</div>${esc(NOTES[d])}</div>`).join("") : `<div class="empty">Notes from Thrinath float in on special days. The first one arrives on ${fmt(START)}.</div>`);
+  if (ST.memorials.length) {
+    h += `<h3>Remembered</h3>` + ST.memorials.map(m => { const nm = (db.whales[m.whale] && db.whales[m.whale].name) || "Your whale";
+      return `<div class="mem"><b>${esc(nm)}</b> swam with you for ${m.days} ${m.days === 1 ? "day" : "days"}, from ${fmt(m.from)} to ${fmt(m.to)}.</div>`; }).join("");
+  }
+  $("v-reef").innerHTML = h;
+}
+
+/* ---------- Keep safe (backup and settings) ---------- */
+function backupDue() { const n = Object.keys(db.checkins).length; if (n < 3) return false; if (!db.lastBackup) return true; return daysBetween(iso(new Date(db.lastBackup)), ST ? ST.today : iso(now())) >= 7; }
+function code() { const json = JSON.stringify(db); return "AMMU1." + btoa(unescape(encodeURIComponent(json))); }
+function renderKeep() {
+  const last = db.lastBackup ? fmt(iso(new Date(db.lastBackup))) : "never";
+  const opts = [["", "Not on my admit card yet (plan for Sat 6 Feb)"]].concat(EXAM_OPTIONS.map(d => [d, fmt(d) + " 2027"]));
+  $("v-keep").innerHTML = `<h2>Keep your tide safe</h2>
+    <p class="muted small">Your check-ins live in this Chrome browser on this laptop. Do not clear browsing data for this site. Once a week, on Sunday, save a backup. If anything ever goes wrong, the backup brings everything back.</p>
+    <p class="small"><b>Last backup:</b> ${last}${backupDue() ? ' <span class="tag" style="background:var(--peach);color:var(--peach-deep)">Time for one</span>' : ""}</p>
+    <div class="actions" style="margin-top:8px"><button class="btn btn-main" id="dl">${I.down}Download backup file</button><button class="btn btn-soft" id="cp">${I.copy}Copy backup code</button></div>
+    <p class="hint" id="cpMsg"></p>
+    <h3>Bring a backup back</h3>
+    <p class="muted small">Use this on a new laptop or browser. It replaces the check-ins here with the ones in the backup.</p>
+    <div class="actions" style="margin-top:0"><button class="btn btn-soft" id="ld">${I.up}Load backup file</button></div>
+    <label class="fl" for="paste">Or paste a backup code</label><textarea id="paste" rows="2" placeholder="AMMU1..."></textarea>
+    <div class="actions" style="margin-top:10px"><button class="btn btn-soft" id="rs">Restore from code</button></div>
+    <h3>Settings</h3>
+    <div class="row2"><div><label class="fl" for="wname" style="margin-top:0">Whale's name</label><input id="wname" type="text" maxlength="24" value="${esc(ST.whaleName)}"></div>
+    <div><label class="fl" for="exam" style="margin-top:0">My GATE date</label><select id="exam">${opts.map(([v, l]) => `<option value="${v}" ${String(db.examDate || "") === v ? "selected" : ""}>${l}</option>`).join("")}</select></div></div>
+    <p class="hint">Set your GATE date when the admit card arrives. Later dates follow the extension rule on page 3 of your plan, day by day.</p>
+    <label class="toggle" style="margin-top:12px"><input type="checkbox" id="calm" ${db.calm ? "checked" : ""}>Calm motion (slower, gentler animation)</label>
+    <h3>Practice mode</h3><p class="muted small">Try every whale state on a pretend date. It uses separate data, so your real tide is never touched.</p>
+    <div class="actions" style="margin-top:4px"><button class="btn btn-soft btn-small" id="openPractice">${PREVIEW ? "You are in practice mode" : "Open practice mode"}</button></div>`;
+  $("dl").onclick = () => { const blob = new Blob([JSON.stringify(db, null, 1)], { type: "application/json" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "ammu-tides-backup-" + ST.today + ".json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); db.lastBackup = now().toISOString(); save(); renderAll(); $("cpMsg").textContent = "Backup file saved to your Downloads folder."; };
+  $("cp").onclick = async () => { const c = code(); try { await navigator.clipboard.writeText(c); $("cpMsg").textContent = "Backup code copied. Paste it somewhere safe, like a note to yourself."; } catch (e) { $("paste").value = c; $("paste").select(); $("cpMsg").textContent = "Your code is in the box below. Press Ctrl+C to copy it."; } db.lastBackup = now().toISOString(); save(); renderTabs(); };
+  $("ld").onclick = () => $("fileIn").click();
+  $("rs").onclick = () => restore($("paste").value.trim());
+  $("wname").onchange = e => { const v = e.target.value.trim(); if (!v) return; db.whales[ST.whale] = Object.assign({}, db.whales[ST.whale], { name: v }); save(); renderAll(); };
+  $("exam").onchange = e => { db.examDate = e.target.value || null; save(); renderAll(); };
+  $("calm").onchange = e => { db.calm = e.target.checked; save(); scene.calm(db.calm); };
+  $("openPractice").onclick = () => { if (!PREVIEW) startPractice(); };
+}
+function restore(text) {
+  let data = null;
+  try { if (text.startsWith("AMMU1.")) data = JSON.parse(decodeURIComponent(escape(atob(text.slice(6))))); else data = JSON.parse(text); } catch (e) { data = null; }
+  if (!data || typeof data !== "object" || typeof data.checkins !== "object") { if (tab !== "keep") setTab("keep"); $("cpMsg").textContent = "That does not look like an Ammu Tides backup. Check that you copied the whole code."; return; }
+  const n = Object.keys(data.checkins).length;
+  openDlg(`<h2>Restore this backup?</h2><p>It has ${n} check-in${n === 1 ? "" : "s"}. The check-ins in this browser will be replaced.</p><div class="actions"><button class="btn btn-soft" id="no">Cancel</button><button class="btn btn-main" id="yes">Restore</button></div>`);
+  $("no").onclick = closeDlg;
+  $("yes").onclick = () => { db = Object.assign(blank(), data); save(); closeDlg(); renderAll(); scene.say("Everything is back where it belongs.", 3200); };
+}
+$("fileIn").onchange = e => { const f = e.target.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => restore(String(rd.result).trim()); rd.readAsText(f); e.target.value = ""; };
+
+/* ---------- dialogs: naming, loss, hatching, notes ---------- */
+function openDlg(h) { $("dlgBody").innerHTML = h; const d = $("dlg"); if (!d.open) d.showModal(); }
+function closeDlg() { const d = $("dlg"); if (d.open) d.close(); }
+function nameDialog(title, text, cb) {
+  openDlg(`<div class="art">${whaleArt(170)}</div><h2>${title}</h2><p class="muted">${text}</p><label class="fl" for="nm">Name</label><input id="nm" type="text" maxlength="24" placeholder="For example: Bluey">
+    <div class="actions"><button class="btn btn-main" id="nmOk" disabled>${I.drop}Start swimming</button></div>`);
+  const nm = $("nm"), ok = $("nmOk"); nm.focus();
+  nm.oninput = () => ok.disabled = !nm.value.trim();
+  nm.onkeydown = e => { if (e.key === "Enter" && nm.value.trim()) ok.click(); };
+  ok.onclick = () => { cb(nm.value.trim()); closeDlg(); };
+}
+$("dlg").addEventListener("cancel", e => { if (!ST || !db.whales[ST.whale] || !db.whales[ST.whale].name) e.preventDefault(); });
+function maybeDialogs() {
+  if ($("dlg").open) return;
+  if (ST.memorials.length > db.ackDeaths) {
+    const m = ST.memorials[db.ackDeaths], nm = (db.whales[m.whale] && db.whales[m.whale].name) || "Your whale";
+    openDlg(`<div class="art">${eggArt(0)}</div><h2>${esc(nm)} has left the tide</h2>
+      <p>${esc(nm)} swam with you for ${m.days} ${m.days === 1 ? "day" : "days"}. Thank you for every night you came back.</p>
+      <p class="muted">A new egg is resting in the sand. Check in ${HATCH_AFTER} days in a row and it will hatch.</p>
+      <div class="actions"><button class="btn btn-main" id="ack">Look after the egg</button></div>`);
+    $("ack").onclick = () => { db.ackDeaths++; save(); closeDlg(); renderAll(); };
+    return;
+  }
+  if (!db.whales[ST.whale] || !db.whales[ST.whale].name) {
+    const first = ST.whale === 0;
+    nameDialog(first ? "Meet your whale" : "Your egg hatched",
+      first ? "This little whale lives in your tide. It stays happy when you check in each night after studying. What will you call it?" : "A brand new whale is here. What will you call it?",
+      name => { db.whales[ST.whale] = { name, born: ST.hatched[ST.whale] }; save(); renderAll(); scene.say(first ? "Hello, Ammu. I will be here every night." : "Hello again. Let's swim together.", 3800); });
+  }
+}
+function showNote(d) { openDlg(`<div class="art">${bottleArt()}</div><h2>A note in a bottle</h2><p style="font-size:16.5px">${esc(NOTES[d])}</p><div class="actions"><button class="btn btn-main" id="nOk">Keep swimming</button></div>`);
+  $("nOk").onclick = () => { if (db.seenNotes.indexOf(d) < 0) db.seenNotes.push(d); save(); closeDlg(); scene.update(ST); }; }
+
+/* ============================================================
+   The tank scene
+   ============================================================ */
+const SVGNS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs, parent) => { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+const lerp = (a, b, t) => a + (b - a) * t;
+const mixHex = (a, b, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const A = p(a), B = p(b); return "#" + A.map((v, i) => pad(Math.round(lerp(v, B[i], t)).toString(16))).join(""); };
+const CORALS = ["branch:#F4A9BD", "fan:#C9B6F2", "kelp:#A9DDC3", "anemone:#FFC3A8", "dome:#FFE29A", "tubes:#A9D3F2", "branch:#C3B1F0", "kelp:#BFE6B8", "star:#FFB89E", "shells:#F7B8CB", "fan:#FFD98A", "tubes:#F6B3C6", "kelp:#AFD4F4", "anemone:#CDB8F4"];
+const SLOTS = [52, 118, 182, 250, 312, 372, 432, 600, 660, 722, 784, 846, 906, 962];
+function coralShape(kind, color, g) {
+  const deep = mixHex(color, "#36406A", .18);
+  if (kind === "branch") { el("path", { d: "M0,0 C-2,-30 -6,-50 -22,-70 M0,-26 C10,-44 22,-52 26,-76 M-4,-46 C4,-60 6,-74 2,-96", stroke: color, "stroke-width": 11, "stroke-linecap": "round", fill: "none" }, g); el("circle", { cx: -22, cy: -72, r: 6, fill: deep, opacity: .35 }, g); }
+  if (kind === "fan") { el("path", { d: "M0,0 C-40,-20 -46,-70 -18,-92 C-6,-100 6,-100 18,-92 C46,-70 40,-20 0,0 Z", fill: color }, g); el("path", { d: "M0,0 L-22,-80 M0,0 L0,-94 M0,0 L22,-80 M0,0 L-36,-48 M0,0 L36,-48", stroke: deep, "stroke-opacity": .28, "stroke-width": 3, fill: "none" }, g); }
+  if (kind === "kelp") { el("path", { d: "M0,0 C-12,-30 12,-56 -2,-86 C-10,-104 6,-118 0,-128", stroke: color, "stroke-width": 9, "stroke-linecap": "round", fill: "none", class: "sway" }, g); el("path", { d: "M8,0 C18,-26 -2,-44 12,-70", stroke: deep, "stroke-opacity": .25, "stroke-width": 7, "stroke-linecap": "round", fill: "none" }, g); }
+  if (kind === "anemone") { for (let i = -3; i <= 3; i++) el("path", { d: `M${i * 6},0 Q${i * 9},-30 ${i * 14},-46`, stroke: color, "stroke-width": 7, "stroke-linecap": "round", fill: "none" }, g); el("ellipse", { cx: 0, cy: -4, rx: 24, ry: 9, fill: deep, opacity: .25 }, g); }
+  if (kind === "dome") { el("path", { d: "M-34,0 C-34,-40 34,-40 34,0 Z", fill: color }, g); el("path", { d: "M-22,-8 C-14,-24 -2,-10 6,-24 C12,-32 20,-20 24,-12", stroke: deep, "stroke-opacity": .3, "stroke-width": 3, fill: "none" }, g); }
+  if (kind === "tubes") { [[-14, 52], [0, 74], [14, 60]].forEach(([x, h]) => { el("rect", { x: x - 6, y: -h, width: 12, height: h, rx: 6, fill: color }, g); el("ellipse", { cx: x, cy: -h + 4, rx: 4, ry: 2.5, fill: deep, opacity: .3 }, g); }); }
+  if (kind === "star") { el("path", { d: "M0,-30 L8,-12 L28,-10 L12,2 L18,22 L0,10 L-18,22 L-12,2 L-28,-10 L-8,-12 Z", fill: color, transform: "translate(0,-14) scale(.9)" }, g); }
+  if (kind === "shells") { el("path", { d: "M-26,0 C-26,-24 -2,-28 -2,0 Z", fill: color }, g); el("path", { d: "M2,0 C2,-30 30,-32 30,0 Z", fill: mixHex(color, "#ffffff", .3) }, g); el("path", { d: "M-14,0 L-14,-18 M16,0 L16,-22", stroke: deep, "stroke-opacity": .3, "stroke-width": 2.5 }, g); }
+}
+function coralIcon(i) { const [kind, color] = CORALS[i].split(":"); const s = document.createElementNS(SVGNS, "svg"); s.setAttribute("viewBox", "-52 -120 104 128"); coralShape(kind, color, s); return s.outerHTML; }
+function friendIcon(k) { const s = document.createElementNS(SVGNS, "svg"); s.setAttribute("viewBox", "-60 -40 120 80"); drawFriend(k, s); return s.outerHTML; }
+function drawFriend(k, g) {
+  if (k === "fish") { el("path", { d: "M-30,0 C-14,-20 18,-20 30,0 C18,20 -14,20 -30,0 Z", fill: "#FFC6A6" }, g); el("path", { d: "M-28,0 L-48,-16 L-44,0 L-48,16 Z", fill: "#FFB28D" }, g); el("circle", { cx: 16, cy: -3, r: 3.4, fill: "#36406A" }, g); }
+  if (k === "turtle") { el("ellipse", { cx: 0, cy: 0, rx: 34, ry: 22, fill: "#A9DDC3" }, g); el("path", { d: "M-18,-8 L0,-16 L18,-8 L18,8 L0,16 L-18,8 Z", fill: "none", stroke: "#6FBF9A", "stroke-width": 3 }, g); el("ellipse", { cx: 42, cy: -2, rx: 11, ry: 9, fill: "#C9EBD9" }, g); el("circle", { cx: 46, cy: -4, r: 2.4, fill: "#36406A" }, g); el("ellipse", { cx: 20, cy: 22, rx: 12, ry: 6, fill: "#C9EBD9" }, g); el("ellipse", { cx: -22, cy: 22, rx: 10, ry: 5, fill: "#C9EBD9" }, g); }
+  if (k === "dolphin") { el("path", { d: "M-50,8 C-30,-22 20,-26 44,-6 C50,-2 56,2 58,4 C50,6 44,6 40,6 C20,18 -20,20 -50,8 Z", fill: "#C8B8F2" }, g); el("path", { d: "M-6,-18 L4,-34 L10,-16 Z", fill: "#B5A2EC" }, g); el("path", { d: "M-48,8 L-62,-6 L-58,8 L-62,20 Z", fill: "#B5A2EC" }, g); el("circle", { cx: 32, cy: -6, r: 3, fill: "#36406A" }, g); }
+}
+function eggArt(p) { return `<svg viewBox="-70 -50 140 100"><ellipse cx="0" cy="40" rx="56" ry="8" fill="#F1E2CC"/><ellipse cx="0" cy="6" rx="28" ry="34" fill="#FFF9EF" stroke="#F0DFC6" stroke-width="2"/><circle cx="-9" cy="-6" r="4" fill="#CFE6F7"/><circle cx="10" cy="10" r="5" fill="#F8D3DD"/><circle cx="6" cy="-16" r="3" fill="#DCD2F8"/>${p > 0 ? '<path d="M-14,0 l6,-6 l5,6 l6,-7" stroke="#C9B48F" stroke-width="2.5" fill="none" stroke-linecap="round"/>' : ""}</svg>`; }
+function bottleArt() { return `<svg viewBox="-70 -45 140 90"><g transform="rotate(-14)"><rect x="-40" y="-16" width="62" height="32" rx="14" fill="#DDF0F8" stroke="#A9D3EA" stroke-width="2.5"/><rect x="22" y="-8" width="16" height="16" rx="4" fill="#DDF0F8" stroke="#A9D3EA" stroke-width="2.5"/><rect x="36" y="-7" width="9" height="14" rx="3" fill="#E9C9A0"/><rect x="-30" y="-8" width="40" height="16" rx="5" fill="#FFF6E2"/><path d="M-24,-2 h26 M-24,3 h18" stroke="#E2C9A3" stroke-width="2" stroke-linecap="round"/></g></svg>`; }
+
+/* ---------- the whale: one drawing used everywhere ----------
+   Drawn from real whale anatomy: big rounded head, long arched mouth line with the eye
+   just above its corner, blowhole on top of the head, pale throat grooves, a long flipper,
+   a small dorsal fin far back, and horizontal flukes that beat up and down. */
+const WH_BODY = "M-118,-10 C-92,-40 -40,-68 32,-71 C104,-74 154,-42 156,-4 C158,32 122,58 62,62 C2,66 -58,50 -98,24 C-110,16 -116,6 -118,-2 Z";
+const WH_MOUTH = {
+  happy: "M153,8 C134,18 108,20 86,14 Q80,12 79,6",
+  glance: "M153,8 C134,18 108,20 86,14",
+  sad: "M153,8 C134,17 108,20 86,16 Q81,17 79,22",
+  struggle: "M153,8 C134,16 110,19 90,18"
+};
+const WH_LID = { happy: "", glance: "", sad: "M80,-24 L105,-24 L105,-16 Q93,-15 80,-9 Z", struggle: "M80,-24 L105,-24 L105,-9 Q92,-7 80,-9 Z" };
+function whaleInner(ids, mood) {
+  mood = mood || "happy";
+  const id = n => ids ? ` id="${n}"` : "";
+  return `<g${id("wTail")}><path d="M-100,-30 C-128,-32 -152,-42 -172,-60 C-168,-46 -156,-24 -136,-8 C-124,2 -112,10 -100,14 Z" fill="url(#gWhale)"/>
+    <path d="M-174,-54 C-192,-62 -214,-76 -226,-102 C-206,-100 -190,-92 -178,-78 C-174,-96 -162,-112 -138,-118 C-142,-94 -154,-72 -174,-54 Z" fill="url(#gWhale)"/>
+    <path d="M-176,-62 L-177,-74" stroke="#6F8AD8" stroke-width="2" stroke-linecap="round" opacity=".45"/></g>
+  <path d="${WH_BODY}" fill="url(#gWhale)"/>
+  <path d="M-70,-42 Q-60,-62 -44,-58 Q-50,-50 -48,-46 Z" fill="url(#gWhale)"/>
+  <path d="M154,8 C150,36 120,58 62,62 C4,66 -50,52 -86,32 C-40,44 30,48 92,36 C126,30 146,20 154,8 Z" fill="url(#gBelly)"/>
+  <g stroke="#C9D5F5" stroke-width="2.2" stroke-linecap="round" fill="none"><path d="M146,18 C118,34 82,42 40,45"/><path d="M140,28 C110,42 72,50 28,52"/><path d="M130,38 C102,50 66,57 26,58"/></g>
+  <ellipse cx="58" cy="-48" rx="50" ry="13" fill="url(#gShine)" transform="rotate(-6 58 -48)"/>
+  <path d="M22,-70 Q30,-76 38,-70" stroke="#7088D6" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  <g${id("wFlip")}><path${id("wFlipP")} d="M44,34 C30,58 4,78 -26,86 C-18,72 0,54 22,36 Z" fill="#8FA8EA"/></g>
+  <ellipse cx="106" cy="28" rx="10" ry="5.5" fill="#F6A9BE" opacity=".6"/>
+  <path${id("wMouth")} d="${WH_MOUTH[mood]}" stroke="#3A4572" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+  <g${id("wEye")}><g${id("wEyeIn")}><ellipse cx="92" cy="-10" rx="9.5" ry="11.5" fill="#2E3762"/><circle cx="95.5" cy="-14.5" r="3.8" fill="#fff"/><circle cx="88.5" cy="-5" r="1.8" fill="#fff"/></g><path${id("wLid")} d="${WH_LID[mood]}" fill="url(#gWhale)"/></g>
+  <path${id("wJoy")} d="M83,-7 Q92,-19 101,-7" stroke="#2E3762" stroke-width="4.2" fill="none" stroke-linecap="round" display="none"/>`;
+}
+function whaleArt(size) { return `<svg viewBox="-236 -126 400 218" style="width:${size || 150}px;height:auto" aria-hidden="true">${whaleInner(false, "happy")}</svg>`; }
+const WHALE_DEFS = `<defs><linearGradient id="gWhale" gradientUnits="userSpaceOnUse" x1="0" y1="-78" x2="0" y2="66"><stop offset="0" stop-color="#7F9BE6"/><stop offset=".55" stop-color="#9DB5F0"/><stop offset="1" stop-color="#BCCDF6"/></linearGradient><linearGradient id="gBelly" gradientUnits="userSpaceOnUse" x1="0" y1="10" x2="0" y2="64"><stop offset="0" stop-color="#F6F8FF"/><stop offset="1" stop-color="#DCE5FB"/></linearGradient><radialGradient id="gShine"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>`;
+(function brand() {
+  const inner = `<circle cx="32" cy="32" r="31" fill="#E3F3FB"/><g transform="translate(36.2,34) scale(.128)">${whaleInner(false, "happy")}</g>`;
+  $("brandWhale").innerHTML = inner;
+  $("favicon").href = "data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${WHALE_DEFS}${inner}</svg>`);
+})();
+const SPOUT = `<g stroke-linecap="round" fill="none"><path d="M0,0 C-3,-24 -14,-40 -30,-46" stroke="#D3EEFB" stroke-width="8"/><path d="M0,0 C1,-28 1,-46 -1,-60" stroke="#D3EEFB" stroke-width="8"/><path d="M0,0 C4,-24 16,-38 32,-44" stroke="#D3EEFB" stroke-width="8"/>
+  <path d="M0,-2 C-2,-22 -12,-36 -26,-42" stroke="#A9D8F2" stroke-width="2.6"/><path d="M0,-2 C1,-26 1,-42 -1,-54" stroke="#A9D8F2" stroke-width="2.6"/><path d="M0,-2 C4,-22 14,-34 28,-40" stroke="#A9D8F2" stroke-width="2.6"/></g>
+  <circle cx="-33" cy="-49" r="5" fill="#E6F6FD"/><circle cx="-1" cy="-65" r="5.5" fill="#E6F6FD"/><circle cx="35" cy="-47" r="5" fill="#E6F6FD"/><circle cx="-16" cy="-62" r="3" fill="#E6F6FD"/><circle cx="18" cy="-60" r="3" fill="#E6F6FD"/>`;
+
+const scene = (() => {
+  const svg = $("scene"), W = 1000, H = 640, SAND = 560;
+  const S = { level: .83, target: .83, haze: 0, hazeT: 0, mood: "happy", phase: "alive", egg: 0, t: 0, bubbles: [], hearts: [], friends: {}, celebrateT: 0, calm: !!db.calm,
+              reduced: matchMedia("(prefers-reduced-motion: reduce)").matches, baby: false, noteDay: null, ptr: null, top: 145 };
+  const WH = { x: 420, y: 330, dir: 1, face: 1, vx: 0, target: 660, pause: 1.5, jit: 0, turnT: -1, turnFrom: 1, kick: 0, blinkAt: 1.6, blinkT: -1, dbl: false,
+               hover: false, wig: 0, lx: 0, ly: 0, surfaceAt: 7, surfacing: false, spoutT: -1, heartAt: 0, prevY: 330, pitch: 0 };
+  const waveB = $("waveBack"), waveF = $("waveFront"), clip = $("waterClipPath");
+  $("whale").innerHTML = whaleInner(true, "happy");
+  const whale = $("whale"), tailG = $("wTail"), flipG = $("wFlip"), eyeG = $("wEye"), eyeIn = $("wEyeIn"), joy = $("wJoy"), shadow = $("wShadow"), spoutG = $("spout"), heartsG = $("hearts");
+  spoutG.innerHTML = SPOUT;
+  const MOODS = {
+    happy:    { speed: 34, kf: 2.3, ka: 11, depth: .42, tilt: 0, cols: ["#7F9BE6", "#9DB5F0", "#BCCDF6"], flip: "#8FA8EA", bub: 1.1 },
+    glance:   { speed: 21, kf: 1.8, ka: 8,  depth: .28, tilt: 0, cols: ["#8AA1DE", "#A5B8EC", "#C0CEF3"], flip: "#98ACE2", bub: .7 },
+    sad:      { speed: 12, kf: 1.3, ka: 6,  depth: .68, tilt: 3, cols: ["#97A4CF", "#ADB8DD", "#C5CDE7"], flip: "#A2AED6", bub: .4 },
+    struggle: { speed: 6,  kf: .9,  ka: 4,  depth: .86, tilt: 9, cols: ["#A6ADC6", "#B8BED3", "#CDD2E0"], flip: "#B1B7CC", bub: .25 }
+  };
+  // static decor
+  const peb = $("pebbles"); [[90, 600, 7], [240, 612, 5], [420, 598, 6], [560, 616, 4], [700, 604, 7], [880, 612, 5], [960, 596, 4], [330, 622, 4]].forEach(([x, y, r]) => el("ellipse", { cx: x, cy: y, rx: r * 1.5, ry: r, fill: "#E8CFAA", opacity: .7 }, peb));
+  const grass = $("grassBg"); const grassX = [22, 978, 470, 540];
+  grassX.forEach((x, i) => { const s = i % 2 ? -1 : 1; const g = el("g", { transform: `translate(${x},${SAND + 8})` }, grass);
+    el("path", { d: `M0,0 C${-10 * s},-40 ${12 * s},-70 ${-4 * s},-${110 - i * 12}`, stroke: "#B6DCCB", "stroke-width": 8, "stroke-linecap": "round", fill: "none", opacity: .75 }, g);
+    el("path", { d: `M10,0 C${16 * s},-30 ${-2 * s},-50 ${12 * s},-${80 - i * 8}`, stroke: "#C7E6D7", "stroke-width": 6, "stroke-linecap": "round", fill: "none", opacity: .7 }, g); });
+  const rayEls = [[180, 70], [430, 90], [690, 60]].map(([x, w]) => el("path", { d: "", fill: "url(#gRay)", opacity: .5, "data-x": x, "data-w": w }, $("rays")));
+
+  function setMood(m) {
+    const M = MOODS[m] || MOODS.happy;
+    $("wMouth").setAttribute("d", WH_MOUTH[m] || WH_MOUTH.happy);
+    $("wLid").setAttribute("d", WH_LID[m] || "");
+    ["wg1", "wg2", "wg3"].forEach((id, i) => $(id).setAttribute("stop-color", M.cols[i]));
+    $("wFlipP").setAttribute("fill", M.flip);
+  }
+  // pointer: eyes follow it, hovering makes the whale happy
+  const toSvg = e => { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const m = svg.getScreenCTM(); return m ? pt.matrixTransform(m.inverse()) : null; };
+  svg.addEventListener("pointermove", e => { S.ptr = toSvg(e); });
+  svg.addEventListener("pointerleave", () => { S.ptr = null; });
+  const ww = $("whaleWrap");
+  ww.addEventListener("pointerenter", () => { WH.hover = true; if (S.phase === "alive" && S.t > WH.heartAt) { WH.wig = .8; WH.heartAt = S.t + 3.2; if (S.mood === "happy" || S.mood === "glance") hearts(3); } });
+  ww.addEventListener("pointerleave", () => { WH.hover = false; });
+  ww.addEventListener("click", () => {
+    if (S.phase !== "alive" || !ST || ST.before) return;
+    const n = ST.whaleName || "Your whale";
+    say(S.mood === "happy" ? `${n} says hello.` : S.mood === "glance" ? `${n} is so glad you are here.` : `${n} hopes you check in tonight.`, 2400);
+    WH.wig = .8; hearts(S.mood === "happy" ? 4 : 2);
+    if (S.mood === "happy") WH.surfaceAt = 0; else for (let i = 0; i < 6; i++) spawn(WH.x + 30 * WH.face * .74, WH.y - 50, 3 + Math.random() * 4);
+  });
+
+  function pickTarget() {
+    let tx, n = 0; do { tx = 180 + Math.random() * 640; n++; } while (Math.abs(tx - WH.x) < 200 && n < 20);
+    WH.target = tx; WH.jit = (Math.random() - .5) * 70;
+  }
+  function hearts(n) {
+    const sc = .74 * (S.baby ? .74 : 1), fs = Math.sign(WH.face || 1);
+    for (let i = 0; i < n; i++) {
+      const e = el("path", { d: "M0,7 C-11,-1 -9,-12 0,-6 C9,-12 11,-1 0,7 Z", fill: ["#F7A9C0", "#F9C0D0", "#EE93AE"][i % 3] }, heartsG);
+      S.hearts.push({ e, x: WH.x + (70 + i * 14) * sc * fs + (Math.random() - .5) * 20, y: WH.y - 60 * sc, life: 0, delay: i * .18, s: .8 + Math.random() * .5, p: Math.random() * 6 });
+    }
+  }
+  function drawReef(st) {
+    const g = $("reefFront"); g.innerHTML = "";
+    SUBJECTS.forEach(([k], i) => { if (!st.reef[k].grown) return; const [kind, color] = CORALS[i].split(":");
+      const grp = el("g", { transform: `translate(${SLOTS[i]},${SAND + 10 + (i % 2) * 6}) scale(${.82 + (i % 3) * .07})` }, g); const inner = el("g", {}, grp); coralShape(kind, color, inner);
+      if (db.seenCoral.indexOf(k) < 0) { inner.style.transformBox = "fill-box"; inner.style.transformOrigin = "50% 100%";
+        inner.animate([{ opacity: 0, transform: "scale(.15)" }, { opacity: 1, transform: "scale(1)" }], { duration: 1500, easing: "cubic-bezier(.2,.9,.3,1.15)" });
+        db.seenCoral.push(k); save(); setTimeout(() => say(`A new coral grew for ${SUBJECTS[i][1]}.`, 3200), 600); } });
+    const mem = $("memorial"); mem.innerHTML = "";
+    if (st.memorials.length) { const m = el("g", { transform: `translate(${st.phase === "egg" ? 400 : 560},${SAND + 22})` }, mem);
+      el("path", { d: "M-20,0 C-20,-22 20,-22 20,0 Z", fill: "#EFE6FA", stroke: "#D6C8F2", "stroke-width": 2 }, m);
+      el("path", { d: "M-8,-2 L-6,-14 M0,-2 L0,-16 M8,-2 L6,-14", stroke: "#C9B9EE", "stroke-width": 2, "stroke-linecap": "round" }, m); }
+  }
+  function drawEgg(st) {
+    const g = $("eggWrap"); g.innerHTML = ""; if (st.phase !== "egg") return;
+    const e = el("g", { id: "egg", transform: `translate(500,${SAND - 6}) scale(1.45)` }, g);
+    el("ellipse", { cx: 0, cy: 30, rx: 50, ry: 9, fill: "#E9D3B1", opacity: .7 }, e);
+    el("ellipse", { cx: 0, cy: 0, rx: 30, ry: 36, fill: "url(#gEgg)", stroke: "#EEDCC2", "stroke-width": 2 }, e);
+    el("circle", { cx: -10, cy: -10, r: 4.5, fill: "#CFE6F7" }, e); el("circle", { cx: 11, cy: 8, r: 5.5, fill: "#F8D3DD" }, e); el("circle", { cx: 6, cy: -20, r: 3.4, fill: "#DCD2F8" }, e);
+    if (st.egg >= 1) el("path", { d: "M-16,2 l6,-7 l6,7 l7,-8", stroke: "#C9B48F", "stroke-width": 2.6, fill: "none", "stroke-linecap": "round" }, e);
+    if (st.egg >= 2) el("path", { d: "M4,-26 l-4,8 l7,4 l-3,9", stroke: "#C9B48F", "stroke-width": 2.6, fill: "none", "stroke-linecap": "round" }, e);
+  }
+  function drawBottle(st) {
+    const b = $("bottle"); b.innerHTML = "";
+    const d = Object.keys(NOTES).filter(x => x <= st.today && x >= addDays(st.today, -2) && db.seenNotes.indexOf(x) < 0).sort().pop();
+    S.noteDay = d || null; b.setAttribute("display", d ? "inline" : "none"); if (!d) return;
+    const g = el("g", { transform: "rotate(-14)" }, b);
+    el("rect", { x: -40, y: -16, width: 62, height: 32, rx: 14, fill: "#E3F3FA", stroke: "#9FCDE8", "stroke-width": 3 }, g);
+    el("rect", { x: 22, y: -8, width: 16, height: 16, rx: 4, fill: "#E3F3FA", stroke: "#9FCDE8", "stroke-width": 3 }, g);
+    el("rect", { x: 36, y: -7, width: 9, height: 14, rx: 3, fill: "#E9C9A0" }, g);
+    el("rect", { x: -30, y: -8, width: 40, height: 16, rx: 5, fill: "#FFF6E2" }, g);
+    el("circle", { cx: 0, cy: -34, r: 12, fill: "#fff", opacity: .9 }, b); el("path", { d: "M-4,-38 a4,4 0 1 1 6,3.5 v2.5 M2,-28 v.5", stroke: "#5B7AD3", "stroke-width": 2.6, fill: "none", "stroke-linecap": "round" }, b);
+    b.onclick = () => showNote(d);
+  }
+  function drawFriends(st) {
+    const g = $("friends"); g.innerHTML = ""; S.friends = {};
+    if (st.phase !== "alive" || st.missed >= 2) return;
+    ["fish", "turtle", "dolphin"].forEach((k, i) => { if (!st.friends[k]) return; const grp = el("g", {}, g); drawFriend(k, grp);
+      S.friends[k] = { g: grp, x: 200 + i * 230, dir: i % 2 ? -1 : 1, face: i % 2 ? -1 : 1, speed: [40, 16, 46][i], depth: [.24, .8, .4][i], ph: i * 2 };
+      if (db.seenFriends.indexOf(k) < 0) { db.seenFriends.push(k); save(); setTimeout(() => say(k === "fish" ? "A little fish moved in. Seven days in a row." : k === "turtle" ? "A sea turtle joined. Twenty-one days in a row." : "A dolphin arrived. Your first pass is complete.", 3600), 900); } });
+  }
+  function update(st) {
+    S.target = st.level; S.hazeT = st.haze; S.mood = st.mood; S.phase = st.phase; S.egg = st.egg;
+    S.baby = st.whale > 0 && st.swim < 7;
+    $("whaleWrap").setAttribute("display", st.phase === "alive" ? "inline" : "none");
+    shadow.setAttribute("display", st.phase === "alive" ? "inline" : "none");
+    setMood(st.mood); drawReef(st); drawEgg(st); drawBottle(st); drawFriends(st);
+  }
+  function waveY(x, top, t, a, k, sp) { return top + Math.sin(x * k + t * sp) * a + Math.sin(x * k * 2.3 - t * sp * .7) * a * .4; }
+  function spawn(x, y, r) { if (S.bubbles.length > 40) return; const e = el("circle", { cx: x, cy: y, r, fill: "#fff", "fill-opacity": .45, stroke: "#fff", "stroke-opacity": .8, "stroke-width": 1.2 }, $("bubbles")); S.bubbles.push({ x, y, v: 36 + Math.random() * 36, p: Math.random() * 6, e }); }
+
+  function frame(dt) {
+    const mv = S.reduced ? 0 : S.calm ? .5 : 1;
+    S.t += dt * (mv || .0001);
+    S.level = lerp(S.level, S.target, Math.min(1, dt * 1.2));
+    S.haze = lerp(S.haze, S.hazeT, Math.min(1, dt * 2));
+    const top = SAND - S.level * 500, t = S.t; S.top = top;
+    let dF = `M0,${H}`, dB = `M0,${H}`;
+    for (let x = 0; x <= W; x += 20) { dF += ` L${x},${waveY(x, top, t, 7, .012, 1.4).toFixed(1)}`; dB += ` L${x},${waveY(x + 60, top - 9, t + 1.7, 6, .01, 1.1).toFixed(1)}`; }
+    dF += ` L${W},${H} Z`; dB += ` L${W},${H} Z`;
+    waveF.setAttribute("d", dF); waveB.setAttribute("d", dB); clip.setAttribute("d", dF);
+    $("haze").setAttribute("opacity", S.haze.toFixed(3));
+    rayEls.forEach((r, i) => { const x = +r.dataset.x + Math.sin(t * .4 + i) * 30, w = +r.dataset.w; r.setAttribute("d", `M${x - w / 2},${top} L${x + w / 2},${top} L${x + w * 1.3},${SAND} L${x - w * .4},${SAND} Z`); r.setAttribute("opacity", (.42 * S.level * (1 - S.haze * 2)).toFixed(3)); });
+    grass.querySelectorAll(":scope > g").forEach((g, i) => g.setAttribute("transform", `translate(${grassX[i]},${SAND + 8}) rotate(${(Math.sin(t * .8 + i) * 4).toFixed(2)})`));
+
+    // ---- the whale ----
+    if (S.phase === "alive") {
+      const M = MOODS[S.mood] || MOODS.happy, sc = .74 * (S.baby ? .74 : 1);
+      let ds = 1, dip = 0;
+      if (WH.turnT >= 0) {                                   // slow, banked turn (never a flat flip)
+        WH.turnT += dt * (mv || 1);
+        const p = Math.min(1, WH.turnT / 1.9), e = (1 - Math.cos(p * Math.PI)) / 2;
+        WH.face = Math.cos(e * Math.PI) * WH.turnFrom;
+        ds = 1 - .14 * Math.sin(p * Math.PI); dip = 9 * Math.sin(p * Math.PI);
+        if (p >= 1) { WH.turnT = -1; WH.dir = -WH.turnFrom; WH.face = WH.dir; }
+      } else if (WH.pause > 0) WH.pause -= dt * (WH.hover ? .3 : 1);
+      else {
+        const dx = WH.target - WH.x;
+        if (Math.abs(dx) < 14) { WH.pause = 1.4 + Math.random() * 2.6; pickTarget(); }
+        else if (Math.sign(dx) !== WH.dir) { WH.turnT = 0; WH.turnFrom = WH.dir; }
+      }
+      const dist = Math.abs(WH.target - WH.x);
+      const want = (WH.turnT >= 0 ? .3 : WH.pause > 0 ? .05 : Math.min(1, .25 + dist / 160)) * M.speed * (WH.hover ? .3 : 1);
+      WH.vx = lerp(WH.vx, want, Math.min(1, dt * 1.1));
+      WH.x = Math.max(150, Math.min(850, WH.x + WH.dir * WH.vx * dt * mv));
+      // tail strokes up and down, faster when swimming, extra wiggle when greeted
+      WH.kick += dt * mv * M.kf * (WH.wig > 0 ? 2.2 : 1) * (.55 + .45 * Math.min(1, WH.vx / M.speed));
+      const tailA = Math.sin(WH.kick) * M.ka, flipA = Math.sin(WH.kick * .5 + 1) * 6;
+      const bob = Math.sin(WH.kick - .8) * 2.4 + Math.sin(t * .45) * 6;
+      // depth: drift, and every so often a happy whale rises to breathe
+      if (S.mood === "happy" && mv) { WH.surfaceAt -= dt; if (WH.surfaceAt < 0) WH.surfacing = true; } else WH.surfacing = false;
+      let yT = lerp(top + 75 * sc + 30, SAND - 72 * sc, M.depth) + WH.jit;
+      if (WH.surfacing) yT = top + 64 * sc;
+      yT = Math.max(top + 62 * sc, Math.min(SAND - 58 * sc, yT));
+      WH.y = lerp(WH.y, yT, Math.min(1, dt * .55));
+      const vy = (WH.y - WH.prevY) / Math.max(dt, .001); WH.prevY = WH.y;
+      WH.pitch = lerp(WH.pitch, Math.max(-7, Math.min(7, vy * .18)), Math.min(1, dt * 2));
+      if (WH.surfacing && Math.abs(WH.y - yT) < 6 && WH.spoutT < 0) WH.spoutT = 0;
+      if (WH.wig > 0) WH.wig -= dt;
+      const wk = WH.wig > 0 ? 1 + .05 * Math.sin((1 - WH.wig / .8) * Math.PI * 2) : 1;
+      const fs = Math.sign(WH.face || 1) * Math.max(.16, Math.abs(WH.face));
+      const ang = (WH.pitch + M.tilt + Math.sin(WH.kick + 1.4) * 1.2) * WH.face;
+      const wy = WH.y + bob + dip;
+      whale.setAttribute("transform", `translate(${WH.x.toFixed(1)},${wy.toFixed(1)}) rotate(${ang.toFixed(2)}) scale(${(fs * sc * ds * wk).toFixed(3)},${(sc * ds * (2 - wk)).toFixed(3)})`);
+      tailG.setAttribute("transform", `rotate(${tailA.toFixed(2)} -104 -6)`);
+      flipG.setAttribute("transform", `rotate(${flipA.toFixed(2)} 40 36)`);
+      // eyes: follow the cursor, look up when waiting for her, blink now and then
+      let lxT, lyT;
+      if (S.ptr) { lxT = Math.max(-1, Math.min(1, (S.ptr.x - WH.x) * Math.sign(fs) / 180)) * 2.4; lyT = Math.max(-1, Math.min(1, (S.ptr.y - wy) / 140)) * 2.2; }
+      else if (S.mood === "glance") { lxT = .6; lyT = -2.4; }
+      else { lxT = Math.sin(t * .3) * 1.2; lyT = Math.sin(t * .23) * .8; }
+      WH.lx = lerp(WH.lx, lxT, Math.min(1, dt * 6)); WH.ly = lerp(WH.ly, lyT, Math.min(1, dt * 6));
+      eyeIn.setAttribute("transform", `translate(${WH.lx.toFixed(2)},${WH.ly.toFixed(2)})`);
+      WH.blinkAt -= dt;
+      if (WH.blinkAt < 0 && WH.blinkT < 0) { WH.blinkT = 0; WH.blinkAt = (S.mood === "happy" ? 2.2 : 3.4) + Math.random() * 3.2; WH.dbl = Math.random() < .2; }
+      let b = 1;
+      if (WH.blinkT >= 0) { WH.blinkT += dt; const p = WH.blinkT / .18; b = p >= 1 ? 1 : 1 - .92 * Math.sin(Math.PI * p); if (p >= 1) { WH.blinkT = -1; if (WH.dbl) { WH.dbl = false; WH.blinkAt = .16; } } }
+      eyeG.setAttribute("transform", `translate(0,${(-10 * (1 - b)).toFixed(2)}) scale(1,${b.toFixed(3)})`);
+      const joyful = WH.wig > 0 && S.mood === "happy";
+      eyeG.setAttribute("display", joyful ? "none" : "inline"); joy.setAttribute("display", joyful ? "inline" : "none");
+      // blowhole: spout at the surface, breath bubbles below it
+      const bx = WH.x + 30 * sc * fs * ds, by = wy - 73 * sc * ds;
+      if (WH.spoutT >= 0) {
+        WH.spoutT += dt;
+        const p = WH.spoutT, grow = p < .35 ? p / .35 : 1, op = p < 1.2 ? 1 : Math.max(0, 1 - (p - 1.2) / .6);
+        spoutG.setAttribute("transform", `translate(${bx.toFixed(1)},${Math.min(by, top + 2).toFixed(1)}) scale(${(grow * sc * 1.15).toFixed(3)})`); spoutG.setAttribute("opacity", op.toFixed(2));
+        if (p > 1.8) { WH.spoutT = -1; WH.surfacing = false; WH.surfaceAt = 20 + Math.random() * 16; spoutG.setAttribute("opacity", 0); }
+      }
+      if (mv && Math.random() < dt * M.bub) spawn(bx + (Math.random() - .5) * 8, by + 6, 2.5 + Math.random() * 3.5);
+      // soft shadow on the sand
+      shadow.setAttribute("cx", (WH.x - 20 * sc * fs).toFixed(1)); shadow.setAttribute("rx", (125 * sc * ds).toFixed(1));
+      shadow.setAttribute("opacity", (.08 + .22 * Math.max(0, Math.min(1, (wy - top) / (SAND - top)))).toFixed(3));
+    }
+    if (mv && Math.random() < dt * .6) spawn(60 + Math.random() * 880, SAND - 4, 2 + Math.random() * 3);
+    if (S.celebrateT > 0) { S.celebrateT -= dt; if (Math.random() < dt * 26) spawn(WH.x + (Math.random() - .5) * 160, WH.y + 20, 3 + Math.random() * 6); }
+    S.bubbles = S.bubbles.filter(b => { b.y -= b.v * dt; b.x += Math.sin(t * 2 + b.p) * .4; if (b.y < top + 4) { b.e.remove(); return false; } b.e.setAttribute("cx", b.x.toFixed(1)); b.e.setAttribute("cy", b.y.toFixed(1)); return true; });
+    S.hearts = S.hearts.filter(h => { h.life += dt; const a = h.life - h.delay; if (a < 0) { h.e.setAttribute("opacity", 0); return true; } if (a > 1.7) { h.e.remove(); return false; }
+      const y = h.y - a * 46, x = h.x + Math.sin(a * 3 + h.p) * 6, o = a < .25 ? a / .25 : 1 - Math.max(0, (a - 1.1) / .6), s = h.s * (.6 + .4 * Math.min(1, a / .3));
+      h.e.setAttribute("transform", `translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${s.toFixed(2)})`); h.e.setAttribute("opacity", o.toFixed(2)); return true; });
+    // friends swim gently and turn smoothly
+    Object.values(S.friends).forEach(f => { f.x += f.dir * f.speed * dt * mv; if (f.x > 920) f.dir = -1; if (f.x < 80) f.dir = 1; f.face = lerp(f.face, f.dir, Math.min(1, dt * 2.5));
+      const fy = lerp(top + 40, SAND - 30, f.depth) + Math.sin(t * .9 + f.ph) * 8, fsx = Math.sign(f.face || 1) * Math.max(.2, Math.abs(f.face));
+      f.g.setAttribute("transform", `translate(${f.x.toFixed(1)},${fy.toFixed(1)}) scale(${(fsx * .8).toFixed(3)},.8)`); });
+    const egg = $("egg"); if (egg) { const w = S.egg > 0 ? Math.sin(t * 6) * Math.max(0, Math.sin(t * .9)) * 5 : 0; egg.setAttribute("transform", `translate(500,${SAND - 6}) rotate(${w.toFixed(2)}) scale(1.45)`); }
+    const bt = $("bottle"); if (S.noteDay) bt.setAttribute("transform", `translate(760,${(top + 4 + Math.sin(t * 1.6) * 5).toFixed(1)}) rotate(${(Math.sin(t * 1.2) * 6).toFixed(1)})`);
+  }
+  let last = performance.now();
+  function loop(ts) { const dt = Math.min(.05, (ts - last) / 1000); last = ts; frame(dt); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+  let sayTimer = null;
+  function say(text, ms) { const s = $("says"); s.textContent = text; s.classList.add("on"); clearTimeout(sayTimer); sayTimer = setTimeout(() => s.classList.remove("on"), ms || 3000); }
+  return { update, say, celebrate: () => { S.celebrateT = 1.4; S.level = Math.max(.2, S.level - .06); WH.wig = .8; if (S.mood === "happy") { WH.surfaceAt = 0; hearts(3); } },
+           calm: v => S.calm = v, state: S, whale: WH, frame, hover: v => { WH.hover = v; if (v) { WH.wig = .8; hearts(3); } } };
+})();
+
+/* ---------- tabs ---------- */
+document.querySelectorAll(".tab").forEach(b => b.onclick = () => setTab(b.dataset.tab));
+
+/* ---------- practice mode: a pretend clock and separate data, so her real tide is never touched ---------- */
+function mountPreview() {
+  if ($("pbar")) return;
+  const bar = document.createElement("div"); bar.className = "pbar"; bar.id = "pbar";
+  bar.innerHTML = `<b>Practice mode</b><span>Pretend it is</span><input type="datetime-local" id="pNow"><select id="pScen">
+    <option value="">Choose a scene</option><option value="0">Happy, all checked in</option><option value="1">1 day missed</option><option value="2">2 days missed</option><option value="3">3 days missed</option><option value="4">4 days missed</option><option value="lost">Whale lost, egg waiting</option><option value="egg2">Egg with 2 check-ins</option><option value="hatched">New whale hatched</option></select>
+    <button id="pGo">Show</button><button id="pClr">Clear practice data</button><button id="pExit">Leave practice</button><span style="opacity:.75">Separate data. The real tide is never touched.</span>`;
+  document.body.prepend(bar);
+  const toLocal = d => iso(d) + "T" + pad(d.getHours()) + ":" + pad(d.getMinutes());
+  $("pNow").value = toLocal(now());
+  const studyDaysBefore = limit => { const out = []; const sch = schedule().map; for (let d = START; d < limit; d = addDays(d, 1)) if (isStudyDay(sch.get(d))) out.push(d); return out; };
+  const fill = d => { const r = schedule().map.get(d); const b = {}; r.b.forEach(x => b[x.k] = "done"); db.checkins[d] = { blocks: b, recall: "Practice check-in", note: "", score: null, at: parse(d).toISOString(), caught: {} }; };
+  $("pGo").onclick = () => {
+    if ($("pNow").value) pretend = new Date($("pNow").value);
+    const sc = $("pScen").value;
+    if (sc !== "") {
+      db = blank(); db.whales = [{ name: "Bluey", born: START }];
+      const t = now(), today = iso(t);
+      const due = studyDaysBefore(today).filter(d => t > deadline(d));
+      if (/^\d$/.test(sc)) { due.slice(0, due.length - Number(sc)).forEach(fill); }
+      else { const cut = Math.max(0, due.length - 5 - (sc === "lost" ? 0 : sc === "egg2" ? 2 : 3)); due.slice(0, cut).forEach(fill);
+        if (sc === "egg2") { due.slice(cut + 5).forEach(fill); db.ackDeaths = 1; }
+        if (sc === "hatched") { due.slice(cut + 5).forEach(fill); db.ackDeaths = 1; db.whales[1] = { name: "Pearl", born: today }; } }
+    }
+    save(); selDay = null; drafts = {}; renderAll();
+  };
+  $("pClr").onclick = () => { try { localStorage.removeItem(KEY); localStorage.removeItem(KEY + "-prev"); } catch (e) {} db = blank(); selDay = null; drafts = {}; renderAll(); };
+  $("pExit").onclick = leavePractice;
+  window.__ammu = { compute, schedule, openDays: () => openDays(compute()), db: () => db, setNow: d => { pretend = d; selDay = null; drafts = {}; renderAll(); }, scene };
+}
+function startPractice() {
+  PREVIEW = true; KEY = PRACTICE_KEY; pretend = pretend || new Date(2026, 9, 2, 21, 0);
+  db = load(); selDay = null; drafts = {}; closeDlg(); mountPreview(); window.scrollTo(0, 0); renderAll();
+}
+function leavePractice() {
+  PREVIEW = false; KEY = REAL_KEY; pretend = null; db = load(); selDay = null; drafts = {};
+  const b = $("pbar"); if (b) b.remove(); delete window.__ammu; renderAll();
+}
+if (PREVIEW) mountPreview();
+
+if (!storageOK) $("storeWarn").hidden = false;
+renderAll();
+// keep the day fresh if the page stays open past midnight or noon
+setInterval(() => { const t = iso(now()); if (ST && (t !== ST.today || openDays(ST).join() !== openDays(compute()).join())) { selDay = null; renderAll(); } }, 60000);
+</script>
+</body>
+</html>
