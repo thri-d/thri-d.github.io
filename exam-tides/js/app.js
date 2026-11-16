@@ -2,7 +2,6 @@
 (function () {
 "use strict";
 const ORDER = ["cns", "cd", "ahsn", "agile", "bio"];
-const EXAM = new Date("2026-11-17T14:00:00+05:30");
 const MODES = [["topics", "Topics"], ["long", "Long answers", "Answers"], ["visuals", "Visuals"], ["quiz", "Quiz"], ["final", "Final hour"]];
 const PREFIX = { cns: "cns-", cd: "cd-", ahsn: "ah-", agile: "ag-" };
 
@@ -115,15 +114,6 @@ function go(s, m) {
 }
 window.addEventListener("hashchange", () => { view = parseHash(); render(true); });
 
-/* ---------- countdown ---------- */
-function untilText() {
-  const ms = EXAM - new Date();
-  if (ms <= 0) return "done";
-  const h = Math.floor(ms / 36e5), m = Math.floor(ms % 36e5 / 6e4);
-  return h >= 48 ? `${Math.floor(h / 24)} days left` : `${h}h ${String(m).padStart(2, "0")}m left`;
-}
-setInterval(() => document.querySelectorAll("[data-until]").forEach(e => e.textContent = untilText()), 30000);
-
 /* ---------- gauge ---------- */
 let gid = 0;
 function gauge(s) {
@@ -154,8 +144,8 @@ function home() {
     <p>Tick what you already know. Recall the rest, one topic at a time.</p>
   </section>
   <section class="paper">
-    <div class="paper-when"><b>Tuesday, 2:00 PM IST</b><span data-until>${untilText()}</span></div>
-    <div class="paper-pick" role="group" aria-label="Tuesday's paper">${ORDER.map(s => `<button class="${p === s ? "on" : ""}" data-paper="${s}" aria-pressed="${p === s}">${DATA[s].short}</button>`).join("")}</div>
+    <div class="paper-when"><b>Next paper</b></div>
+    <div class="paper-pick" role="group" aria-label="Next paper">${ORDER.map(s => `<button class="${p === s ? "on" : ""}" data-paper="${s}" aria-pressed="${p === s}">${DATA[s].short}</button>`).join("")}</div>
     ${p && !DATA[p].soon ? `<button class="btn big" data-open="${p}">Revise ${esc(DATA[p].name)} ${I.right}</button>` : ""}
   </section>
   <section class="board" aria-label="Subjects"><div class="gauges">${ORDER.map(gauge).join("")}</div></section>

@@ -612,3 +612,68 @@ body{font-size:17px;letter-spacing:.003em}
 /* rail */
 .rail-list{margin-top:6px}
 .rail-item small{font-size:12.5px}
+
+/* =========================================================
+   Focus timer (the whale)
+   ========================================================= */
+.tt{position:fixed;top:10px;right:62px;z-index:30;
+  --w-body:#2E8E9B;--w-belly:#F3FBFA;--w-cheek:#F4A29E;--w-eye:#0F2731;--w-spout:#7FCFD5;
+  --sea-a:#CBE6E8;--sea-b:#EAF5F4}
+:root[data-theme="night"] .tt{--w-body:#4FB3BD;--w-belly:#E8F6F4;--w-eye:#0A171C;--sea-a:#123C44;--sea-b:#0F262C}
+.tt.is-break{--w-body:#4E9E7A}
+@media(min-width:1000px){.tt{top:18px;right:22px}}
+.tt-pill{display:flex;align-items:center;gap:6px;height:38px;padding:0 13px 0 4px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);box-shadow:0 6px 18px -12px rgba(15,39,49,.5);transition:border-color .2s}
+.tt-pill:hover{border-color:var(--line-strong)}
+.tt-pill.on{border-color:var(--tide);color:var(--tide-deep)}
+:root[data-theme="night"] .tt-pill.on{color:var(--tide)}
+.tt-pill.paused .tt-label{color:var(--amber)}
+.tt-ring{position:relative;display:grid;place-items:center;width:30px;height:30px}
+.tt-ringsvg{position:absolute;inset:0;width:30px;height:30px;transform:rotate(-90deg)}
+.tt [hidden]{display:none!important}
+.tt-track{fill:none;stroke:var(--surface-2);stroke-width:2.6}
+.tt-prog{fill:none;stroke:var(--w-body);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:0 100;transition:stroke-dasharray .25s linear}
+.tt-label{font:600 13.5px var(--mono);font-variant-numeric:tabular-nums;min-width:38px;text-align:left}
+.whale{display:block;overflow:visible}
+.whale.mini{width:22px;height:19px;margin-top:1px}
+.w-body{fill:var(--w-body)}
+.w-belly{fill:var(--w-belly)}
+.w-eye{fill:var(--w-eye)}
+.w-shine{fill:#fff}
+.w-cheek{fill:var(--w-cheek);opacity:.85}
+.w-spout{fill:none;stroke:var(--w-spout);stroke-width:2;stroke-linecap:round;opacity:0;transform-origin:26px 10px}
+.tt.splash .w-spout{animation:spout .9s ease-out 3}
+.tt.splash .whale.mini{animation:hop .45s ease-out 2}
+@keyframes spout{0%{opacity:0;transform:scaleY(.2)}35%{opacity:1;transform:scaleY(1)}100%{opacity:0;transform:translateY(-3px) scaleY(1.1)}}
+@keyframes hop{50%{transform:translateY(-3px)}}
+.tt-panel{position:absolute;top:46px;right:0;width:min(312px,calc(100vw - 24px));border-radius:26px;background:var(--surface);border:1px solid var(--line);box-shadow:0 24px 60px -28px rgba(15,39,49,.55);overflow:hidden;transform-origin:top right;animation:pop .18s ease-out}
+@media(max-width:999px){.tt-panel{right:-50px}}
+@keyframes pop{from{opacity:0;transform:scale(.96) translateY(-4px)}}
+.tt-sea{position:relative;height:96px;background:linear-gradient(180deg,var(--sea-a),var(--sea-b));display:grid;place-items:center}
+.whale.big{width:76px;height:64px;margin-top:6px}
+.tt.running .whale.big{animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-4px) rotate(-2deg)}}
+.tt-waves{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:18px}
+.tt-waves path{fill:var(--surface)}
+.tt-tabs{display:flex;gap:2px;margin:8px auto 0;padding:3px;border-radius:12px;background:var(--surface-2);width:max-content}
+.tt-tabs button{border:0;background:none;padding:6px 14px;border-radius:9px;font-weight:600;font-size:13.5px;color:var(--ink-2)}
+.tt-tabs button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(15,39,49,.18)}
+.tt-phase{margin-top:12px;text-align:center;font-size:13.5px;color:var(--muted);font-weight:600}
+.tt-time{text-align:center;font-family:var(--display);font-size:62px;line-height:1.05;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.tt-bar{height:7px;margin:6px 26px 0;border-radius:7px;background:var(--surface-2);overflow:hidden}
+.tt-bar i{display:block;height:100%;width:0;background:var(--w-body);border-radius:7px;transition:width .25s linear}
+.tt-presets{display:flex;align-items:center;justify-content:center;gap:5px;margin:12px 14px 0;flex-wrap:wrap}
+.tt-presets button{width:36px;height:30px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font:600 13px var(--mono)}
+.tt-presets button.on{border-color:var(--w-body);background:var(--tide-soft);color:var(--tide-deep)}
+.tt-presets span{font-size:12.5px;color:var(--muted);margin-left:2px}
+.tt-actions{display:flex;justify-content:center;gap:8px;margin:14px 16px 0}
+.tt-main{min-width:104px;border:0;border-radius:999px;padding:10px 20px;background:var(--w-body);color:#fff;font-weight:700;font-size:15px}
+:root[data-theme="night"] .tt-main{color:#04171b}
+.tt-ghost{border:1.5px solid var(--line-strong);background:none;border-radius:999px;padding:9px 14px;font-weight:600;font-size:14px;color:var(--ink-2)}
+.tt-foot{display:flex;align-items:center;justify-content:space-between;margin:14px 16px 14px;min-height:28px}
+.tt-dots{display:flex;gap:6px}
+.tt-dots i{width:9px;height:9px;border-radius:50%;box-shadow:inset 0 0 0 1.6px var(--line-strong)}
+.tt-dots i.f{background:var(--w-body);box-shadow:none}
+.tt-chime{display:inline-flex;align-items:center;gap:5px;border:0;background:none;color:var(--muted);font-size:12.5px;font-weight:600;padding:4px}
+.tt-chime .ic{width:16px;height:16px}
+@media (prefers-reduced-motion:reduce){.tt.running .whale.big,.tt.splash .w-spout,.tt.splash .whale.mini,.tt-panel{animation:none}.tt.splash .w-spout{opacity:1}}
+@media(min-width:1000px) and (max-width:1279px){main{padding-top:68px}}
