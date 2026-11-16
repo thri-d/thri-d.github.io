@@ -1,3 +1,12 @@
+/* Self-hosted fonts (OFL): Instrument Sans, Instrument Serif, JetBrains Mono */
+@font-face{font-family:"Instrument Sans";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/instrument-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Sans";font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/instrument-sans-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Sans";font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/instrument-sans-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Sans";font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/instrument-sans-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Serif";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/instrument-serif-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/jetbrains-mono-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/jetbrains-mono-latin-700-normal.woff2) format("woff2")}
 /* Exam Tides — chart-room design system */
 :root{
   --bg:#EDF2F0; --surface:#F8FBFA; --surface-2:#E2EBE8; --sunk:#E7EFEC;
@@ -468,12 +477,12 @@ body{font-size:17px;letter-spacing:.003em}
 /* home */
 .home{padding-top:8px}
 .hero{padding:clamp(28px,7vh,72px) 0 10px}
-.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(36px,9.6vw,84px);line-height:1.02;letter-spacing:-.022em}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(38px,11.2vw,96px);line-height:1;letter-spacing:-.022em}
 .hero h1 span{display:block;text-wrap:balance}
-@media(min-width:1000px){.hero h1{font-size:clamp(56px,6.2vw,88px)}}
+@media(min-width:1000px){.hero h1{font-size:clamp(64px,7vw,104px)}}
 .l-short{display:none}
 @media(max-width:999px){.l-full{display:none}.l-short{display:inline}}
-.hero p{margin:22px 0 0;font-size:clamp(17px,2.2vw,20px);color:var(--ink-2);max-width:40ch}
+.hero p{margin:22px 0 0;font-size:clamp(17px,2.2vw,20px);color:var(--ink-2);max-width:48ch}
 .paper{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin:30px 0 0;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .paper-when{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .paper-when b{font-size:16px}
