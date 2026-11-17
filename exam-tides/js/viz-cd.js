@@ -3,9 +3,9 @@
 VIZ["cd-phases"] = { t: "One statement through every phase", cap: "position = initial + rate * 60, exactly as in the textbook.", build(host) {
   flowViz(host, { nodes: [
     { t: "Source", s: "Character stream", code: "position = initial + rate * 60" },
-    { t: "Lexical analysis", s: "Characters → tokens; names go into the symbol table", code: "⟨id,1⟩ ⟨=⟩ ⟨id,2⟩ ⟨+⟩ ⟨id,3⟩ ⟨*⟩ ⟨60⟩\n\nSymbol table\n1  position  float\n2  initial   float\n3  rate      float" },
-    { t: "Syntax analysis", s: "Tokens → syntax tree (* binds tighter than +)", code: "        =\n      /   \\\n ⟨id,1⟩    +\n         /   \\\n     ⟨id,2⟩    *\n             /   \\\n         ⟨id,3⟩   60" },
-    { t: "Semantic analysis", s: "Type checking inserts a conversion", d: "rate is float but 60 is an integer, so the checker inserts ==inttofloat==.", code: "        =\n      /   \\\n ⟨id,1⟩    +\n         /   \\\n     ⟨id,2⟩    *\n             /   \\\n         ⟨id,3⟩  inttofloat\n                     |\n                     60" },
+    { t: "Lexical analysis", s: "Characters → tokens; names go into the symbol table", code: "<id,1> <=> <id,2> <+>\n<id,3> <*> <60>\n\nSymbol table\n1  position  float\n2  initial   float\n3  rate      float" },
+    { t: "Syntax analysis", s: "Tokens → syntax tree (* binds tighter than +)", code: "        =\n      /   \\\n <id,1>    +\n         /   \\\n     <id,2>    *\n             /   \\\n         <id,3>   60" },
+    { t: "Semantic analysis", s: "Type checking inserts a conversion", d: "rate is float but 60 is an integer, so the checker inserts ==inttofloat==.", code: "        =\n      /   \\\n <id,1>    +\n         /   \\\n     <id,2>    *\n             /   \\\n         <id,3>  inttofloat\n                     |\n                     60" },
     { t: "Intermediate code", s: "Three-address code", code: "t1 = inttofloat(60)\nt2 = id3 * t1\nt3 = id2 + t2\nid1 = t3" },
     { t: "Code optimisation", s: "Fold the conversion, drop the extra copy", d: "The conversion is done once at compile time (60 → 60.0) and t3 is removed.", code: "t1 = id3 * 60.0\nid1 = id2 + t1" },
     { t: "Code generation", s: "Registers and machine instructions (F = floating point)", code: "LDF  R2, id3\nMULF R2, R2, #60.0\nLDF  R1, id2\nADDF R1, R1, R2\nSTF  id1, R1" }] });
@@ -35,7 +35,7 @@ VIZ["cd-buffer"] = { t: "Input buffering: lexemeBegin, forward and the sentinel"
 }};
 
 VIZ["cd-dfa"] = { t: "DFA for (a|b)*abb: run any string", cap: "Built from followpos. Type a string of a's and b's and step through it.", build(host) {
-  hx("div", "vz-mini", `<table class="vz-tbl"><tr><th>position</th><td>1 (a)</td><td>2 (b)</td><td>3 (a)</td><td>4 (b)</td><td>5 (b)</td><td>6 (#)</td></tr><tr><th>followpos</th><td>{1,2,3}</td><td>{1,2,3}</td><td>{4}</td><td>{5}</td><td>{6}</td><td>—</td></tr></table>
+  hx("div", "vz-mini", `<table class="vz-tbl"><tr><th>position</th><th>symbol</th><th>followpos</th></tr>${[[1,"a","{1,2,3}"],[2,"b","{1,2,3}"],[3,"a","{4}"],[4,"b","{5}"],[5,"b","{6}"],[6,"#","—"]].map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</table>
   <p class="vz-dim">States: A = {1,2,3} start, B = {1,2,3,4}, C = {1,2,3,5}, D = {1,2,3,6} accepting (contains position 6, the # marker).</p>`, host);
   const f = hx("div", "vz-form", `<label>Input string<input value="babb" spellcheck="false" autocapitalize="off"></label>`, host);
   const inp = f.querySelector("input");
@@ -133,11 +133,11 @@ VIZ["cd-slr"] = { t: "SLR parsing table and a live shift-reduce parse", cap: "Th
       const row = [st.join(" "), sym.join(" "), w.slice(ip).join(" "), s, a];
       if (!act) { rows.push(row.concat("error (empty cell)")); break; }
       if (act === "acc") { rows.push(row.concat("accept")); break; }
-      if (act[0] === "s") { st.push(+act.slice(1)); sym.push(a); ip++; rows.push(row.concat(`shift to ${act.slice(1)}`)); continue; }
+      if (act[0] === "s") { st.push(+act.slice(1)); sym.push(a); ip++; rows.push(row.concat(`shift ${act.slice(1)}`)); continue; }
       const p = SLR.P[+act.slice(1)];
       for (let k = 0; k < p[1]; k++) { st.pop(); sym.pop(); }
       st.push(SLR.G[st[st.length - 1]][p[0]]); sym.push(p[0]);
-      rows.push(row.concat(`reduce by ${p[2]}`));
+      rows.push(row.concat(`reduce ${p[2]}`));
     }
     const t = hx("div", "vz-scroll", `<table class="vz-tbl vz-trace"><tr><th>Stack</th><th>Symbols</th><th>Input</th><th>Action</th></tr>${rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[5]}</td></tr>`).join("")}</table>`, out);
     const trs = t.querySelectorAll("tr");
@@ -153,10 +153,10 @@ VIZ["cd-slr"] = { t: "SLR parsing table and a live shift-reduce parse", cap: "Th
 VIZ["cd-3ac"] = { t: "Quadruples, triples, indirect triples", cap: "a = b * −c + b * −c in all three representations.", build(host) {
   const box = hx("div", null, null, host), n = note(host);
   const views = [
-    ["Three-address code", `<pre class="vz-code">t1 = minus c\nt2 = b * t1\nt3 = minus c\nt4 = b * t3\nt5 = t2 + t4\na  = t5</pre>`, "Each line has at most ==one operator== on the right. Temporaries t1 to t5 hold intermediate results."],
+    ["Code", `<pre class="vz-code">t1 = minus c\nt2 = b * t1\nt3 = minus c\nt4 = b * t3\nt5 = t2 + t4\na  = t5</pre>`, "Each line has at most ==one operator== on the right. Temporaries t1 to t5 hold intermediate results."],
     ["Quadruples", `<table class="vz-tbl"><tr><th></th><th>op</th><th>arg1</th><th>arg2</th><th>result</th></tr><tr><th>0</th><td>minus</td><td>c</td><td></td><td>t1</td></tr><tr><th>1</th><td>*</td><td>b</td><td>t1</td><td>t2</td></tr><tr><th>2</th><td>minus</td><td>c</td><td></td><td>t3</td></tr><tr><th>3</th><td>*</td><td>b</td><td>t3</td><td>t4</td></tr><tr><th>4</th><td>+</td><td>t2</td><td>t4</td><td>t5</td></tr><tr><th>5</th><td>=</td><td>t5</td><td></td><td>a</td></tr></table>`, "Four fields. Results have ==explicit names==, so instructions can be moved freely, at the cost of many temporaries in the symbol table."],
     ["Triples", `<table class="vz-tbl"><tr><th></th><th>op</th><th>arg1</th><th>arg2</th></tr><tr><th>0</th><td>minus</td><td>c</td><td></td></tr><tr><th>1</th><td>*</td><td>b</td><td><mark>(0)</mark></td></tr><tr><th>2</th><td>minus</td><td>c</td><td></td></tr><tr><th>3</th><td>*</td><td>b</td><td><mark>(2)</mark></td></tr><tr><th>4</th><td>+</td><td><mark>(1)</mark></td><td><mark>(3)</mark></td></tr><tr><th>5</th><td>=</td><td>a</td><td><mark>(4)</mark></td></tr></table>`, "No result column: a result is named by its ==position== in brackets. Saves space, but moving an instruction changes its number and ==breaks every reference==."],
-    ["Indirect triples", `<div class="vz-two"><table class="vz-tbl"><tr><th>instruction</th></tr><tr><td>35: (0)</td></tr><tr><td>36: (1)</td></tr><tr><td>37: (2)</td></tr><tr><td>38: (3)</td></tr><tr><td>39: (4)</td></tr><tr><td>40: (5)</td></tr></table><table class="vz-tbl"><tr><th></th><th>op</th><th>arg1</th><th>arg2</th></tr><tr><th>0</th><td>minus</td><td>c</td><td></td></tr><tr><th>1</th><td>*</td><td>b</td><td>(0)</td></tr><tr><th>2</th><td>minus</td><td>c</td><td></td></tr><tr><th>3</th><td>*</td><td>b</td><td>(2)</td></tr><tr><th>4</th><td>+</td><td>(1)</td><td>(3)</td></tr><tr><th>5</th><td>=</td><td>a</td><td>(4)</td></tr></table></div>`, "A separate ==list of pointers== gives the execution order. An optimiser reorders that list and leaves the triples untouched. Best of both."]];
+    ["Indirect", `<div class="vz-two"><table class="vz-tbl"><tr><th>instruction</th></tr><tr><td>35: (0)</td></tr><tr><td>36: (1)</td></tr><tr><td>37: (2)</td></tr><tr><td>38: (3)</td></tr><tr><td>39: (4)</td></tr><tr><td>40: (5)</td></tr></table><table class="vz-tbl"><tr><th></th><th>op</th><th>arg1</th><th>arg2</th></tr><tr><th>0</th><td>minus</td><td>c</td><td></td></tr><tr><th>1</th><td>*</td><td>b</td><td>(0)</td></tr><tr><th>2</th><td>minus</td><td>c</td><td></td></tr><tr><th>3</th><td>*</td><td>b</td><td>(2)</td></tr><tr><th>4</th><td>+</td><td>(1)</td><td>(3)</td></tr><tr><th>5</th><td>=</td><td>a</td><td>(4)</td></tr></table></div>`, "A separate ==list of pointers== gives the execution order. An optimiser reorders that list and leaves the triples untouched. Best of both."]];
   seg(host.insertBefore(hx("div"), box), views.map(v => v[0]), k => { box.innerHTML = `<div class="vz-scroll">${views[k][1]}</div>`; n.innerHTML = fmt(views[k][2]); }, 0);
   box.innerHTML = `<div class="vz-scroll">${views[0][1]}</div>`; n.innerHTML = fmt(views[0][2]);
 }};
@@ -179,15 +179,15 @@ VIZ["cd-ar"] = { t: "Control links vs access links on the stack", cap: "sort cal
   hx("pre", "vz-code vz-nest", "sort                     depth 1\n├── readArray            depth 2\n├── exchange             depth 2\n└── quicksort            depth 2\n    └── partition        depth 3", host);
   const ctl = hx("div", null, null, host);
   const R = [{ n: "sort", d: 1 }, { n: "quicksort(1,9)", d: 2, a: 0 }, { n: "quicksort(1,3)", d: 2, a: 0 }, { n: "partition(1,3)", d: 3, a: 2 }, { n: "exchange(1,3)", d: 2, a: 0 }];
-  const W = vw(host), rh = 40, gap = 12, H = R.length * (rh + gap) + 30;
+  const W = vw(host), rh = 40, gap = 12, H = R.length * (rh + gap) + 40;
   const svg = svgRoot(hx("div", "vz-canvas", null, host), W, H, "activation records");
   const bw = Math.min(W * 0.5, 240), cx = W / 2;
-  const yOf = i => H - 16 - (i + 1) * (rh + gap) + gap;
+  const yOf = i => H - 26 - (i + 1) * (rh + gap) + gap;
   R.forEach((r, i) => {
     sv("rect", { x: cx - bw / 2, y: yOf(i), width: bw, height: rh, rx: 8, class: "vx-box" }, svg);
     tx(svg, cx, yOf(i) + 25, `${r.n}   (depth ${r.d})`, "vx-t vx-b vx-s");
   });
-  tx(svg, cx, H - 2, "stack grows upward ↑", "vx-t vx-s vx-mt");
+  tx(svg, cx, H - 8, "stack grows upward ↑", "vx-t vx-s vx-mt");
   const gC = sv("g", { class: "vx-links ctrl" }, svg), gA = sv("g", { class: "vx-links acc" }, svg);
   R.forEach((r, i) => {
     if (i > 0) {

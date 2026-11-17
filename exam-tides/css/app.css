@@ -677,3 +677,120 @@ body{font-size:17px;letter-spacing:.003em}
 .tt-chime .ic{width:16px;height:16px}
 @media (prefers-reduced-motion:reduce){.tt.running .whale.big,.tt.splash .w-spout,.tt.splash .whale.mini,.tt-panel{animation:none}.tt.splash .w-spout{opacity:1}}
 @media(min-width:1000px) and (max-width:1279px){main{padding-top:68px}}
+
+/* v4 audit fixes: never let wide content stretch the page */
+.shell > div{min-width:0}
+.page,#modebody,.vcard,.vbody,.lcard,.panel,.fsec{min-width:0;max-width:100%}
+html,body{overflow-x:clip}
+
+/* v4: step controls */
+.vz-bar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;margin-top:12px;padding:6px;border-radius:14px;background:var(--sunk)}
+.vz-bar[hidden]{display:none}
+.vz-btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;height:40px;padding:0 14px;border-radius:11px;border:1.5px solid var(--line-strong);background:var(--surface);font-weight:700;font-size:14.5px;color:var(--ink)}
+.vz-btn .ic{width:17px;height:17px}
+.vz-btn:first-child{padding-left:9px}
+.vz-primary{padding:0 12px 0 16px;min-width:96px}
+.vz-primary.vz-again{padding:0 14px 0 10px;background:var(--surface);color:var(--ink);border-color:var(--line-strong)}
+.vz-pos{min-width:0;text-align:center;font:600 13.5px var(--mono);color:var(--muted)}
+.vz-bar:focus-visible{outline:2.5px solid var(--tide)}
+
+/* flow steps: labelled pills on wide screens, numbered dots on phones */
+.vz-track{flex-wrap:wrap;overflow:visible;padding:2px 0 0;gap:6px}
+.vz-panel h4{display:flex;align-items:center;gap:10px}
+.vz-panel h4 .vz-k{flex:none;width:26px;height:26px;background:var(--tide);color:#fff;font-size:13px}
+:root[data-theme="night"] .vz-panel h4 .vz-k{color:#04171b}
+@media(max-width:640px){
+  .vz-track{gap:6px}
+  .vz-track li button{padding:0;border-radius:50%;width:34px;height:34px;justify-content:center}
+  .vz-track .vz-tl{display:none}
+  .vz-track .vz-k{width:100%;height:100%;background:none}
+  .vz-track li.now .vz-k{background:var(--tide)}
+  .vz-track li.past button{background:var(--tide-soft);color:var(--tide-deep)}
+}
+@media(min-width:641px){.vz-track{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}}
+
+/* tables and code: phone sizing, scroll cue where scrolling is unavoidable */
+.vz-scroll{background:linear-gradient(90deg,var(--surface) 30%,transparent) left/24px 100% no-repeat local,linear-gradient(270deg,var(--surface) 30%,transparent) right/24px 100% no-repeat local,radial-gradient(farthest-side at 0 50%,rgba(15,39,49,.18),transparent) left/10px 100% no-repeat scroll,radial-gradient(farthest-side at 100% 50%,rgba(15,39,49,.18),transparent) right/10px 100% no-repeat scroll;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+@media(max-width:640px){
+  .vz-tbl{font-size:12.5px}
+  .vz-tbl th,.vz-tbl td{padding:4px 6px}
+  .vz-code{font-size:12.5px;padding:10px 12px}
+  .vz-aes{grid-template-columns:auto;justify-content:start}
+  .vz-grid4{grid-template-columns:repeat(4,38px)}
+  .vz-grid4 span{height:38px}
+  .vz-grid5{grid-template-columns:repeat(5,40px)}
+  .vz-grid5 span{height:40px}
+}
+.vz-335{grid-template-columns:repeat(3,minmax(0,1fr))}
+.vz-335 p{overflow-wrap:anywhere}
+
+/* sheet (visual on top of the current page) */
+.noscroll,.noscroll body{overflow:hidden}
+.sheet-wrap{position:fixed;inset:0;z-index:60}
+.sheet-back{position:absolute;inset:0;background:rgba(6,20,26,.46);animation:fade .18s ease-out}
+.sheetbox{position:absolute;left:0;right:0;bottom:0;max-height:92dvh;overflow:auto;overscroll-behavior:contain;background:var(--surface);border-radius:22px 22px 0 0;padding:0 16px 24px;animation:rise .22s cubic-bezier(.2,.8,.2,1)}
+.sheet-h{position:sticky;top:0;z-index:2;display:flex;align-items:flex-start;gap:12px;padding:16px 0 12px;background:var(--surface);border-bottom:1px solid var(--line)}
+.sheet-h > div{flex:1;min-width:0}
+.sheet-h h3{font-size:18px;line-height:1.3}
+.sheet-h p{margin:4px 0 0;font-size:14px;color:var(--muted);line-height:1.45}
+.sheet-x{flex:none}
+.sheet-body{padding-top:4px}
+@media(min-width:760px){.sheetbox{left:50%;right:auto;bottom:auto;top:50%;width:min(760px,92vw);max-height:88vh;border-radius:22px;transform:translate(-50%,-50%);animation:pop2 .2s ease-out;padding:0 22px 24px}}
+@keyframes fade{from{opacity:0}}
+@keyframes rise{from{transform:translateY(40px);opacity:.6}}
+@keyframes pop2{from{opacity:0;transform:translate(-50%,-48%)}}
+@media (prefers-reduced-motion:reduce){.sheetbox,.sheet-back{animation:none}}
+.vz-code.wrap{white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:640px){.vz-ptab th,.vz-ptab td{padding:4px 4px;font-size:11.5px}}
+@media(max-width:380px){.vz-ptab th,.vz-ptab td{padding:3px 3px;font-size:11px}}
+
+/* v4: rebuilt diagram pieces */
+.vx-phsep{stroke:var(--line);stroke-dasharray:3 4}
+.vx-ph{font-size:11px}
+.vz-form label > span{display:block}
+.vz-form label > span b{color:var(--tide-deep);font-family:var(--mono)}
+:root[data-theme="night"] .vz-form label > span b{color:var(--tide)}
+.vz-out code{word-break:normal;white-space:nowrap;margin-right:2px}
+@media(max-width:640px){.vz-buf{gap:3px}.vz-buf span{min-width:31px;height:40px;padding:0 3px;font-size:14px}.vz-buf span.eof{font-size:11px}}
+.vz-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:13px;color:var(--ink-2)}
+.vz-legend span{display:inline-flex;align-items:center;gap:6px}
+.vz-legend i{display:inline-block;width:16px;height:12px;border-radius:4px}
+.vz-legend .lg-exp{background:var(--good-soft);border:1.5px solid var(--good);border-radius:50%}
+.vz-legend .lg-req{border:2px dashed var(--tide)}
+.vz-legend .lg-in{width:12px;border-radius:50%;background:var(--tide-soft);border:2px solid var(--tide)}
+/* sensor node */
+.vz-node{margin-top:10px;display:grid;gap:8px}
+.vz-node-row{display:flex;align-items:stretch;gap:6px}
+.vz-node-row.flow .vz-blk{flex:1}
+.vz-node-row.one .vz-blk{flex:1}
+.vz-node-row.opts .vz-blk{flex:1}
+.vz-arr{align-self:center;color:var(--muted);font-weight:700}
+.vz-blk{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:62px;padding:8px 6px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface-2);text-align:center;min-width:0}
+.vz-blk b{font-size:13.5px;line-height:1.2}
+.vz-blk small{font-size:12px;color:var(--muted);line-height:1.25}
+.vz-blk.hot{border-color:var(--amber)}
+.vz-blk.power{background:var(--amber-soft);border-color:var(--amber)}
+.vz-blk.opt{background:var(--surface);border-style:dashed;min-height:52px}
+.vz-blk.now{background:var(--tide-soft);border-color:var(--tide)}
+.vz-feed{text-align:center;font-size:12.5px;color:var(--muted);margin:-2px 0}
+/* manifesto */
+.vz-man{display:grid;gap:8px;margin-top:10px}
+.vz-man button{display:grid;grid-template-columns:1fr auto;grid-template-areas:"h s" "l s";align-items:center;gap:2px 12px;text-align:left;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface)}
+.vz-man .heavy{grid-area:h;font-weight:700;font-size:16px;color:var(--ink)}
+.vz-man .light{grid-area:l;font-size:14px;color:var(--muted)}
+.vz-scale{grid-area:s;width:52px;height:34px;fill:none;stroke:var(--ink-2);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.vz-scale .pan{fill:var(--tide-soft);stroke:var(--tide)}
+.vz-scale .pv{fill:var(--ink-2);stroke:none}
+.vz-man button.now{border-color:var(--amber);background:var(--amber-soft)}
+/* scrum 3-3-5 */
+.vz-335{display:grid;grid-template-columns:1fr;gap:8px}
+.vz-335 section{display:grid;grid-template-columns:96px 1fr;align-items:start;gap:8px;padding:10px 12px}
+.vz-335 h4{margin:3px 0 0}
+.vz-335 section div{display:flex;flex-wrap:wrap;gap:5px}
+.vz-335 span{padding:3px 9px;border-radius:8px;background:var(--surface);font-size:13.5px;font-weight:600}
+@media(max-width:400px){.vz-335 section{grid-template-columns:1fr}}
+@media(max-width:400px){.vz-node-row{gap:4px}.vz-blk{padding:8px 4px}.vz-blk b{font-size:12.5px}.vz-blk small{font-size:11.5px}}
+.vx-tdd path.vx-tip{stroke:none;fill:var(--line-strong)}
+.vx-tdd.red.now path.vx-tip{fill:var(--signal)} .vx-tdd.green.now path.vx-tip{fill:var(--good)} .vx-tdd.blue.now path.vx-tip{fill:var(--tide)}
+@media (max-width:999px){body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:88px;background:linear-gradient(to top,var(--bg) 50%,color-mix(in srgb,var(--bg) 0%,transparent));pointer-events:none;z-index:9}}
+@media (min-width:1000px){.modes{width:max-content;max-width:calc(100% - 140px)}}

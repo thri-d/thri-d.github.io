@@ -1,25 +1,14 @@
 /* Agile visual explainers */
 
-VIZ["ag-manifesto"] = { t: "The four values as balance scales", cap: "Both sides have value; the left side weighs more. Tap a scale.", build(host) {
-  const V = [["Individuals and interactions", "processes and tools", "Good people talking to each other solve problems that no process document anticipates."],
-    ["Working software", "comprehensive documentation", "Progress is measured by software that runs, not by pages written. Documentation still exists, just less of it."],
-    ["Customer collaboration", "contract negotiation", "Work with the customer continuously instead of fighting over the wording of a fixed contract."],
-    ["Responding to change", "following a plan", "Plans are made, but they bend when the customer or market changes."]];
-  const W = vw(host), rowH = 76, H = V.length * rowH + 8;
-  const svg = svgRoot(hx("div", "vz-canvas", null, host), W, H, "manifesto");
-  const n = note(host); n.innerHTML = fmt("Initials in order: ==I W C R== — ==I Will Code Right==.");
-  V.forEach((v, i) => {
-    const g = sv("g", { class: "vx-scale" }, svg), y = 14 + i * rowH, cx = W / 2, arm = Math.min(W * 0.36, 230);
-    sv("path", { d: `M${cx - 10} ${y + 48} L${cx} ${y + 28} L${cx + 10} ${y + 48} Z`, class: "vx-fulcrum" }, g);
-    const tilt = 7, yl = y + 28 + tilt, yr = y + 28 - tilt;
-    sv("line", { x1: cx - arm, y1: yl, x2: cx + arm, y2: yr, class: "vx-beam" }, g);
-    sv("rect", { x: cx - arm - 4, y: yl - 2, width: Math.min(arm * 0.95, 200), height: 26, rx: 7, class: "vx-pan heavy", transform: `translate(${-4} 0)` }, g);
-    tx(g, cx - arm + Math.min(arm * 0.95, 200) / 2 - 8, yl + 15, v[0], "vx-t vx-b vx-s");
-    sv("rect", { x: cx + arm - Math.min(arm * 0.95, 200) + 4, y: yr - 2, width: Math.min(arm * 0.95, 200), height: 26, rx: 7, class: "vx-pan" }, g);
-    tx(g, cx + arm - Math.min(arm * 0.95, 200) / 2 + 4, yr + 15, v[1], "vx-t vx-s vx-mt");
-    g.style.cursor = "pointer";
-    g.addEventListener("click", () => { svg.querySelectorAll(".vx-scale").forEach(x => x.classList.remove("now")); g.classList.add("now"); n.innerHTML = `<b>${v[0]}</b> over ${v[1]}. ` + fmt(v[2]); });
-  });
+VIZ["ag-manifesto"] = { t: "The four values as balance scales", cap: "Both sides have value; the left side weighs more. Tap a value.", build(host) {
+  const V = [["Individuals and interactions", "processes and tools", "Good people talking to each other solve problems no process document anticipates."],
+    ["Working software", "comprehensive documentation", "Progress is measured by software that runs, not pages written. Documentation still exists, just less of it."],
+    ["Customer collaboration", "contract negotiation", "Work with the customer continuously instead of arguing over the wording of a fixed contract."],
+    ["Responding to change", "following a plan", "Plans are made, but they bend when the customer or the market changes."]];
+  const scale = '<svg class="vz-scale" viewBox="0 0 64 40" aria-hidden="true"><path d="M32 12v22M24 36h16" /><path d="M8 14 56 6" /><path d="M8 14l-5 10h10zM56 6l-5 10h10z" class="pan"/><circle cx="32" cy="10" r="2.5" class="pv"/></svg>';
+  const box = hx("div", "vz-man", V.map((v, i) => `<button type="button" data-i="${i}"><span class="heavy">${v[0]}</span>${scale}<span class="light">over ${v[1]}</span></button>`).join(""), host);
+  const n = note(host); n.innerHTML = fmt("Initials in order: ==I W C R== = ==I Will Code Right==.");
+  box.querySelectorAll("button").forEach(b => b.onclick = () => { box.querySelectorAll("button").forEach(x => x.classList.remove("now")); b.classList.add("now"); const v = V[+b.dataset.i]; n.innerHTML = `<b>${v[0]}</b> over ${v[1]}. ` + fmt(v[2]); });
 }};
 
 VIZ["ag-xpmap"] = { t: "Your syllabus is Shore's book: five practice families", cap: "Unit 1 to Unit 5 follow the chapters Thinking, Collaborating, Releasing, Planning, Developing. Tap a practice.", build(host) {
@@ -35,7 +24,7 @@ VIZ["ag-xpmap"] = { t: "Your syllabus is Shore's book: five practice families", 
 }};
 
 VIZ["ag-scrum"] = { t: "Scrum in one picture: 3 roles, 3 artifacts, 5 events", cap: "Step through one sprint.", build(host) {
-  hx("div", "vz-335", `<section><h4>3 roles</h4><p>Product Owner</p><p>Scrum Master</p><p>Development Team</p></section><section><h4>3 artifacts</h4><p>Product Backlog</p><p>Sprint Backlog</p><p>Increment</p></section><section><h4>5 events</h4><p>Sprint</p><p>Sprint Planning</p><p>Daily Scrum</p><p>Sprint Review</p><p>Sprint Retrospective</p></section>`, host);
+  hx("div", "vz-335", [["3 roles", ["Product Owner", "Scrum Master", "Development Team"]], ["3 artifacts", ["Product Backlog", "Sprint Backlog", "Increment"]], ["5 events", ["Sprint", "Sprint Planning", "Daily Scrum", "Sprint Review", "Sprint Retrospective"]]].map(([h, xs]) => `<section><h4>${h}</h4><div>${xs.map(x => `<span>${x}</span>`).join("")}</div></section>`).join(""), host);
   flowViz(host, { nodes: [
     { t: "Product Backlog", s: "Owned by the Product Owner", d: "An ordered list of everything the product might need, highest value first." },
     { t: "Sprint Planning", s: "What and how", d: "The team picks backlog items it can finish this sprint and plans the work." },
@@ -47,35 +36,38 @@ VIZ["ag-scrum"] = { t: "Scrum in one picture: 3 roles, 3 artifacts, 5 events", c
 }};
 
 VIZ["ag-tdd"] = { t: "TDD, one cycle at a time", cap: "A tiny real example: a leap-year function.", build(host) {
-  const W = vw(host), H = 190, svg = svgRoot(hx("div", "vz-canvas", null, host), W, H, "TDD cycle");
-  const cx = W / 2, cy = 95, R = 70;
-  const arcs = [["Red", "write a failing test", -90, 30, "red"], ["Green", "make it pass", 30, 150, "green"], ["Refactor", "clean up", 150, 270, "blue"]];
+  const W = vw(host), H = 250, svg = svgRoot(hx("div", "vz-canvas", null, host), W, H, "TDD cycle");
+  const cx = W / 2, cy = 112, R = W < 380 ? 58 : 66;
+  const arcs = [["Red", "failing test", -90, 30, "red"], ["Green", "make it pass", 30, 150, "green"], ["Refactor", "clean up", 150, 270, "blue"]];
   const paths = arcs.map(([t, s, a, b, c]) => {
     const p = (ang, rr) => [cx + rr * Math.cos(ang * Math.PI / 180), cy + rr * Math.sin(ang * Math.PI / 180)];
     const [x1, y1] = p(a + 4, R), [x2, y2] = p(b - 4, R);
     const g = sv("g", { class: "vx-tdd " + c }, svg);
-    sv("path", { d: `M${x1} ${y1} A ${R} ${R} 0 0 1 ${x2} ${y2}`, fill: "none", "marker-end": mk(svg, "ah") }, g);
-    const [lx, ly] = p((a + b) / 2, R + 30);
-    tx(g, lx, ly, t, "vx-t vx-b"); tx(g, lx, ly + 15, s, "vx-t vx-s vx-mt");
+    sv("path", { d: `M${x1} ${y1} A ${R} ${R} 0 0 1 ${x2} ${y2}`, fill: "none" }, g);
+    { const e = (b - 4) * Math.PI / 180, tx_ = -Math.sin(e), ty_ = Math.cos(e), nx = Math.cos(e), ny = Math.sin(e), s = 12;
+      sv("path", { d: `M${x2 + tx_ * s} ${y2 + ty_ * s} L${x2 + nx * s * .7} ${y2 + ny * s * .7} L${x2 - nx * s * .7} ${y2 - ny * s * .7} Z`, class: "vx-tip" }, g); }
+    const mid = (a + b) / 2, [lx, ly] = p(mid, R + 18), c0 = Math.cos(mid * Math.PI / 180);
+    const anc = c0 > 0.3 ? "start" : c0 < -0.3 ? "end" : "middle", dy = Math.sin(mid * Math.PI / 180) > 0.5 ? 14 : 0;
+    tx(g, lx, ly + dy, t, "vx-t vx-b", anc); tx(g, lx, ly + dy + 15, s, "vx-t vx-s vx-mt", anc);
     return g;
   });
-  tx(svg, cx, cy + 5, "minutes, not hours", "vx-t vx-s vx-mt");
+  tx(svg, cx, cy - 2, "minutes,", "vx-t vx-s vx-mt"); tx(svg, cx, cy + 13, "not hours", "vx-t vx-s vx-mt");
   const panel = hx("div", "vz-panel", null, host);
   const S = [
-    [0, "Write a test that fails", "assert isLeap(2024) == true\n# fails: isLeap does not exist yet"],
+    [0, "Write a test that fails first", "assert isLeap(2024) == true\n# fails: isLeap does not exist"],
     [1, "Write just enough code to pass", "def isLeap(year):\n    return year % 4 == 0\n# test passes"],
-    [2, "Refactor (nothing to clean yet)", "# code is simple; all tests green"],
-    [0, "Next failing test", "assert isLeap(1900) == false\n# fails: 1900 % 4 == 0 gives true"],
-    [1, "Make it pass", "def isLeap(year):\n    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)\n# both tests pass; isLeap(2000) == true also passes"],
-    [2, "Refactor with the tests as a safety net", "def divisible(y, n):\n    return y % n == 0\n\ndef isLeap(year):\n    return divisible(year, 4) and (not divisible(year, 100) or divisible(year, 400))\n# behaviour unchanged, all tests still green"]];
+    [2, "Nothing to clean yet", "# code is simple; all tests green"],
+    [0, "Next failing test", "assert isLeap(1900) == false\n# fails: 1900 is divisible by 4"],
+    [1, "Make it pass", "def isLeap(year):\n    return (year % 4 == 0 and\n            (year % 100 != 0 or\n             year % 400 == 0))\n# 2024, 1900 and 2000 all pass"],
+    [2, "Clean up, tests as the safety net", "def div(y, n):\n    return y % n == 0\n\ndef isLeap(y):\n    return div(y, 4) and (\n        not div(y, 100)\n        or div(y, 400))\n# same behaviour, all tests green"]];
   stepper(host, S.length, i => {
     paths.forEach((p, k) => p.classList.toggle("now", k === S[i][0]));
-    panel.innerHTML = `<h4>${arcs[S[i][0]][0]}: ${S[i][1]}</h4><pre class="vz-code">${S[i][2]}</pre>`;
+    panel.innerHTML = `<h4>${arcs[S[i][0]][0]}: ${S[i][1]}</h4><pre class="vz-code wrap">${S[i][2]}</pre>`;
   });
 }};
 
 VIZ["ag-velocity"] = { t: "Velocity, slack and the burn-up chart", cap: "Move the sliders. Velocity decides how much fits; slack keeps promises safe.", build(host) {
-  const f = hx("div", "vz-form vz-form2", `<label>Velocity (points per iteration) <b></b><input type="range" min="6" max="16" value="10"></label><label>Slack held back <b></b><input type="range" min="0" max="30" step="10" value="10"></label>`, host);
+  const f = hx("div", "vz-form vz-form2", `<label><span>Velocity (points per iteration): <b></b></span><input type="range" min="6" max="16" value="10"></label><label><span>Slack held back: <b></b></span><input type="range" min="0" max="30" step="10" value="10"></label>`, host);
   const [vi, si] = f.querySelectorAll("input"), [vl, sl] = f.querySelectorAll("b");
   const stories = [["Login", 3], ["Search", 5], ["Cart", 2], ["Payment", 8], ["Order history", 3], ["Wishlist", 1], ["Reviews", 5], ["Coupons", 2]];
   const W = vw(host), H = 220, wrap = hx("div", "vz-canvas", null, host);
@@ -115,7 +107,7 @@ VIZ["ag-ci"] = { t: "One continuous-integration cycle", cap: "Every few hours, t
 }};
 
 VIZ["ag-planning"] = { t: "The planning game on one grid", cap: "Customers place cards by value; programmers say what each costs.", build(host) {
-  const C = [["Login", 80, 20], ["Payment", 90, 75], ["Wishlist", 30, 15], ["3D product view", 25, 85], ["Search", 75, 45], ["Coupons", 45, 30]];
+  const C = [["Login", 76, 18], ["Payment", 70, 74], ["Wishlist", 22, 20], ["3D product view", 22, 72], ["Search", 62, 34], ["Coupons", 36, 32]];
   const W = vw(host), H = Math.round(W * 0.62), svg = svgRoot(hx("div", "vz-canvas", null, host), W, H, "value vs cost");
   const X = c => 30 + (W - 44) * c / 100, Y = v => H - 26 - (H - 44) * v / 100;
   sv("line", { x1: X(50), y1: Y(0), x2: X(50), y2: Y(100), class: "vx-axis dash" }, svg);
@@ -124,7 +116,7 @@ VIZ["ag-planning"] = { t: "The planning game on one grid", cap: "Customers place
   sv("line", { x1: X(0), y1: Y(0), x2: X(0), y2: Y(100), class: "vx-axis" }, svg);
   tx(svg, X(100), H - 6, "cost (programmers estimate) →", "vx-t vx-s vx-mt", "end");
   tx(svg, X(0) + 6, 14, "value (customers decide) ↑", "vx-t vx-s vx-mt", "start");
-  [["Do first", 25, 96], ["Plan carefully", 75, 96], ["Cheap extras", 25, 4], ["Question it", 75, 4]].forEach(([l, c, v]) => tx(svg, X(c), Y(v) + 4, l, "vx-t vx-s vx-quad"));
+  [["Do first", 2, 95, "start"], ["Plan carefully", 98, 95, "end"], ["Cheap extras", 2, 4, "start"], ["Question it", 98, 4, "end"]].forEach(([l, c, v, a]) => tx(svg, X(c), Y(v) + 4, l, "vx-t vx-s vx-quad", a));
   C.forEach(([l, v, c]) => { const g = sv("g", { class: "vx-card" }, svg); const w = l.length * 6.6 + 16; sv("rect", { x: X(c) - w / 2, y: Y(v) - 12, width: w, height: 24, rx: 6 }, g); tx(g, X(c), Y(v) + 4, l, "vx-t vx-s vx-b"); });
   note(host).innerHTML = fmt("Steps: ==anyone writes stories → programmers estimate cost → customers order them by value== → repeat. High value at low cost goes first. Neither side can make the plan alone, which is the whole point of the game.");
 }};

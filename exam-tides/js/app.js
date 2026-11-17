@@ -55,6 +55,7 @@ const I = {
   shape: '<svg class="ic" viewBox="0 0 24 24"><rect x="3.5" y="4" width="7" height="6" rx="1.5"/><rect x="13.5" y="14" width="7" height="6" rx="1.5"/><path d="M7 10v4.5a2 2 0 0 0 2 2h4.5"/></svg>',
   calc: '<svg class="ic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7h7M8.5 11.5h1M12 11.5h1M15.5 11.5h0M8.5 15h1M12 15h1M15.5 15v2.5"/></svg>',
   target: '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></svg>',
+  close: '<svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   facts: '<svg class="ic" viewBox="0 0 24 24"><path d="M6 3.5h9l3.5 3.5v13.5H6z"/><path d="M14.5 3.5V7.5h4M9 12h6M9 15.5h6"/></svg>'
 };
 const EM = {
@@ -276,6 +277,24 @@ function finalMode(s) {
   <section class="fsec"><h3>${I.target}<span>Where the marks are</span></h3><ul class="sheet">${Fh.marks.map(l => `<li>${F(l)}</li>`).join("")}</ul></section>`;
 }
 
+
+/* ---------- sheet: open a visual on top of the current page ---------- */
+function openSheet(id) {
+  const V = VIZ[id]; if (!V) return;
+  const lastFocus = document.activeElement;
+  const sh = document.createElement("div");
+  sh.className = "sheet-wrap";
+  sh.innerHTML = `<div class="sheet-back" data-sheet-close></div><div class="sheetbox" role="dialog" aria-modal="true" aria-label="${esc(V.t)}"><header class="sheet-h"><div><h3>${esc(V.t)}</h3>${V.cap ? `<p>${esc(V.cap)}</p>` : ""}</div><button type="button" class="iconbtn sheet-x" data-sheet-close aria-label="Close">${I.close}</button></header><div class="sheet-body"></div></div>`;
+  document.body.appendChild(sh);
+  document.documentElement.classList.add("noscroll");
+  V.build(sh.querySelector(".sheet-body"));
+  sh.querySelector(".sheet-x").focus({ preventScroll: true });
+  const onKey = e => { if (e.key === "Escape") close(); };
+  function close() { sh.remove(); document.documentElement.classList.remove("noscroll"); document.removeEventListener("keydown", onKey); if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true }); }
+  document.addEventListener("keydown", onKey);
+  sh.addEventListener("click", e => { if (e.target.closest("[data-sheet-close]")) { e.stopPropagation(); close(); } });
+}
+
 /* ---------- render ---------- */
 function render(scroll) {
   document.getElementById("rail").innerHTML = rail();
@@ -307,7 +326,7 @@ document.addEventListener("click", e => {
   if (d.act === "showviz") { const slot = document.getElementById("vizslot"); slot.innerHTML = `<div class="panel"><h3 class="vt">${esc(VIZ[d.viz].t)}</h3><div class="vb"></div></div>`; VIZ[d.viz].build(slot.querySelector(".vb")); return; }
   const vc = t.closest("[data-vcard]");
   if (vc && t.parentElement === vc) { if (vc.classList.contains("open")) { vc.classList.remove("open"); vc.querySelector(".vbody").hidden = true; } else openViz(vc); return; }
-  if (d.goviz) { OPENVIZ = d.goviz; return go(s, "visuals"); }
+  if (d.goviz) { openSheet(d.goviz); return; }
   if (d.qt) { QT = d.qt; return rerender(); }
   if (d.mx) { const [pi, qi, k] = d.mx.split(".").map(Number); MX[s][pi + "." + qi] = k; return rerender(); }
   if (d.pick) { const Q = QZ[s]; if (Q.pick == null) { Q.pick = +d.pick; const it = Q.items[Q.i]; if (Q.pick === it.m[2]) Q.score++; else Q.miss.push(it); } return rerender(); }

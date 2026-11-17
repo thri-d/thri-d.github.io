@@ -56,7 +56,7 @@ VIZ["ah-zrp"] = { t: "ZRP: zone radius ρ and peripheral nodes", cap: "Drag the 
   const edges = [["X", "a"], ["X", "b"], ["X", "c"], ["X", "d"], ["a", "e"], ["a", "f"], ["b", "f"], ["b", "g"], ["c", "h"], ["c", "i"], ["d", "j"], ["d", "k"], ["g", "m"], ["h", "l"], ["h", "m"], ["e", "k"]];
   const adj = {}; for (const k in nodes) adj[k] = []; edges.forEach(([a, b]) => { adj[a].push(b); adj[b].push(a); });
   const dist = { X: 0 }, q = ["X"]; while (q.length) { const u = q.shift(); adj[u].forEach(v => { if (dist[v] == null) { dist[v] = dist[u] + 1; q.push(v); } }); }
-  const f = hx("div", "vz-form", `<label>Zone radius ρ = <b>2</b><input type="range" min="1" max="3" value="2"></label>`, host);
+  const f = hx("div", "vz-form", `<label><span>Zone radius ρ = <b>2</b></span><input type="range" min="1" max="3" value="2"></label>`, host);
   const r = f.querySelector("input"), lab = f.querySelector("b");
   const net = netViz(host, { nodes, edges, ratio: 0.62, r: 13, label: "zone" });
   const n = note(host);
@@ -130,13 +130,14 @@ VIZ["ah-multicast"] = { t: "Tree vs mesh multicast when a link breaks", cap: "Br
 }};
 
 VIZ["ah-lar"] = { t: "LAR: expected zone and request zone", cap: "The longer since D's last known position, the bigger the circle, and the more nodes join the flood.", build(host) {
-  const f = hx("div", "vz-form", `<label>Time since D was last seen (radius v·(t₁ − t₀)) <b></b><input type="range" min="6" max="30" value="14"></label>`, host);
+  const f = hx("div", "vz-form", `<label><span>Time since D was last seen: radius v·(t₁ − t₀) = <b></b></span><input type="range" min="6" max="30" value="14"></label>`, host);
   const r = f.querySelector("input"), lab = f.querySelector("b");
   const W = vw(host), H = Math.round(W * 0.6), svg = svgRoot(hx("div", "vz-canvas", null, host), W, H, "LAR zones");
   const P = (x, y) => [12 + (W - 24) * x / 100, 12 + (H - 24) * y / 100];
   const pts = [[14, 18], [26, 40], [40, 22], [38, 64], [52, 44], [58, 16], [66, 58], [76, 30], [86, 46], [24, 80], [48, 86], [72, 80], [90, 14], [92, 76], [12, 58], [60, 34], [30, 12], [80, 64]];
   const S = [10, 88], D = [74, 26];
   const g = sv("g", null, svg);
+  hx("div", "vz-legend", `<span><i class="lg-exp"></i>Expected zone</span><span><i class="lg-req"></i>Request zone (scheme 1)</span><span><i class="lg-in"></i>Forwards the RREQ</span>`, host);
   const n = note(host);
   function draw() {
     const R = +r.value; lab.textContent = R;
@@ -150,7 +151,6 @@ VIZ["ah-lar"] = { t: "LAR: expected zone and request zone", cap: "The longer sin
     pts.forEach(p => { const ok = p[0] >= x0 && p[0] <= x1 && p[1] >= y0 && p[1] <= y1; if (ok) inside++; const [x, y] = P(...p); sv("circle", { cx: x, cy: y, r: 7, class: "vx-dot" + (ok ? " in" : "") }, g); });
     const [sx, sy] = P(...S); sv("circle", { cx: sx, cy: sy, r: 11, class: "vx-dot src" }, g); tx(g, sx, sy + 4, "S", "vx-t vx-nl");
     sv("circle", { cx, cy, r: 11, class: "vx-dot dst" }, g); tx(g, cx, cy + 4, "D", "vx-t vx-nl");
-    tx(g, cx, cy - ry - 6, "expected zone", "vx-t vx-s"); tx(g, ax + 6, ay + 14, "request zone (scheme 1)", "vx-t vx-s", "start");
     n.innerHTML = fmt(`D was at the centre and moves at most v, so it is now inside the ==expected zone== of radius v·(t₁ − t₀). The ==request zone== is the smallest rectangle holding S and that circle. Only the ==${inside} of ${pts.length}== nodes inside it forward the RREQ; the rest drop it. Scheme 2 instead forwards only if a node is closer to D than the node it heard from.`);
   }
   r.oninput = draw; draw();
@@ -158,36 +158,27 @@ VIZ["ah-lar"] = { t: "LAR: expected zone and request zone", cap: "The longer sin
 
 VIZ["ah-node"] = { t: "Inside a sensor node", cap: "Tap a block. The radio is the hungriest part.", build(host) {
   const B = [
-    ["Sensing unit", "Sensor + ADC", "Turns a physical quantity (temperature, light, vibration) into an analogue signal, then the ADC converts it to digital.", 8, 18],
-    ["Processing unit", "Microcontroller + memory", "Runs the protocols and local processing (filtering, aggregation). Small memory, low clock speed.", 38, 18],
-    ["Transceiver", "Radio", "Sends and receives over the wireless link. ==The largest energy consumer==: even idle listening drains the battery.", 68, 18],
-    ["Power unit", "Battery", "Feeds every block; often never replaced. This is why energy efficiency drives every WSN design decision.", 38, 62],
-    ["Location finder", "Optional", "GPS or localisation algorithms when position matters.", 8, 62],
-    ["Mobiliser / power generator", "Optional", "Moves the node, or harvests energy (for example solar).", 68, 62]];
-  const W = vw(host), H = Math.round(W * 0.55), svg = svgRoot(hx("div", "vz-canvas", null, host), W, H, "sensor node");
+    ["Sensing unit", "Sensor + ADC", "Turns a physical quantity (temperature, light, vibration) into an analogue signal; the ADC converts it to digital.", "core"],
+    ["Processing unit", "Processor + memory", "A microcontroller runs the protocols and local processing (filtering, aggregation). Small memory, low clock speed.", "core"],
+    ["Transceiver", "Radio", "Sends and receives over the wireless link. ==The largest energy consumer==: even idle listening drains the battery.", "core hot"],
+    ["Power unit", "Battery, feeds every block", "Often never replaced, which is why energy efficiency drives every WSN design decision.", "power"],
+    ["Location finder", "Optional", "GPS or localisation algorithms, when position matters.", "opt"],
+    ["Mobiliser", "Optional", "Moves the node.", "opt"],
+    ["Power generator", "Optional", "Harvests energy, for example solar.", "opt"]];
+  const wrap = hx("div", "vz-node", "", host);
+  const row = (items, cls) => `<div class="vz-node-row ${cls}">${items.map(i => `<button type="button" class="vz-blk ${B[i][3]}" data-b="${i}"><b>${B[i][0]}</b><small>${B[i][1]}</small></button>`).join(cls === "flow" ? '<span class="vz-arr" aria-hidden="true">→</span>' : "")}</div>`;
+  wrap.innerHTML = row([0, 1, 2], "flow") + `<div class="vz-feed" aria-hidden="true">powers all units ↑</div>` + row([3], "one") + `<div class="vz-node-row opts">${[4, 5, 6].map(i => `<button type="button" class="vz-blk opt" data-b="${i}"><b>${B[i][0]}</b><small>${B[i][1]}</small></button>`).join("")}</div>`;
   const n = note(host); n.innerHTML = fmt("Four core units: ==sense, process, transmit, power==. Tap any block.");
-  const bw = (W - 24) * 0.26, bh = H * 0.24;
-  const P = (x, y) => [12 + (W - 24) * x / 100, 12 + (H - 24) * y / 100];
-  const gs = B.map((b, k) => {
-    const [x, y] = P(b[3], b[4]); const g = sv("g", { class: "vx-blk" + (k > 3 ? " opt" : "") }, svg);
-    sv("rect", { x, y, width: bw, height: bh, rx: 10 }, g);
-    tx(g, x + bw / 2, y + bh / 2 - 3, b[0], "vx-t vx-b vx-s"); tx(g, x + bw / 2, y + bh / 2 + 13, b[1], "vx-t vx-s vx-mt");
-    g.style.cursor = "pointer"; g.addEventListener("click", () => { gs.forEach(x => x.classList.remove("now")); g.classList.add("now"); n.innerHTML = `<b>${b[0]}</b>: ` + fmt(b[2]); });
-    return g;
-  });
-  const [x1, y1] = P(8, 18), [x2] = P(38, 18), [x3] = P(68, 18), [, py] = P(38, 62), [px] = P(38, 62);
-  sv("line", { x1: x1 + bw, y1: y1 + bh / 2, x2: x2 - 2, y2: y1 + bh / 2, class: "vx-flow", "marker-end": mk(svg, "ah") }, svg);
-  sv("line", { x1: x2 + bw, y1: y1 + bh / 2, x2: x3 - 2, y2: y1 + bh / 2, class: "vx-flow", "marker-end": mk(svg, "ah") }, svg);
-  sv("line", { x1: px + bw / 2, y1: py, x2: px + bw / 2, y2: y1 + bh + 2, class: "vx-flow vx-power", "marker-end": mk(svg, "ah") }, svg);
+  wrap.querySelectorAll("button").forEach(b => b.onclick = () => { wrap.querySelectorAll("button").forEach(x => x.classList.remove("now")); b.classList.add("now"); const d = B[+b.dataset.b]; n.innerHTML = `<b>${d[0]}</b>: ` + fmt(d[2]); });
 }};
 
 VIZ["ah-smac"] = { t: "Duty cycling: always on vs S-MAC vs T-MAC", cap: "Same three frames, light traffic. Filled = radio on.", build(host) {
   const W = vw(host), rows = [["Always on", "on"], ["S-MAC", "smac"], ["T-MAC", "tmac"]], H = 40 + rows.length * 54;
   const svg = svgRoot(hx("div", "vz-canvas", null, host), W, H, "duty cycles");
-  const x0 = 92, fw = (W - x0 - 10) / 3;
+  const x0 = W < 420 ? 74 : 92, fw = (W - x0 - 10) / 3;
   rows.forEach(([name, k], r) => {
     const y = 26 + r * 54;
-    tx(svg, 6, y + 22, name, "vx-t vx-b vx-s", "start");
+    tx(svg, 4, y + 21, name, "vx-t vx-b vx-s", "start");
     for (let f = 0; f < 3; f++) {
       const fx = x0 + f * fw;
       sv("rect", { x: fx, y, width: fw - 4, height: 32, rx: 6, class: "vx-sleep" }, svg);
@@ -195,10 +186,11 @@ VIZ["ah-smac"] = { t: "Duty cycling: always on vs S-MAC vs T-MAC", cap: "Same th
       if (k === "smac") on = (fw - 4) * 0.4;
       if (k === "tmac") on = (fw - 4) * (f === 1 ? 0.3 : 0.13);
       sv("rect", { x: fx, y, width: on, height: 32, rx: 6, class: "vx-awake" }, svg);
-      if (k !== "on") { tx(svg, fx + on / 2, y + 21, f === 1 && k !== "on" ? "data" : "listen", "vx-t vx-s vx-on"); if (on < fw - 30) tx(svg, fx + on + (fw - 4 - on) / 2, y + 21, "sleep", "vx-t vx-s vx-mt"); }
-      else tx(svg, fx + on / 2, y + 21, "idle listening", "vx-t vx-s vx-on");
+      const lab = k === "on" ? (fw > 90 ? "idle listening" : "idle") : (f === 1 ? "data" : "listen");
+      if (on >= lab.length * 6.6 + 6) tx(svg, fx + on / 2, y + 21, lab, "vx-t vx-s vx-on");
+      if (k !== "on" && fw - 4 - on >= 40) tx(svg, fx + on + (fw - 4 - on) / 2, y + 21, "sleep", "vx-t vx-s vx-mt");
     }
   });
-  tx(svg, x0 + 1.5 * fw, 16, "frame 1 · frame 2 (has data) · frame 3", "vx-t vx-s vx-mt");
+  [0, 1, 2].forEach(f => tx(svg, x0 + f * fw + (fw - 4) / 2, 16, f === 1 ? "frame 2 (data)" : `frame ${f + 1}`, "vx-t vx-s vx-mt"));
   note(host).innerHTML = fmt("==Always on==: the radio wastes energy on idle listening. ==S-MAC==: a fixed listen period (SYNC, then RTS/CTS and data) followed by sleep, with neighbours sharing schedules. ==T-MAC==: the listen period ==ends early== once nothing is heard for a timeout TA, so light traffic costs even less. Widths are illustrative, not measured.");
 }};

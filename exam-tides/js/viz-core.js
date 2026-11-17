@@ -44,28 +44,28 @@ function mk(svg, kind) { return `url(#${kind}${svg.dataset.uid})`; }
 function stepper(host, n, render, opts) {
   opts = opts || {};
   const bar = hx("div", "vz-bar", null, host);
-  const back = hx("button", "vz-btn", "Back", bar);
+  const back = hx("button", "vz-btn", '<svg class="ic" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg><span>Back</span>', bar);
   const pos = hx("span", "vz-pos", "", bar);
-  const next = hx("button", "vz-btn vz-primary", "Next step", bar);
-  const reset = hx("button", "vz-btn vz-quiet", "Start over", bar);
-  back.type = next.type = reset.type = "button";
+  const next = hx("button", "vz-btn vz-primary", "", bar);
+  back.type = next.type = "button";
   let i = 0;
   function go(k) {
     i = Math.max(0, Math.min(n - 1, k));
     render(i);
-    pos.textContent = `Step ${i + 1} of ${n}`;
+    pos.textContent = `${i + 1} / ${n}`;
     back.disabled = i === 0;
-    next.disabled = i === n - 1;
-    next.textContent = i === n - 1 ? "Done" : "Next step";
+    const last = i === n - 1;
+    next.innerHTML = last ? '<svg class="ic" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4"/></svg><span>Start over</span>' : '<span>Next</span><svg class="ic" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>';
+    next.classList.toggle("vz-again", last);
   }
   back.onclick = () => go(i - 1);
-  next.onclick = () => go(i + 1);
-  reset.onclick = () => go(0);
+  next.onclick = () => go(i === n - 1 ? 0 : i + 1);
   bar.tabIndex = 0;
   bar.addEventListener("keydown", e => {
     if (e.key === "ArrowRight") { go(i + 1); e.preventDefault(); }
     if (e.key === "ArrowLeft") { go(i - 1); e.preventDefault(); }
   });
+  if (n <= 1) bar.hidden = true;
   if (opts.first !== false) go(0);
   return { go, get: () => i, bar };
 }
@@ -109,7 +109,10 @@ function seqViz(host, cfg) {
       sv("line", { x1: x1 + dir * 4, y1: y, x2: x2 - dir * 4, y2: y, class: "vx-msg" + (s.k ? " " + s.k : ""), "marker-end": mk(svg, s.k === "bad" ? "ah-bad" : "ah") }, g);
       tx(g, (x1 + x2) / 2, y - 7, s.m, "vx-t vx-s" + (s.k === "bad" ? " vx-badt" : ""));
     }
-    if (s.ph) tx(g, 6, y - 19, s.ph, "vx-t vx-ph", "start");
+    if (s.ph && (k === 0 || cfg.steps[k - 1].ph !== s.ph)) {
+      if (k > 0) sv("line", { x1: 4, y1: y - 24, x2: W - 4, y2: y - 24, class: "vx-phsep" }, g);
+      tx(g, W - 6, y - 12, s.ph, "vx-t vx-ph", "end");
+    }
     return g;
   });
   const n = note(host);
@@ -124,7 +127,7 @@ function seqViz(host, cfg) {
 function flowViz(host, cfg) {
   const track = hx("ol", "vz-track", null, host);
   const lis = cfg.nodes.map((nd, k) => {
-    const li = hx("li", "", `<button type="button"><span class="vz-k">${k + 1}</span><span>${nd.t}</span></button>`, track);
+    const li = hx("li", "", `<button type="button" aria-label="Step ${k + 1}: ${nd.t}"><span class="vz-k">${k + 1}</span><span class="vz-tl">${nd.t}</span></button>`, track);
     li.querySelector("button").onclick = () => st.go(k);
     return li;
   });
@@ -132,8 +135,8 @@ function flowViz(host, cfg) {
   const st = stepper(host, cfg.nodes.length, i => {
     lis.forEach((li, k) => li.className = k < i ? "past" : k === i ? "now" : "");
     const nd = cfg.nodes[i];
-    panel.innerHTML = `<h4>${nd.t}</h4>${nd.s ? `<p class="vz-sub">${fmt(nd.s)}</p>` : ""}${nd.d ? `<p>${fmt(nd.d)}</p>` : ""}${nd.code ? `<pre class="vz-code">${nd.code.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</pre>` : ""}`;
-    const cur = lis[i]; if (cur && cur.scrollIntoView && track.scrollWidth > track.clientWidth) track.scrollLeft = cur.offsetLeft - 20;
+    panel.innerHTML = `<h4><span class="vz-k">${i + 1}</span>${nd.t}</h4>${nd.s ? `<p class="vz-sub">${fmt(nd.s)}</p>` : ""}${nd.d ? `<p>${fmt(nd.d)}</p>` : ""}${nd.code ? `<pre class="vz-code">${nd.code.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</pre>` : ""}`;
+    const cur = lis[i]; if (cur && track.scrollWidth > track.clientWidth) track.scrollTo({ left: cur.offsetLeft - track.offsetLeft - 12, behavior: "smooth" });
   });
 }
 

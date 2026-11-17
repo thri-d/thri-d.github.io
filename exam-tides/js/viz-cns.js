@@ -36,7 +36,7 @@ VIZ["cns-playfair"] = { t: "Playfair cipher, pair by pair", cap: "Type any key a
     const pairsBox = hx("div", "vz-pairs", null, lay);
     const results = P.map(([a, b]) => playfairEnc(M, a, b));
     const chips = P.map(([a, b], k) => hx("span", "vz-chip", `${a}${b}<small>${results[k].o.join("")}</small>`, pairsBox));
-    hx("p", "vz-out", `<span>Ciphertext</span> <code>${results.map(r => r.o.join("")).join(" ")}</code>`, pairsBox);
+    hx("p", "vz-out", `<span>Ciphertext</span> ${results.map(r => `<code>${r.o.join("")}</code>`).join(" ")}`, pairsBox);
     const n = note(body);
     const cells = grid.querySelectorAll("span");
     stepper(body, P.length, i => {
@@ -82,7 +82,7 @@ VIZ["cns-rounds"] = { t: "One DES round vs one AES round", cap: "Feistel changes
     s = g();
     sv("rect", { x: L - bw / 2, y: 256, width: bw, height: 34, rx: 8, class: "vx-box" }, s); tx(s, L, 278, "Lᵢ = Rᵢ₋₁", "vx-t vx-b");
     sv("rect", { x: R - bw / 2, y: 256, width: bw, height: 34, rx: 8, class: "vx-box" }, s); tx(s, R, 278, "Rᵢ = Lᵢ₋₁ ⊕ F(Rᵢ₋₁, Kᵢ)", "vx-t vx-b vx-s");
-    tx(s, W / 2, 318, "Repeat 16 times. Decrypt with the subkeys in reverse.", "vx-t vx-s vx-mt");
+    tx(s, W / 2, 312, "Repeat 16 times.", "vx-t vx-s vx-mt"); tx(s, W / 2, 327, "Decrypt: same steps, subkeys reversed.", "vx-t vx-s vx-mt");
     const notes = [
       "The 64-bit block is split into two 32-bit halves.",
       "Inside F: ==expand R from 32 to 48 bits== (E-box) → ==XOR with the 48-bit subkey Kᵢ== → ==8 S-boxes, 6 bits in, 4 out== (48 → 32) → ==P-box== permutation.",
