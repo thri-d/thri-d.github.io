@@ -170,7 +170,7 @@ function subjectHTML() {
   const c = counts(s);
   const body = ({ topics: topicsMode, long: longMode, visuals: visualsMode, quiz: quizMode, final: finalMode })[view.m](s);
   return `<div class="page">
-  <header class="subhead">${emblem(D.mark)}<div class="grow"><h1>${esc(D.name)}</h1><div class="meta"><b>${c.ready}</b> of ${c.total} topics ready</div><div class="levelbar"><i style="width:${c.pct}%"></i></div>${s === "agile" ? `<a class="planlink" href="agile-plan.html"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4M8 14h3M8 17h6"/></svg>One-day plan for the paper</a>` : ""}</div></header>
+  <header class="subhead">${emblem(D.mark)}<div class="grow"><h1>${esc(D.name)}</h1><div class="meta"><b>${c.ready}</b> of ${c.total} topics ready</div><div class="levelbar"><i style="width:${c.pct}%"></i></div>${s === "agile" ? `<a class="planlink" href="agile-plan.html"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4M8 14h3M8 17h6"/></svg>One-day plan for the paper</a><a class="planlink" href="agile-guide.html"><svg class="ic" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>Complete answers</a>` : ""}</div></header>
   <nav class="modes" aria-label="Sections">${MODES.map(([k, l, sh]) => `<button class="${view.m === k ? "on" : ""}" data-mode="${k}">${I[k]}${sh ? `<span class="l-full">${l}</span><span class="l-short">${sh}</span>` : `<span>${l}</span>`}</button>`).join("")}</nav>
   <div id="modebody">${body}</div></div>`;
 }

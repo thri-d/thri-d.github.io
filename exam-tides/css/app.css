@@ -823,3 +823,4 @@ html,body{overflow-x:clip}
 .vz-chain li::before{content:counter(ch);display:inline-grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;background:var(--tide-soft);color:var(--tide-deep);font:700 11.5px var(--mono);position:relative;z-index:1}
 .vz-chain li + li::after{content:"";position:absolute;left:10.5px;top:-6px;height:12px;border-left:1.5px solid var(--line-strong)}
 :root[data-theme="night"] .vz-chain li::before{color:var(--tide)}
+.planlink + .planlink{margin-left:8px}

@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E6A78'/%3E%3Cpath d='M5 19c3-3 6-3 9 0s6 3 9 0 4-2 4-2' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=20261124b">
+<link rel="stylesheet" href="css/app.css?v=20261124c">
 <style>
 .pl{max-width:700px;margin:0 auto;padding:0 16px 120px}
 .pl-top{position:sticky;top:0;z-index:20;display:flex;align-items:center;min-height:58px;margin:0 -16px;padding:0 130px 0 16px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -154,118 +154,118 @@ try { const s = JSON.parse(localStorage.getItem("examtides.v2") || "{}"); docume
 
 const APP = "index.html#agile";
 const D1 = "2026-11-24", D2 = "2026-11-25";
-const START = new Date(`${D1}T10:00:00+05:30`).getTime(), PAPER = new Date(`${D2}T14:00:00+05:30`).getTime();
+const START = new Date(`${D1}T11:45:00+05:30`).getTime(), PAPER = new Date(`${D2}T14:00:00+05:30`).getTime();
 
 /* topic rows: syllabus wording, linked to the matching card ("unit.index") or visual ("v:id") in Exam Tides */
 const T = (name, key, sub) => ({ name, key, sub });
 const V = (name, id) => ({ name, key: "v:" + id, vis: true });
+const G = (name, id, sub) => ({ name, key: "g:" + id, sub });
 
 /* kinds: s = study part, r = revision or practice, b = short break, B = 30-minute break, m = meal, e = end of day */
 const P = [
- {d:D1,s:"10:00",e:"10:10",k:"r",id:"w",kind:"Before you open anything",t:"Warm-up on a blank page",
+ {d:D1,s:"11:45",e:"11:50",k:"r",id:"w",kind:"Before you open anything",t:"Warm-up on a blank page",
   body:"Write the five unit names and every Agile word you already know. Guesses are fine: trying first makes the reading stick better."},
 
- {d:D1,s:"10:10",e:"10:35",k:"s",u:1,id:"1a",kind:"Unit 1 · Part 1 of 4",t:"Why Agile, and the two main methods",
-  topics:[T("Why Agile?","1.0"),T("Understanding success","1.0"),T("Beyond deadlines","1.0"),T("Importance of organisational success","1.0"),T("Introduction to agility","1.0"),T("Agile methods: Scrum and XP","1.2"),V("Scrum in one picture","ag-scrum")],
-  recall:"The three kinds of success, and why on time and on budget is not enough. Draw Scrum 3-3-5."},
- {d:D1,s:"10:35",e:"10:40",k:"b"},
- {d:D1,s:"10:40",e:"11:05",k:"s",u:1,id:"1b",kind:"Unit 1 · Part 2 of 4",t:"The Manifesto and its principles",
-  topics:[T("Manifesto for Agile Software Development","1.1"),V("The four values as balance scales","ag-manifesto"),T("Principles of the agile process","1.1"),V("The twelve principles in five groups","ag-principles")],
-  recall:"The four values in order (I Will Code Right). As many of the twelve principles as you can, group by group."},
- {d:D1,s:"11:05",e:"11:10",k:"b"},
- {d:D1,s:"11:10",e:"11:35",k:"s",u:1,id:"1c",kind:"Unit 1 · Part 3 of 4",t:"Understanding and adopting XP",
-  topics:[T("XP life cycle","1.3"),T("XP team","1.3"),T("XP concepts","1.3"),V("The XP life cycle, phase by phase","ag-xplife"),T("Knowing whether XP is suitable","1.4"),T("Implementing XP","1.4"),T("Assessing agility","1.4")],
-  recall:"Beck's six XP phases in order. The four groups in an XP team. The six prerequisites for adopting XP."},
- {d:D1,s:"11:35",e:"11:40",k:"b"},
- {d:D1,s:"11:40",e:"12:05",k:"s",u:1,id:"1d",kind:"Unit 1 · Part 4 of 4",t:"Practising XP: Thinking",
-  topics:[T("Pair programming","1.5"),T("Energized work","1.5"),T("Informative workspace","1.5"),T("Root-cause analysis","1.5"),T("Retrospectives","1.5")],
-  recall:"All five practices with one line each. Driver and navigator. The five whys."},
- {d:D1,s:"12:05",e:"12:10",k:"b"},
- {d:D1,s:"12:10",e:"12:25",k:"r",u:1,id:"1x",kind:"Unit 1 · Check",t:"Write one answer from memory",
-  body:"On paper, outline “Explain the Agile Manifesto and the principles of the agile process”: headings and keywords only. Then compare with Long answers and add what you missed in a different colour.",
-  link:["Long answers","-long"]},
- {d:D1,s:"12:25",e:"12:55",k:"B",req:["1a","1b","1c","1d","1x"],t:"Break, 30 minutes",lock:"Opens when every Unit 1 slot is ticked."},
+ {d:D1,s:"11:50",e:"12:15",k:"s",u:1,id:"1a",kind:"Unit 1 · Part 1 of 4",t:"Why Agile, Scrum and XP, the Manifesto",
+  topics:[G("Why Agile? Understanding success","1-1","Why Agile? · Understanding success · Beyond deadlines · Organisational success"),G("Introduction to agility; Scrum and XP","1-2"),G("Manifesto for Agile Software Development","1-3")],
+  recall:"The three kinds of success. Scrum 3-3-5 as a diagram. The four values in order (I Will Code Right)."},
+ {d:D1,s:"12:15",e:"12:20",k:"b"},
+ {d:D1,s:"12:20",e:"12:45",k:"s",u:1,id:"1b",kind:"Unit 1 · Part 2 of 4",t:"Principles, XP life cycle, XP team",
+  topics:[G("Principles of the agile process","1-4"),G("XP life cycle","1-5"),G("XP team","1-6")],
+  recall:"The twelve principles under their five group headings. Draw the six XP phases. The four roles in an XP team."},
+ {d:D1,s:"12:45",e:"12:50",k:"b"},
+ {d:D1,s:"12:50",e:"13:15",k:"s",u:1,id:"1c",kind:"Unit 1 · Part 3 of 4",t:"XP concepts, adopting XP, pair programming",
+  topics:[G("XP concepts","1-7"),G("Adopting XP: is it suitable, implementing it, assessing agility","1-8"),G("Pair programming","1-9")],
+  recall:"The nine XP concepts in one line each. The six prerequisites for XP. Driver vs navigator."},
+ {d:D1,s:"13:15",e:"13:50",k:"m",t:"Lunch and rest",sub:"Away from the screen. A short nap is fine."},
+ {d:D1,s:"13:50",e:"14:15",k:"s",u:1,id:"1d",kind:"Unit 1 · Part 4 of 4",t:"The rest of the Thinking practices",
+  topics:[G("Energized work","1-10"),G("Informative workspace","1-11"),G("Root-cause analysis","1-12"),G("Retrospectives","1-13")],
+  recall:"Energized work in one line. Four things on an informative wall. A five-whys chain. The five steps of a retrospective."},
+ {d:D1,s:"14:15",e:"14:20",k:"b"},
+ {d:D1,s:"14:20",e:"14:35",k:"r",u:1,id:"1x",kind:"Unit 1 · Check",t:"Write one answer from memory",
+  body:"On paper, write the XP life cycle answer with its diagram, from memory. Then open the answer and add what you missed in a different colour.",
+  link:["Unit 1 answers","guide:u1"]},
+ {d:D1,s:"14:35",e:"15:05",k:"B",req:["1a","1b","1c","1d","1x"],t:"Break, 30 minutes",lock:"Opens when every Unit 1 slot is ticked."},
 
- {d:D1,s:"12:55",e:"13:20",k:"s",u:2,id:"2a",kind:"Unit 2 · Part 1 of 2",t:"Trust and working with customers",
-  topics:[T("Trust","2.0"),T("Sit together","2.1"),T("Real customer involvement","2.2"),T("Ubiquitous language","2.3")],
-  recall:"Team and organisational ways to build trust. Osmotic communication. Customer involvement for the five kinds of project."},
- {d:D1,s:"13:20",e:"13:25",k:"b"},
- {d:D1,s:"13:25",e:"13:50",k:"s",u:2,id:"2b",kind:"Unit 2 · Part 2 of 2",t:"Daily rhythm and showing progress",
-  topics:[T("Stand-up meetings","2.4"),T("Coding standards","2.3"),T("Iteration demo","2.5"),T("Reporting","2.5")],
-  recall:"The three stand-up questions. How a team agrees coding standards. Three reports to give and three to avoid."},
- {d:D1,s:"13:50",e:"14:35",k:"m",t:"Lunch and rest",sub:"Away from the screen. A nap of up to 20 minutes is fine."},
- {d:D1,s:"14:35",e:"14:50",k:"r",u:2,id:"2x",kind:"Revision",t:"Quiz on Units 1 and 2",
-  body:"One Quick quiz round. Recalling the morning after a break keeps it from fading. For anything you miss, open its topic and read it once.",
-  link:["Quiz","-quiz"]},
- {d:D1,s:"14:50",e:"14:55",k:"b"},
+ {d:D1,s:"15:05",e:"15:30",k:"s",u:2,id:"2a",kind:"Unit 2 · Part 1 of 2",t:"Trust and working with customers",
+  topics:[G("Trust","2-1"),G("Sit together","2-2"),G("Real customer involvement","2-3"),G("Ubiquitous language","2-4")],
+  recall:"Team and organisational ways to build trust. Why sitting together works. The five kinds of project for customer involvement."},
+ {d:D1,s:"15:30",e:"15:35",k:"b"},
+ {d:D1,s:"15:35",e:"16:00",k:"s",u:2,id:"2b",kind:"Unit 2 · Part 2 of 2",t:"Daily rhythm and showing progress",
+  topics:[G("Stand-up meetings","2-5"),G("Coding standards","2-6"),G("Iteration demo","2-7"),G("Reporting","2-8")],
+  recall:"The three stand-up questions. How a team creates coding standards. The two demo questions. Reports to give and to avoid."},
+ {d:D1,s:"16:00",e:"16:05",k:"b"},
+ {d:D1,s:"16:05",e:"16:15",k:"r",u:2,id:"2x",kind:"Revision",t:"Quick quiz on Units 1 and 2",
+  body:"One Quick quiz round. For anything you miss, read that answer's one-line box again.",
+  link:["Open Quiz","app:-quiz"]},
+ {d:D1,s:"16:15",e:"16:20",k:"b"},
 
- {d:D1,s:"14:55",e:"15:20",k:"s",u:3,id:"3a",kind:"Unit 3 · Part 1 of 2",t:"Bug-free release and version control",
-  topics:[T("Bug-free release","3.0","'Done done' and no bugs"),T("Version control","3.1")],
-  recall:"Everything 'done done' includes. Five ways to get close to zero bugs. Eight version-control terms."},
- {d:D1,s:"15:20",e:"15:25",k:"b"},
- {d:D1,s:"15:25",e:"15:50",k:"s",u:3,id:"3b",kind:"Unit 3 · Part 2 of 2",t:"Build, integrate, share the code",
-  topics:[T("Ten-minute build","3.2"),T("Continuous integration","3.3"),V("The CI cycle, step by step","ag-ci"),T("Collective ownership","3.4"),T("Documentation","3.4")],
-  recall:"The integration token and the golden rule. Synchronous vs asynchronous integration. The three kinds of documentation."},
- {d:D1,s:"15:50",e:"15:55",k:"b"},
- {d:D1,s:"15:55",e:"16:10",k:"r",u:3,id:"3x",kind:"Unit 3 · Check",t:"Write one answer from memory",
-  body:"Outline “Explain the ten-minute build and continuous integration”, with the CI cycle drawn. Then compare with Long answers.",
-  link:["Long answers","-long"]},
- {d:D1,s:"16:10",e:"16:40",k:"B",req:["2a","2b","2x","3a","3b","3x"],t:"Break, 30 minutes",lock:"Opens when Units 2 and 3 are ticked."},
+ {d:D1,s:"16:20",e:"16:45",k:"s",u:3,id:"3a",kind:"Unit 3 · Part 1 of 2",t:"Bug-free release, version control, ten-minute build",
+  topics:[G("Bug-free release","3-1","'Done done' and no bugs"),G("Version control","3-2"),G("Ten-minute build","3-3")],
+  recall:"What 'done done' includes. Ways to get close to zero bugs. Version-control terms. Why ten minutes."},
+ {d:D1,s:"16:45",e:"16:50",k:"b"},
+ {d:D1,s:"16:50",e:"17:15",k:"s",u:3,id:"3b",kind:"Unit 3 · Part 2 of 2",t:"Integrate and share the code",
+  topics:[G("Continuous integration","3-4"),G("Collective ownership","3-5"),G("Documentation","3-6")],
+  recall:"Draw the CI cycle. The integration token. Collective ownership in one line. The three kinds of documentation."},
+ {d:D1,s:"17:15",e:"17:20",k:"b"},
+ {d:D1,s:"17:20",e:"17:30",k:"r",u:3,id:"3x",kind:"Unit 3 · Check",t:"Draw and explain CI from memory",
+  body:"Draw the continuous-integration cycle and write five points under it. Then compare with the answer.",
+  link:["Unit 3 answers","guide:u3"]},
+ {d:D1,s:"17:30",e:"18:00",k:"B",req:["2a","2b","2x","3a","3b","3x"],t:"Break, 30 minutes",lock:"Opens when Units 2 and 3 are ticked."},
 
- {d:D1,s:"16:40",e:"17:05",k:"s",u:4,id:"4a",kind:"Unit 4 · Part 1 of 3",t:"Vision, release planning, the planning game",
-  topics:[T("Vision","4.0","Printed as “Version” in the syllabus"),T("Release planning","4.0"),T("The planning game","4.1"),V("The planning game on one grid","ag-planning")],
-  recall:"Who knows value and who knows cost. The planning-game steps. Scopeboxed vs timeboxed. What an MMF is."},
- {d:D1,s:"17:05",e:"17:10",k:"b"},
- {d:D1,s:"17:10",e:"17:35",k:"s",u:4,id:"4b",kind:"Unit 4 · Part 2 of 3",t:"Risk, iteration planning and slack",
-  topics:[T("Risk management","4.2"),T("Iteration planning","4.3"),T("Slack","4.3"),V("Velocity, slack and the burn-up chart","ag-velocity")],
-  recall:"Four responses to a risk. Velocity in one line. The five iteration-planning steps. Why plan slack."},
- {d:D1,s:"17:35",e:"17:40",k:"b"},
- {d:D1,s:"17:40",e:"18:05",k:"s",u:4,id:"4c",kind:"Unit 4 · Part 3 of 3",t:"Stories and estimating",
-  topics:[T("Stories","4.4"),T("Estimating","4.4")],
-  recall:"INVEST, letter by letter. Four special kinds of story. Why consistent estimates matter more than accurate ones."},
- {d:D1,s:"18:05",e:"18:15",k:"m",t:"Tea break",sub:"Stand up, walk, water."},
- {d:D1,s:"18:15",e:"18:30",k:"r",u:4,id:"4x",kind:"Revision",t:"Units 1 to 4, mixed",
-  body:"Look-alikes first (Scrum vs XP, demo vs retrospective, release vs iteration planning), then one Quick quiz round.",
-  link:["Quiz","-quiz"]},
- {d:D1,s:"18:30",e:"18:35",k:"b"},
+ {d:D1,s:"18:00",e:"18:25",k:"s",u:4,id:"4a",kind:"Unit 4 · Part 1 of 3",t:"Vision, release planning, the planning game",
+  topics:[G("Vision","4-1","Printed as “Version” in the syllabus"),G("Release planning","4-2"),G("The planning game","4-3")],
+  recall:"Three parts of a vision statement. MMF and scopeboxed vs timeboxed. Who knows value and who knows cost."},
+ {d:D1,s:"18:25",e:"18:30",k:"b"},
+ {d:D1,s:"18:30",e:"18:55",k:"s",u:4,id:"4b",kind:"Unit 4 · Part 2 of 3",t:"Risk, iteration planning and slack",
+  topics:[G("Risk management","4-4"),G("Iteration planning","4-5"),G("Slack","4-6")],
+  recall:"Risk responses and the risk multipliers. The iteration-planning steps. Velocity in one line. Why plan slack."},
+ {d:D1,s:"18:55",e:"19:00",k:"b"},
+ {d:D1,s:"19:00",e:"19:25",k:"s",u:4,id:"4c",kind:"Unit 4 · Part 3 of 3",t:"Stories and estimating",
+  topics:[G("Stories","4-7"),G("Estimating","4-8")],
+  recall:"INVEST, letter by letter. Special kinds of story. Why consistent estimates matter more than accurate ones."},
+ {d:D1,s:"19:25",e:"19:30",k:"b"},
+ {d:D1,s:"19:30",e:"19:40",k:"r",u:4,id:"4x",kind:"Revision",t:"Look-alikes, Units 1 to 4",
+  body:"Look-alikes in Quiz: Scrum vs XP, demo vs retrospective, release vs iteration planning.",
+  link:["Open Quiz","app:-quiz"]},
 
- {d:D1,s:"18:35",e:"19:00",k:"s",u:5,id:"5a",kind:"Unit 5 · Part 1 of 3",t:"Requirements, customer tests, TDD",
-  topics:[T("Incremental requirements","5.0"),T("Customer tests","5.0"),T("Test-driven development","5.1"),V("TDD, one cycle at a time","ag-tdd")],
+ {d:D1,s:"19:40",e:"20:05",k:"s",u:5,id:"5a",kind:"Unit 5 · Part 1 of 3",t:"Requirements, customer tests, TDD",
+  topics:[G("Incremental requirements","5-1"),G("Customer tests","5-2"),G("Test-driven development","5-3")],
   recall:"Red, Green, Refactor with the leap-year example. Customer tests: describe, demonstrate, develop."},
- {d:D1,s:"19:00",e:"19:05",k:"b"},
- {d:D1,s:"19:05",e:"19:30",k:"s",u:5,id:"5b",kind:"Unit 5 · Part 2 of 3",t:"Refactoring and incremental design",
-  topics:[T("Refactoring","5.2"),T("Incremental design and architecture","5.3")],
-  recall:"Refactoring in one line. Four code smells. The simple-design rules, YAGNI first."},
- {d:D1,s:"19:30",e:"19:35",k:"b"},
- {d:D1,s:"19:35",e:"20:00",k:"s",u:5,id:"5c",kind:"Unit 5 · Part 3 of 3",t:"Spikes, performance, exploratory testing",
-  topics:[T("Spike solutions","5.4"),T("Performance optimisation","5.4"),T("Exploratory testing","5.5")],
-  recall:"What a spike is and why its code is thrown away. Measure first. The four exploratory-testing heuristics."},
- {d:D1,s:"20:00",e:"20:30",k:"B",req:["4a","4b","4c","4x","5a","5b","5c"],t:"Break, 30 minutes",lock:"Opens when Units 4 and 5 are ticked. That is the whole syllabus."},
- {d:D1,s:"20:30",e:"21:00",k:"m",t:"Dinner",sub:"From here on, practice only. No new topics."},
+ {d:D1,s:"20:05",e:"20:10",k:"b"},
+ {d:D1,s:"20:10",e:"20:35",k:"s",u:5,id:"5b",kind:"Unit 5 · Part 2 of 3",t:"Refactoring, design, spikes",
+  topics:[G("Refactoring","5-4"),G("Incremental design and architecture","5-5"),G("Spike solutions","5-6")],
+  recall:"Refactoring in one line. Four code smells. Simple-design rules, YAGNI first. What a spike is."},
+ {d:D1,s:"20:35",e:"20:40",k:"b"},
+ {d:D1,s:"20:40",e:"21:05",k:"s",u:5,id:"5c",kind:"Unit 5 · Part 3 of 3",t:"Performance and exploratory testing",
+  topics:[G("Performance optimisation","5-7"),G("Exploratory testing","5-8")],
+  recall:"Measure first: the steps of performance optimisation. The four tools and four heuristics of exploratory testing."},
+ {d:D1,s:"21:05",e:"21:35",k:"B",req:["4a","4b","4c","4x","5a","5b","5c"],t:"Break, 30 minutes",lock:"Opens when Units 4 and 5 are ticked. That is the whole syllabus."},
+ {d:D1,s:"21:35",e:"22:05",k:"m",t:"Dinner",sub:"From here on, practice only. No new topics."},
 
- {d:D1,s:"21:00",e:"21:40",k:"r",u:9,id:"r1",kind:"Exam practice",t:"Two full answers, by hand",
-  body:"18 minutes each, no notes, as in the hall. One from Unit 1 and one from Unit 4 or 5: pick the one you would least like to see. Last 4 minutes: check against Long answers and mark the gaps.",
-  link:["Long answers","-long"]},
- {d:D1,s:"21:40",e:"21:45",k:"b"},
- {d:D1,s:"21:45",e:"22:10",k:"r",u:9,id:"r2",kind:"Wrap up",t:"One page for the whole paper",
-  body:"From memory, one sheet: the five unit headings with keywords under each. Then open Final hour and add what is missing. This sheet is tomorrow morning's revision.",
-  link:["Final hour","-final"]},
- {d:D1,s:"22:10",e:"",k:"e",t:"Done for today",sub:"Lights out by 11:30. Sleep is when today's learning is stored."},
+ {d:D1,s:"22:05",e:"22:40",k:"r",u:9,id:"r1",kind:"Exam practice",t:"Two full answers, by hand",
+  body:"15 minutes each, no notes, as in the hall. One from Unit 1 and one from Unit 4 or 5: pick the one you would least like to see. Last 5 minutes: compare with the answers and mark the gaps.",
+  link:["All answers","guide:"]},
+ {d:D1,s:"22:40",e:"22:45",k:"b"},
+ {d:D1,s:"22:45",e:"23:05",k:"r",u:9,id:"r2",kind:"Wrap up",t:"One page for the whole paper",
+  body:"From memory, one sheet: the five unit headings with keywords under each. Then check the one-line boxes in the answers and add what is missing. This sheet is tomorrow morning's revision.",
+  link:["All answers","guide:"]},
+ {d:D1,s:"23:05",e:"",k:"e",t:"Done for today",sub:"Lights out by midnight. Sleep is when today's learning is stored."},
 
- {d:D2,s:"09:00",e:"09:25",k:"r",u:9,id:"m1",kind:"After breakfast",t:"Last night's page, from memory",
+ {d:D2,s:"09:30",e:"09:55",k:"r",u:9,id:"m1",kind:"After breakfast",t:"Last night's page, from memory",
   body:"Rewrite the one-page sheet on blank paper, then compare it with last night's. Circle whatever you missed."},
- {d:D2,s:"09:25",e:"09:30",k:"b"},
- {d:D2,s:"09:30",e:"09:55",k:"r",u:9,id:"m2",kind:"Fix the gaps",t:"Only what you circled",
-  body:"Open just those topics in Exam Tides and read each once. If time is left, do the Look-alikes in Quiz.",
-  link:["Topics",""]},
- {d:D2,s:"09:55",e:"10:05",k:"b"},
- {d:D2,s:"10:05",e:"10:50",k:"r",u:9,id:"m3",kind:"Answer outlines",t:"One outline per unit",
+ {d:D2,s:"09:55",e:"10:00",k:"b"},
+ {d:D2,s:"10:00",e:"10:25",k:"r",u:9,id:"m2",kind:"Fix the gaps",t:"Only what you circled",
+  body:"Open just those answers and read the one-line box, the diagram and the doubt points. Nothing else.",
+  link:["All answers","guide:"]},
+ {d:D2,s:"10:25",e:"10:35",k:"b"},
+ {d:D2,s:"10:35",e:"11:20",k:"r",u:9,id:"m3",kind:"Answer outlines",t:"One outline per unit",
   body:`About 9 minutes each: headings, keywords and the diagram, nothing more.<ol>
    <li>Agile Manifesto and the twelve principles</li><li>Stand-up meetings and iteration demo</li>
    <li>Ten-minute build and continuous integration</li><li>Planning game and release planning</li>
    <li>Test-driven development, with the example</li></ol>`,
-  link:["Long answers","-long"]},
- {d:D2,s:"10:50",e:"",k:"e",t:"Close the books",sub:"Rest and eat a proper lunch. One last look at your one page around 12:30, then put it away. Paper at 2:00 PM."}
+  link:["All answers","guide:"]},
+ {d:D2,s:"11:20",e:"",k:"e",t:"Close the books",sub:"Rest and eat a proper lunch. One last look at your one page around 12:30, then put it away. Paper at 2:00 PM."}
 ];
 
 const STUDY = P.filter(x => x.id);
@@ -278,7 +278,8 @@ const mins = (a, b) => { const [h1, m1] = a.split(":").map(Number), [h2, m2] = b
 const twelve = s => { let [h, m] = s.split(":").map(Number); h = h % 12 || 12; return `${h}:${String(m).padStart(2, "0")}`; };
 const ampm = s => `${twelve(s)} ${+s.split(":")[0] >= 12 ? "PM" : "AM"}`;
 const ist = (d, s) => new Date(`${d}T${s}:00+05:30`).getTime();
-const href = k => `index.html#agile:${k}`;
+const href = k => k.startsWith("g:") ? `agile-guide.html#g-${k.slice(2)}` : `index.html#agile:${k}`;
+const linkHref = l => l.startsWith("guide:") ? `agile-guide.html${l.length > 6 ? "#" + l.slice(6) : ""}` : l.startsWith("app:") ? `${APP}${l.slice(4)}` : `${APP}${l}`;
 const SV = {
   tick: '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
   clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.5 1.5M9.5 3h5"/></svg>',
@@ -306,7 +307,7 @@ function rowHTML(x, i) {
       : `<li><a href="${href(t.key)}"><span class="n">${++n}</span><span>${t.name}${t.sub ? `<small>${t.sub}</small>` : ""}</span>${SV.go}</a></li>`).join("")}</ul>` : "";
   const body = x.body ? `<div class="pl-body"><p>${x.body}</p></div>` : "";
   const recall = x.recall ? `<div class="pl-recall"><b>Last 5 minutes, book closed</b><p>${x.recall}</p></div>` : "";
-  const link = x.link ? `<a class="pl-btn" href="${APP}${x.link[1]}">${SV.open}${x.link[0]}</a>` : "";
+  const link = x.link ? `<a class="pl-btn" href="${linkHref(x.link[1])}">${SV.open}${x.link[0]}</a>` : "";
   return `<div class="pl-row" data-i="${i}" data-id="${x.id}">${timeCol(x, 1)}<div class="pl-card">
     <div class="pl-head"><div><div class="pl-kind">${x.kind}</div><h3>${x.t}</h3></div>
     <button class="pl-tick" type="button" data-tick="${x.id}" aria-pressed="false" aria-label="Mark done: ${x.t}">${SV.tick}</button></div>
@@ -319,7 +320,7 @@ const root = document.getElementById("plan");
 root.innerHTML = `
   <div class="pl-top"><a class="pl-back" href="${APP}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Agile in Exam Tides</a></div>
   <header class="pl-hero">
-    <div><h1>Agile in one day</h1><p>The whole syllabus in order, unit by unit. Each part ends with writing from memory.</p></div>
+    <div><h1>Agile in one day</h1><p>The whole syllabus in order, unit by unit, from the complete answers. Each part ends with writing from memory.</p><a class="pl-btn" style="margin-top:12px" href="agile-guide.html"><svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>All answers</a></div>
     <div class="pl-clock" id="clock" role="img"></div>
   </header>
   <section class="pl-prog" aria-label="Progress">
@@ -401,7 +402,7 @@ function paintNow() {
     const title = x.k === "b" ? `Break, ${mins(x.s, x.e)} minutes` : x.t;
     el.innerHTML = `<small>Now · until ${ampm(x.e)} · ${left} min left</small><strong>${title}</strong>${next}${x.k !== "b" ? `<button type="button" data-jump="${cur}">Go to this slot</button>` : ""}`;
   } else if (t < ist(D1, P[0].s)) {
-    el.innerHTML = `<small>Starts Tuesday at 10:00 AM IST</small><strong>${P[0].t}</strong><em>${P[0].body}</em><button type="button" data-jump="0">Go to the first slot</button>`;
+    el.innerHTML = `<small>Starts Tuesday at 11:45 AM IST</small><strong>${P[0].t}</strong><em>${P[0].body}</em><button type="button" data-jump="0">Go to the first slot</button>`;
   } else if (firstOpen && ist(firstOpen.d, firstOpen.s) < t) {
     const i = P.indexOf(firstOpen);
     el.innerHTML = `<small>First slot not ticked yet</small><strong>${firstOpen.t}</strong><em>${firstOpen.kind}</em><button type="button" data-jump="${i}">Go to this slot</button>`;
@@ -437,6 +438,6 @@ paint();
 setInterval(paintNow, 30000);
 })();
 </script>
-<script src="js/tools.js?v=20261124b"></script>
+<script src="js/tools.js?v=20261124c"></script>
 </body>
 </html>

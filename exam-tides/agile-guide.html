@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agile Methodology · complete answers</title>
+<meta name="theme-color" content="#EDF2F0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E6A78'/%3E%3Cpath d='M5 19c3-3 6-3 9 0s6 3 9 0 4-2 4-2' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/app.css?v=20261124c">
+<style>
+.gd{max-width:740px;margin:0 auto;padding:0 16px 120px}
+.gd-top{position:sticky;top:0;z-index:20;margin:0 -16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.gd-bar{display:flex;align-items:center;min-height:58px;padding:0 130px 0 16px}
+.tt{right:16px!important;top:10px!important}
+.gd-back{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:15px;color:var(--ink-2);text-decoration:none}
+.gd-back svg{width:18px;height:18px}
+.gd-units{display:flex;gap:6px;padding:0 16px 10px;overflow-x:auto;scrollbar-width:none}
+.gd-units::-webkit-scrollbar{display:none}
+.gd-units a{flex:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);font-weight:600;font-size:14px;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.gd-units a.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+:root[data-theme="night"] .gd-units a.on{background:var(--tide);border-color:var(--tide);color:#04171b}
+
+.gd-hero{margin:26px 0 8px}
+.gd-hero h1{font:400 clamp(38px,9.5vw,56px)/1.03 var(--display);letter-spacing:-.02em}
+.gd-hero p{margin:10px 0 0;color:var(--ink-2);font-size:16px;line-height:1.55;max-width:36em}
+.gd-key{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+.gd-key span{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink-2);padding:4px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.gd-key i{width:9px;height:9px;border-radius:3px;display:inline-block}
+
+/* unit + toc */
+.gd-unit{margin:40px 0 14px;scroll-margin-top:120px}
+.gd-unit small{display:block;font-size:13.5px;font-weight:700;color:var(--tide-deep)}
+:root[data-theme="night"] .gd-unit small{color:var(--tide)}
+.gd-unit h2{font:400 34px/1.08 var(--display);margin-top:4px}
+.gd-unit p{margin:8px 0 0;font-size:14.5px;color:var(--muted)}
+.gd-toc{list-style:none;margin:12px 0 18px;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.gd-toc li + li{border-top:1px solid var(--line)}
+.gd-toc a{display:grid;grid-template-columns:34px 1fr 20px;gap:6px;align-items:center;padding:10px 14px;text-decoration:none;color:var(--ink);font-size:15px;line-height:1.35}
+.gd-toc a span:first-child{font:600 12.5px var(--mono);color:var(--muted)}
+.gd-toc .ok{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line-strong)}
+.gd-toc li.learned .ok{background:var(--good);border-color:var(--good)}
+
+/* answer card */
+.ans{background:var(--surface);border:1px solid var(--line);border-radius:20px;margin:0 0 18px;overflow:hidden;scroll-margin-top:118px}
+.ans-h{padding:18px 18px 14px}
+.ans-syl{font-size:13px;font-weight:600;color:var(--muted);line-height:1.4}
+.ans-h h3{font-size:21px;line-height:1.25;margin-top:6px}
+.ans-q{margin-top:8px;font-size:15px;color:var(--ink-2);line-height:1.45}
+.ans-q b{color:var(--ink)}
+.ans-ff{margin-top:10px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.ans-ff b{font-family:var(--mono);font-size:12.5px;color:var(--tide-deep)}
+:root[data-theme="night"] .ans-ff b{color:var(--tide)}
+.ans-one{margin:0 18px 6px;padding:12px 14px;border-radius:12px;background:var(--tide-soft);font-size:16px;line-height:1.5;color:var(--ink)}
+.ans-one b:first-child{display:block;font-size:12.5px;color:var(--tide-deep);margin-bottom:2px}
+:root[data-theme="night"] .ans-one b:first-child{color:var(--tide)}
+.ans-b{padding:6px 18px 4px;font-size:16px;line-height:1.62;color:var(--ink)}
+.ans-b h4{font-size:16.5px;margin:20px 0 6px;color:var(--ink);display:flex;align-items:baseline;gap:8px}
+.ans-b h4::before{content:"";flex:none;width:6px;height:6px;border-radius:2px;background:var(--tide);transform:translateY(-3px)}
+.ans-b p{margin:8px 0}
+.ans-b ul,.ans-b ol{margin:8px 0;padding-left:22px}
+.ans-b li{margin:5px 0}
+.ans-b li::marker{color:var(--muted)}
+.ans-b strong{font-weight:700}
+.ans-b mark{background:linear-gradient(transparent 58%,var(--mark) 58%);color:inherit;padding:0 1px}
+:root[data-theme="night"] .ans-b mark{background:linear-gradient(transparent 58%,rgba(255,224,102,.35) 58%)}
+.ans-b code{font:600 14px var(--mono);background:var(--surface-2);padding:1px 5px;border-radius:5px}
+
+/* callouts */
+.co{margin:12px 0;padding:11px 14px;border-radius:12px;font-size:15px;line-height:1.55;border:1px solid transparent}
+.co > b:first-child{display:block;font-size:12.5px;margin-bottom:2px}
+.co.note{background:var(--amber-soft);border-color:color-mix(in srgb,var(--amber) 35%,transparent)}
+.co.note > b:first-child{color:var(--amber)}
+.co.tip{background:var(--surface-2)}
+.co.tip > b:first-child{color:var(--ink-2)}
+.co.mem{background:var(--tide-soft)}
+.co.mem > b:first-child{color:var(--tide-deep)}
+:root[data-theme="night"] .co.mem > b:first-child{color:var(--tide)}
+.co.ex{background:var(--sunk);border-color:var(--line)}
+.co.ex > b:first-child{color:var(--ink-2)}
+.co.write{background:transparent;border:1.5px dashed var(--line-strong)}
+.co.write > b:first-child{color:var(--ink-2)}
+
+/* pros / cons */
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.pc > div{border-radius:14px;padding:12px 14px 6px;border:1px solid var(--line)}
+.pc h5{font-size:14px;margin:0 0 4px}
+.pc .pro{background:var(--good-soft)} .pc .pro h5{color:var(--good)}
+.pc .con{background:var(--signal-soft,#F6E3DF)} .pc .con h5{color:var(--signal)}
+.pc ul{margin:0;padding-left:18px;font-size:15px;line-height:1.5}
+.pc li{margin:0 0 7px}
+.pc.one{grid-template-columns:1fr}
+@media(max-width:620px){.pc{grid-template-columns:1fr}}
+
+/* tables */
+.tw{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:12px}
+.tw table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.45}
+.tw th,.tw td{padding:8px 10px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
+.tw th{background:var(--surface-2);font-weight:700;border-top:0}
+.tw td:first-child{font-weight:600}
+
+/* diagrams */
+.fig{margin:16px 0;border:1px solid var(--line);border-radius:16px;padding:14px 12px 10px;background:var(--bg)}
+.fig figcaption{margin-top:8px;font-size:13.5px;color:var(--muted);text-align:center;line-height:1.4}
+.fig figcaption b{color:var(--ink-2)}
+.fig svg{display:block;width:100%;height:auto;max-width:520px;margin:0 auto}
+.dg-box{fill:var(--surface);stroke:var(--ink-2);stroke-width:1.5}
+.dg-box.hl{fill:var(--tide-soft);stroke:var(--tide)}
+.dg-t{font:600 13px var(--font);fill:var(--ink);dominant-baseline:middle;text-anchor:middle}
+.dg-s{font:500 11.5px var(--font);fill:var(--muted);dominant-baseline:middle;text-anchor:middle}
+.dg-a{stroke:var(--ink-2);stroke-width:1.6;fill:none}
+.dg-ah{fill:var(--ink-2)}
+/* vertical flow (HTML) */
+.vf{display:grid;justify-items:center;gap:0;max-width:420px;margin:0 auto}
+.vf div{width:100%;text-align:center;padding:9px 12px;border:1.5px solid var(--ink-2);border-radius:10px;background:var(--surface);font-weight:600;font-size:14.5px;line-height:1.35}
+.vf div small{display:block;font-weight:500;font-size:12.5px;color:var(--muted)}
+.vf div.hl{background:var(--tide-soft);border-color:var(--tide)}
+.vf i{display:block;width:2px;height:18px;background:var(--ink-2);position:relative;margin:0 0 6px}
+.vf i::after{content:"";position:absolute;left:-5px;bottom:-6px;border:6px solid transparent;border-top:7px solid var(--ink-2);border-bottom:0}
+.vf .back{font-size:12.5px;color:var(--muted);margin-top:6px}
+/* columns (HTML) */
+.cols{display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:8px}
+.cols section{border:1.5px solid var(--ink-2);border-radius:12px;background:var(--surface);overflow:hidden}
+.cols h6{margin:0;padding:7px 10px;font-size:13.5px;background:var(--tide-soft);border-bottom:1.5px solid var(--ink-2);text-align:center}
+.cols ul{list-style:none;margin:0;padding:6px 10px 8px;font-size:13.5px;line-height:1.4}
+.cols li{padding:3px 0;text-align:center}
+@media(max-width:480px){.cols.c3{grid-template-columns:1fr}}
+
+/* interactive */
+.iv{margin:14px 0}
+.iv > summary{list-style:none;display:inline-flex;align-items:center;gap:8px;cursor:pointer;padding:8px 13px;border-radius:11px;border:1px solid var(--line-strong);background:var(--surface);font-weight:600;font-size:14.5px;color:var(--tide-deep)}
+:root[data-theme="night"] .iv > summary{color:var(--tide)}
+.iv > summary::-webkit-details-marker{display:none}
+.iv > summary svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.iv[open] > summary{margin-bottom:10px}
+.iv .ivbody{border:1px solid var(--line);border-radius:16px;padding:12px;background:var(--bg)}
+
+.ans-f{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 18px 16px;border-top:1px solid var(--line);margin-top:10px}
+.learn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface);font-weight:700;font-size:14.5px;color:var(--ink-2)}
+.learn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.ans.learned .learn{background:var(--good);border-color:var(--good);color:#fff}
+.ans-f a{font-size:14px;font-weight:600;color:var(--muted);text-decoration:none}
+.gd-wait{padding:16px;border:1px dashed var(--line-strong);border-radius:16px;color:var(--muted);font-size:15px}
+</style>
+</head>
+<body>
+<main class="gd" id="guide"></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="js/viz-core.js?v=20261124c"></script>
+<script src="js/viz-agile.js?v=20261124c"></script>
+<script src="js/guide-agile-1.js?v=20261124c"></script>
+<script src="js/guide-agile-2.js?v=20261124c"></script>
+<script src="js/guide-agile-3.js?v=20261124c"></script>
+<script src="js/guide-agile-4.js?v=20261124c"></script>
+<script src="js/guide-agile-5.js?v=20261124c"></script>
+<script>
+(function(){
+"use strict";
+try { const s = JSON.parse(localStorage.getItem("examtides.v2") || "{}"); document.documentElement.dataset.theme = s.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day"); } catch (e) {}
+
+const UNITS = [
+  [1, "Introduction, Extreme Programming (XP) and Agile Development", "Why Agile, the Manifesto, Scrum and XP, adopting XP, and the Thinking practices."],
+  [2, "Collaborating", "Trust, sitting together, real customers, ubiquitous language, stand-ups, coding standards, demos and reporting."],
+  [3, "Releasing", "Bug-free release, version control, the ten-minute build, continuous integration, collective ownership and documentation."],
+  [4, "Planning", "Vision, release planning, the planning game, risk management, iteration planning, slack, stories and estimating."],
+  [5, "Developing", "Incremental requirements, customer tests, TDD, refactoring, incremental design, spikes, performance and exploratory testing."]];
+const SRC = (window.GUIDE || []);
+const KEY = "examtides.agileguide";
+let learned = {}; try { learned = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(learned)); } catch (e) {} };
+
+/* ---------- inline text ---------- */
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const inl = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/==(.+?)==/g, "<mark>$1</mark>").replace(/(^|[\s(])\*([^*\s][^*]*?)\*(?=[\s).,;:!?]|$)/g, "$1<em>$2</em>").replace(/`(.+?)`/g, "<code>$1</code>").replace(/ -- /g, " – ");
+
+/* ---------- diagrams ---------- */
+const NS = "http://www.w3.org/2000/svg";
+function wrapLines(t, max) { const w = t.split(" "), out = []; let cur = ""; w.forEach(x => { if ((cur + " " + x).trim().length > max && cur) { out.push(cur); cur = x; } else cur = (cur + " " + x).trim(); }); if (cur) out.push(cur); return out; }
+function lines(t, max) { return t.split(" / ").map((p, k) => wrapLines(p, max).map(l => [l, k ? "dg-s" : "dg-t"])).flat(); }
+function label(x, y, t, cls, max) { const ls = cls === "dg-s" ? wrapLines(t.replace(/ \/ /g, " "), max || 14).map(l => [l, "dg-s"]) : lines(t, max || 14); const h = 14; return ls.map(([l, c], k) => `<text class="${c}" x="${x}" y="${(y - (ls.length - 1) * h / 2 + k * h).toFixed(1)}">${esc(l)}</text>`).join(""); }
+const boxH = (t, max) => Math.max(36, lines(t, max).length * 14 + 14);
+function arrow(x1, y1, x2, y2) {
+  const a = Math.atan2(y2 - y1, x2 - x1), s = 8, w = 4.5;
+  const bx = x2 - Math.cos(a) * s, by = y2 - Math.sin(a) * s;
+  return `<line class="dg-a" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}"/><path class="dg-ah" d="M${x2.toFixed(1)} ${y2.toFixed(1)} L${(bx - Math.sin(a) * w).toFixed(1)} ${(by + Math.cos(a) * w).toFixed(1)} L${(bx + Math.sin(a) * w).toFixed(1)} ${(by - Math.cos(a) * w).toFixed(1)} Z"/>`;
+}
+function cycle(items, center) {
+  const n = items.length, W = 360, bw = 118, MX = 15;
+  const hs = items.map(x => boxH(x.replace(/^\*/, ""), MX)), bhMax = Math.max(...hs);
+  const R = n > 4 ? 122 : 108, H = 2 * R + bhMax + 24, cx = W / 2, cy = H / 2;
+  const pts = items.map((_, k) => { const a = -Math.PI / 2 + k * 2 * Math.PI / n; return [cx + R * Math.cos(a), cy + R * Math.sin(a)]; });
+  let s = "";
+  pts.forEach((p, k) => { const q = pts[(k + 1) % n], h1 = hs[k], h2 = hs[(k + 1) % n]; const dx = q[0] - p[0], dy = q[1] - p[1], L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
+    const off = h => Math.min(Math.abs(ux) > 1e-6 ? (bw / 2 + 5) / Math.abs(ux) : 1e9, Math.abs(uy) > 1e-6 ? (h / 2 + 5) / Math.abs(uy) : 1e9);
+    const o1 = off(h1), o2 = off(h2); if (L > o1 + o2 + 14) s += arrow(p[0] + ux * o1, p[1] + uy * o1, q[0] - ux * o2, q[1] - uy * o2); });
+  if (center) s += label(cx, cy, center, "dg-s", 16);
+  pts.forEach((p, k) => { const hl = items[k].startsWith("*"); const t = hl ? items[k].slice(1) : items[k], h = hs[k]; s += `<rect class="dg-box${hl ? " hl" : ""}" x="${(p[0] - bw / 2).toFixed(1)}" y="${(p[1] - h / 2).toFixed(1)}" width="${bw}" height="${h}" rx="9"/>` + label(p[0], p[1], t, "dg-t", MX); });
+  return `<svg viewBox="0 0 ${W} ${H.toFixed(0)}" role="img" aria-label="${esc(items.join(", "))}">${s}</svg>`;
+}
+function hub(center, items) {
+  const n = items.length, W = 380, bw = 120, MX = 15;
+  const hs = items.map(x => boxH(x, MX)), bhMax = Math.max(...hs);
+  const R = n > 6 ? 134 : n === 6 ? 126 : n === 5 ? 132 : 112, ry = R * (n > 4 ? 0.9 : 0.95), H = 2 * ry + bhMax + 20, cx = W / 2, cy = H / 2;
+  let s = "", boxes = "";
+  items.forEach((it, k) => { const a = -Math.PI / 2 + k * 2 * Math.PI / n, x = cx + R * Math.cos(a), y = cy + ry * Math.sin(a), h = hs[k];
+    s += `<line class="dg-a" x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/>`;
+    boxes += `<rect class="dg-box" x="${(x - bw / 2).toFixed(1)}" y="${(y - h / 2).toFixed(1)}" width="${bw}" height="${h}" rx="9"/>` + label(x, y, it, "dg-t", MX); });
+  const ch = boxH(center, 16);
+  return `<svg viewBox="0 0 ${W} ${H.toFixed(0)}" role="img" aria-label="${esc(center + ": " + items.join(", "))}">${s}<rect class="dg-box hl" x="${cx - 60}" y="${cy - ch / 2}" width="120" height="${ch}" rx="12"/>${label(cx, cy, center, "dg-t", 16)}${boxes}</svg>`;
+}
+function vflow(items, back) {
+  return `<div class="vf">${items.map((t, k) => { const hl = t.startsWith("*"); t = hl ? t.slice(1) : t; const [a, b] = t.split(" ~ "); return (k ? "<i></i>" : "") + `<div class="${hl ? "hl" : ""}">${inl(a)}${b ? `<small>${inl(b)}</small>` : ""}</div>`; }).join("")}${back ? `<div class="back" style="border:0;background:none">${inl(back)}</div>` : ""}</div>`;
+}
+function cols(spec) {
+  const groups = spec.split(" || ").map(g => { const i = g.indexOf(": "); return i < 0 ? [g, []] : [g.slice(0, i), g.slice(i + 2).split(" | ")]; });
+  return `<div class="cols${groups.length >= 3 ? " c3" : ""}" style="--n:${groups.length}">${groups.map(([h, xs]) => `<section><h6>${inl(h)}</h6><ul>${xs.map(x => `<li>${inl(x)}</li>`).join("")}</ul></section>`).join("")}</div>`;
+}
+function quad(spec) {
+  /* "Top-left label | top-right | bottom-left | bottom-right :: x-axis :: y-axis" */
+  const [q, xa, ya] = spec.split(" :: "); const Q = q.split(" | ");
+  const W = 340, H = 300, x0 = 46, y0 = 14, w = 280, h = 240;
+  let s = `<rect class="dg-box" x="${x0}" y="${y0}" width="${w}" height="${h}" rx="6"/><line class="dg-a" x1="${x0 + w / 2}" y1="${y0}" x2="${x0 + w / 2}" y2="${y0 + h}"/><line class="dg-a" x1="${x0}" y1="${y0 + h / 2}" x2="${x0 + w}" y2="${y0 + h / 2}"/>`;
+  [[x0 + w / 4, y0 + h / 4], [x0 + 3 * w / 4, y0 + h / 4], [x0 + w / 4, y0 + 3 * h / 4], [x0 + 3 * w / 4, y0 + 3 * h / 4]].forEach(([x, y], k) => s += label(x, y, Q[k] || "", "dg-t", 16));
+  s += label(x0 + w / 2, y0 + h + 22, xa || "", "dg-s", 40) + `<g transform="translate(18 ${y0 + h / 2}) rotate(-90)">${label(0, 0, ya || "", "dg-s", 40)}</g>`;
+  return `<svg viewBox="0 0 ${W} ${H}">${s}</svg>`;
+}
+function diagram(type, body) {
+  if (type === "cycle") { const [it, c] = body.split(" @ "); return cycle(it.split(" | "), c); }
+  if (type === "hub") { const [c, it] = body.split(" :: "); return hub(c, it.split(" | ")); }
+  if (type === "flow") { const [it, back] = body.split(" ^ "); return vflow(it.split(" | "), back); }
+  if (type === "cols") return cols(body);
+  if (type === "quad") return quad(body);
+  return "";
+}
+
+/* ---------- section parser ---------- */
+function parse(src) {
+  const meta = {}, out = []; let list = null, para = [], box = null, table = null;
+  const flushP = () => { if (para.length) { (box ? box.items : out).push(`<p>${inl(para.join(" "))}</p>`); para = []; } };
+  const flushL = () => { if (list) { const html = `<${list.t}>${list.items.map(x => `<li>${inl(x)}</li>`).join("")}</${list.t}>`; if (box && box.kind === "pc") box.cur.push(html); else out.push(html); list = null; } };
+  const flushT = () => { if (table) { const [h, ...rows] = table; out.push(`<div class="tw"><table><thead><tr>${h.map(c => `<th>${inl(c)}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${inl(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`); table = null; } };
+  const flushBox = () => { if (box && box.kind === "pc") { flushL(); out.push(`<div class="pc${box.sides.length === 1 ? " one" : ""}">${box.sides.map(s => `<div class="${s.cls}"><h5>${s.h}</h5>${s.html.join("")}</div>`).join("")}</div>`); } box = null; };
+  const all = () => { flushP(); flushL(); flushT(); };
+  src.replace(/\r/g, "").split("\n").forEach(raw => {
+    const l = raw.trim();
+    if (!l) { all(); if (box && box.kind === "pc" && box.endOnBlank) flushBox(); return; }
+    let m;
+    if ((m = l.match(/^@(\w+)\s+(.*)$/))) { meta[m[1]] = m[2]; return; }
+    if (l.startsWith("## ")) { all(); flushBox(); out.push(`<h4>${inl(l.slice(3))}</h4>`); return; }
+    if ((m = l.match(/^!(adv|lim|pro|con)\s*(.*)$/))) {
+      all();
+      const cls = (m[1] === "adv" || m[1] === "pro") ? "pro" : "con", h = m[2] || (cls === "pro" ? "Advantages" : "Limitations");
+      if (!box || box.kind !== "pc") box = { kind: "pc", sides: [], endOnBlank: false };
+      const side = { cls, h: inl(h), html: [] }; box.sides.push(side); box.cur = side.html;
+      if (box.sides.length === 2) box.endOnBlank = true;
+      return;
+    }
+    if (l === "!end") { all(); flushBox(); return; }
+    if ((m = l.match(/^!(note|tip|mem|ex|write)\s+(.*)$/))) {
+      all(); flushBox();
+      const H = { note: "Doubt point", tip: "Exam tip", mem: "Remember", ex: "Example", write: "How to write it in the exam" }[m[1]];
+      let t = m[2], h = H; const mm = t.match(/^\[(.+?)\]\s*(.*)$/); if (mm) { h = mm[1]; t = mm[2]; }
+      out.push(`<div class="co ${m[1]}"><b>${esc(h)}</b>${inl(t)}</div>`); return;
+    }
+    if ((m = l.match(/^!dia\s+(\w+):\s*(.*?)(?:\s+::cap\s+(.*))?$/))) {
+      all(); flushBox();
+      out.push(`<figure class="fig">${diagram(m[1], m[2])}${m[3] ? `<figcaption>${inl(m[3])}</figcaption>` : ""}</figure>`); return;
+    }
+    if ((m = l.match(/^!viz\s+([\w-]+)\s*(?:::\s*(.*))?$/))) {
+      all(); flushBox();
+      if (typeof VIZ !== "undefined" && VIZ[m[1]]) out.push(`<details class="iv" data-viz="${m[1]}"><summary><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>${inl(m[2] || "Interactive version")}</summary><div class="ivbody"></div></details>`);
+      return;
+    }
+    if (l.startsWith("|")) { flushP(); flushL(); table = table || []; table.push(l.replace(/^\||\|$/g, "").split("|").map(c => c.trim())); return; }
+    if ((m = l.match(/^(-|\d+\.)\s+(.*)$/))) {
+      flushP(); flushT();
+      const t = m[1] === "-" ? "ul" : "ol";
+      if (!list || list.t !== t) { flushL(); list = { t, items: [] }; }
+      list.items.push(m[2]); return;
+    }
+    flushL(); flushT(); para.push(l);
+  });
+  all(); flushBox();
+  return { meta, html: out.join("") };
+}
+
+/* ---------- render ---------- */
+const parsed = SRC.map(parse).filter(p => p.meta.id);
+const byUnit = u => parsed.filter(p => +p.meta.unit === u);
+const ICK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const root = document.getElementById("guide");
+let num = {};
+function card(p) {
+  const m = p.meta, id = "g-" + m.id;
+  num[m.unit] = (num[m.unit] || 0) + 1;
+  return `<article class="ans${learned[m.id] ? " learned" : ""}" id="${id}" data-id="${m.id}">
+    <header class="ans-h"><div class="ans-syl">Unit ${m.unit} · Answer ${num[m.unit]} · Syllabus: ${inl(m.syl || "")}</div>
+    <h3>${inl(m.title)}</h3>${m.q ? `<div class="ans-q"><b>Typical question:</b> ${inl(m.q)}</div>` : ""}
+    ${m.ff ? `<div class="ans-ff">${m.ff.split(";").map(x => { const [a, b] = x.split("="); return `<b>${esc(a.trim())}</b> ${esc((b || "").trim())}`; }).join(" · ")}</div>` : ""}</header>
+    ${m.one ? `<div class="ans-one"><b>In one line</b>${inl(m.one)}</div>` : ""}
+    <div class="ans-b">${p.html}</div>
+    <footer class="ans-f"><button class="learn" type="button" data-learn="${m.id}">${ICK}<span>${learned[m.id] ? "Learned" : "Mark as learned"}</span></button><a href="#u${m.unit}">Unit ${m.unit} list</a></footer>
+  </article>`;
+}
+root.innerHTML = `
+  <div class="gd-top"><div class="gd-bar"><a class="gd-back" href="agile-plan.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Today's plan</a></div>
+  <nav class="gd-units">${UNITS.map(([u]) => `<a href="#u${u}" data-u="${u}">Unit ${u}</a>`).join("")}<a href="index.html#agile">Exam Tides</a></nav></div>
+  <header class="gd-hero"><h1>Agile, every answer</h1>
+    <p>Every syllabus topic written as a full exam answer, in syllabus order, with the diagram to draw. Read the one-line definition first, then the answer, then write it once from memory.</p>
+    <div class="gd-key"><span><i style="background:var(--tide-soft)"></i>One line</span><span><i style="background:var(--amber-soft)"></i>Doubt point</span><span><i style="background:var(--good-soft)"></i>Advantages</span><span><i style="background:var(--surface-2)"></i>Exam tip</span></div>
+  </header>
+  ${UNITS.map(([u, name, sub]) => { const list = byUnit(u); return `
+  <section class="gd-unit" id="u${u}"><small>Unit ${u}</small><h2>${name}</h2><p>${sub}</p></section>
+  ${list.length ? `<ol class="gd-toc">${list.map((p, k) => `<li data-id="${p.meta.id}" class="${learned[p.meta.id] ? "learned" : ""}"><a href="#g-${p.meta.id}"><span>${u}.${k + 1}</span><span>${inl(p.meta.title)}</span><span class="ok"></span></a></li>`).join("")}</ol>${list.map(card).join("")}` : `<div class="gd-wait">This unit's answers are being added and will appear here shortly.</div>`}`; }).join("")}`;
+
+root.addEventListener("click", e => {
+  const b = e.target.closest("[data-learn]"); if (!b) return;
+  const id = b.dataset.learn; if (learned[id]) delete learned[id]; else learned[id] = 1; save();
+  const a = root.querySelector(`.ans[data-id="${id}"]`); a.classList.toggle("learned", !!learned[id]); b.querySelector("span").textContent = learned[id] ? "Learned" : "Mark as learned";
+  const li = root.querySelector(`.gd-toc li[data-id="${id}"]`); if (li) li.classList.toggle("learned", !!learned[id]);
+});
+root.querySelectorAll("details.iv").forEach(d => d.addEventListener("toggle", () => { const body = d.querySelector(".ivbody"); if (d.open && !body.dataset.built) { body.dataset.built = 1; try { VIZ[d.dataset.viz].build(body); } catch (err) { body.textContent = "This diagram could not load."; } } }));
+
+/* highlight the unit chip in view */
+const chips = [...root.querySelectorAll(".gd-units a[data-u]")];
+const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { const u = en.target.dataset.unit; chips.forEach(c => c.classList.toggle("on", c.dataset.u === u)); } }), { rootMargin: "-130px 0px -60% 0px" });
+root.querySelectorAll(".ans").forEach(a => { a.dataset.unit = a.id ? (parsed.find(p => "g-" + p.meta.id === a.id) || { meta: {} }).meta.unit : ""; io.observe(a); });
+root.querySelectorAll(".gd-unit").forEach(s => { s.dataset.unit = s.id.slice(1); io.observe(s); });
+if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) requestAnimationFrame(() => t.scrollIntoView()); }
+})();
+</script>
+<script src="js/tools.js?v=20261124c"></script>
+</body>
+</html>
