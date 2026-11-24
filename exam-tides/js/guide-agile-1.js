@@ -193,7 +193,7 @@ String.raw`
 
 !note Principle 3 says "a couple of weeks to a couple of months". Some notes write "weeks, not months"; that is not the exact principle.
 !note Principle 10's definition of simplicity, "the art of maximising the amount of work **not done**", is a favourite one-mark question.
-!tip In a 10-mark answer, write all twelve with a short line each. If time is short, write the group headings first so the structure is visible, then fill the points.
+!tip In a long answer, write all twelve with a short line each. If time is short, write the group headings first so the structure is visible, then fill the points.
 !mem Group sizes **3-3-2-2-2**: Customer, People, Pace, Quality, Team.
 !write One-line intro (principles behind the manifesto) → twelve numbered principles under the five group headings → one line on how XP practices implement them.
 `,

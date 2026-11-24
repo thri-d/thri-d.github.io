@@ -98,7 +98,8 @@
 .tw table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.45}
 .tw th,.tw td{padding:8px 10px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
 .tw th{background:var(--surface-2);font-weight:700;border-top:0}
-.tw td:first-child{font-weight:600}
+.tw td:first-child{font-weight:600;color:var(--ink)}
+.tw td{color:var(--ink-2)}
 
 /* diagrams */
 .fig{margin:16px 0;border:1px solid var(--line);border-radius:16px;padding:14px 12px 10px;background:var(--bg)}
@@ -226,6 +227,7 @@ function quad(spec) {
   return `<svg viewBox="0 0 ${W} ${H}">${s}</svg>`;
 }
 function diagram(type, body) {
+  if (type === "cycle" || type === "hub") body = body.replace(/ ~ /g, " / ");
   if (type === "cycle") { const [it, c] = body.split(" @ "); return cycle(it.split(" | "), c); }
   if (type === "hub") { const [c, it] = body.split(" :: "); return hub(c, it.split(" | ")); }
   if (type === "flow") { const [it, back] = body.split(" ^ "); return vflow(it.split(" | "), back); }
