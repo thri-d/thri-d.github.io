@@ -794,3 +794,6 @@ html,body{overflow-x:clip}
 .vx-tdd.red.now path.vx-tip{fill:var(--signal)} .vx-tdd.green.now path.vx-tip{fill:var(--good)} .vx-tdd.blue.now path.vx-tip{fill:var(--tide)}
 @media (max-width:999px){body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:88px;background:linear-gradient(to top,var(--bg) 50%,color-mix(in srgb,var(--bg) 0%,transparent));pointer-events:none;z-index:9}}
 @media (min-width:1000px){.modes{width:max-content;max-width:calc(100% - 140px)}}
+.planlink{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:6px 12px;border-radius:10px;background:var(--tide-soft);color:var(--tide-deep);font-weight:700;font-size:14.5px;text-decoration:none}
+.planlink .ic{width:17px;height:17px}
+:root[data-theme="night"] .planlink{color:var(--tide)}

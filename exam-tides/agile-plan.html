@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agile Methodology · one-day plan</title>
+<meta name="theme-color" content="#EDF2F0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E6A78'/%3E%3Cpath d='M5 19c3-3 6-3 9 0s6 3 9 0 4-2 4-2' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/app.css?v=20261124">
+<style>
+.pl{max-width:720px;margin:0 auto;padding:18px 16px 110px}
+.pl-top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;min-height:58px;margin:-18px -16px 0;padding:0 130px 0 16px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tt{right:16px!important;top:10px!important}
+@media(min-width:1000px){.pl-top{margin-top:-28px}}
+.pl-back{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:15px;color:var(--ink-2);text-decoration:none}
+.pl-back svg{width:18px;height:18px}
+.pl-hero{margin:22px 0 18px}
+.pl-hero h1{font:400 clamp(40px,10vw,58px)/1.02 var(--display);letter-spacing:-.02em}
+.pl-hero p{margin:10px 0 0;color:var(--ink-2);font-size:16.5px;max-width:34em}
+.pl-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pl-meta span{padding:5px 11px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--ink-2)}
+
+/* progress */
+.pl-prog{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;margin:0 0 14px}
+.pl-prog-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.pl-prog-h b{font-size:16px}
+.pl-prog-h span{font:600 14px var(--mono);color:var(--muted)}
+.pl-units{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
+.pl-u{display:grid;gap:5px}
+.pl-u i{display:block;height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.pl-u i b{display:block;height:100%;width:0;background:var(--tide);border-radius:99px;transition:width .3s}
+.pl-u.full i b{background:var(--good)}
+.pl-u small{font-size:12.5px;color:var(--muted);font-weight:600;line-height:1.2}
+.pl-u.full small{color:var(--good)}
+
+/* now card */
+.pl-now{background:var(--ink);color:var(--bg);border-radius:var(--r-lg);padding:16px 18px;margin:0 0 22px;display:grid;gap:4px}
+:root[data-theme="night"] .pl-now{background:var(--tide-soft);color:var(--ink)}
+.pl-now small{font-size:13px;font-weight:600;opacity:.75}
+.pl-now strong{font-size:19px;line-height:1.25}
+.pl-now em{font-style:normal;font-size:14.5px;opacity:.85}
+.pl-now button{justify-self:start;margin-top:8px;border:0;border-radius:11px;padding:8px 14px;font-weight:700;font-size:14.5px;background:var(--bg);color:var(--ink)}
+:root[data-theme="night"] .pl-now button{background:var(--tide);color:#04171b}
+
+/* day + rows */
+.pl-day{margin:26px 0 10px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.pl-day h2{font:400 30px/1.1 var(--display)}
+.pl-day span{font-size:14px;color:var(--muted);font-weight:600}
+.pl-list{display:grid;gap:8px}
+.pl-row{display:grid;grid-template-columns:64px 1fr;gap:0 12px;align-items:start}
+.pl-time{padding-top:15px;text-align:right;font:600 14px/1.2 var(--mono);color:var(--ink-2)}
+.pl-time small{display:block;margin-top:3px;font-size:11.5px;color:var(--muted);font-weight:400}
+.pl-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:13px 14px 14px;min-width:0;transition:border-color .2s,background .2s}
+.pl-head{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+.pl-kind{font-size:12.5px;font-weight:700;color:var(--tide-deep);letter-spacing:.01em}
+:root[data-theme="night"] .pl-kind{color:var(--tide)}
+.pl-card h3{font-size:17.5px;margin-top:2px}
+.pl-cover{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 0;padding:0;list-style:none}
+.pl-cover li{font-size:13.5px;padding:3px 9px;border-radius:8px;background:var(--surface-2);color:var(--ink-2);font-weight:500}
+.pl-do{margin:10px 0 0;font-size:15px;color:var(--ink-2);line-height:1.5}
+.pl-do a{font-weight:600}
+.pl-recall{margin:10px 0 0;padding:9px 11px;border-radius:10px;background:var(--amber-soft);font-size:14.5px;line-height:1.45;color:var(--ink)}
+.pl-recall b{color:var(--amber)}
+.pl-acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.pl-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--line-strong);background:var(--surface);font-weight:600;font-size:14px;color:var(--ink-2)}
+.pl-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pl-tick{width:34px;height:34px;border-radius:10px;border:1.6px solid var(--line-strong);background:var(--surface);display:grid;place-items:center;flex:none}
+.pl-tick svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.pl-row.done .pl-tick{background:var(--good);border-color:var(--good)}
+.pl-row.done .pl-tick svg{opacity:1}
+.pl-row.done .pl-card{background:var(--sunk)}
+.pl-row.done .pl-card h3{color:var(--ink-2)}
+.pl-row.done .pl-cover,.pl-row.done .pl-do,.pl-row.done .pl-recall,.pl-row.done .pl-acts{display:none}
+.pl-row.now .pl-card{border-color:var(--tide);box-shadow:0 0 0 2px var(--tide-soft)}
+.pl-row.now .pl-time{color:var(--tide)}
+
+/* breaks */
+.pl-row.brk .pl-time{padding-top:7px;font-size:13px;color:var(--muted)}
+.pl-brk{padding:7px 2px;font-size:14px;color:var(--muted);border-top:1px dashed var(--line);margin-top:9px}
+.pl-row.brk.now .pl-brk{color:var(--tide);font-weight:600}
+.pl-row.big .pl-card{background:transparent;border-style:dashed}
+.pl-row.big h3{font-size:16px}
+.pl-lock{margin-top:6px;font-size:14px;color:var(--muted)}
+.pl-row.big.open .pl-card{border-style:solid;border-color:var(--good);background:var(--good-soft)}
+.pl-row.big.open .pl-lock{color:var(--good);font-weight:600}
+.pl-row.meal .pl-card{background:transparent;border-style:dashed}
+.pl-row.meal h3{font-size:16px;font-weight:600}
+.pl-row.meal p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.pl-row.end .pl-card{background:transparent;border:0;padding-left:0}
+
+.pl-foot{margin-top:28px;display:grid;gap:10px}
+.pl-note{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;font-size:15px;color:var(--ink-2)}
+.pl-note b{color:var(--ink)}
+.pl-note summary{font-weight:700;color:var(--ink);cursor:pointer}
+.pl-note ul{margin:10px 0 0;padding-left:18px;display:grid;gap:6px}
+@media(max-width:400px){.pl-row{grid-template-columns:52px 1fr;gap:0 9px}.pl-time{font-size:13px}.pl-card{padding:12px}}
+@media(min-width:1000px){.pl{padding-top:28px}}
+</style>
+</head>
+<body>
+<main class="pl" id="plan"></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+"use strict";
+/* theme: follow Exam Tides */
+try { const s = JSON.parse(localStorage.getItem("examtides.v2") || "{}"); const t = s.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day"); document.documentElement.dataset.theme = t; } catch (e) {}
+
+const A = "index.html#agile";
+const L = (h, txt) => `<a href="index.html#agile${h}">${txt}</a>`;
+/* kind: s = study sprint, c = checkpoint / recall, b = short break, B = 30-minute break (unlocks), m = meal, e = end */
+const D1 = "2026-11-24", D2 = "2026-11-25";
+const P = [
+ {d:D1,s:"09:00",e:"09:10",k:"c",u:0,id:"w",kind:"Warm-up",t:"Blank page first",
+  do:"Before opening anything, write the five unit names and every Agile word you already know. Guesses are fine: they prepare your memory for what comes next.",
+  recall:null},
+ {d:D1,s:"09:10",e:"09:35",k:"s",u:1,id:"1a",kind:"Unit 1 · sprint 1 of 3",t:"Why Agile, and the Manifesto",
+  cover:["Why Agile?","Understanding success","Beyond deadlines","Organisational success","Introduction to agility","Manifesto: 4 values","Principles of the agile process"],
+  do:`${L("","Topics")}: first two cards. Then ${L("-visuals","Visuals")}: the four values as balance scales.`,
+  recall:"Write the 4 values in order (I Will Code Right), the 3 kinds of success, and any 6 principles."},
+ {d:D1,s:"09:35",e:"09:40",k:"b"},
+ {d:D1,s:"09:40",e:"10:05",k:"s",u:1,id:"1b",kind:"Unit 1 · sprint 2 of 3",t:"Scrum and XP",
+  cover:["Agile methods: Scrum and XP","XP life cycle","XP team","XP concepts"],
+  do:`${L("","Topics")}: Scrum and XP, Understanding XP. ${L("-visuals","Visuals")}: Scrum in one picture and the XP map.`,
+  recall:"Draw Scrum 3-3-5 from memory. Write Beck's six XP phases in order and the four groups in an XP team."},
+ {d:D1,s:"10:05",e:"10:10",k:"b"},
+ {d:D1,s:"10:10",e:"10:35",k:"s",u:1,id:"1c",kind:"Unit 1 · sprint 3 of 3",t:"Adopting XP and the Thinking practices",
+  cover:["Is XP suitable?","Implementing XP","Assessing agility","Pair programming","Energized work","Informative workspace","Root-cause analysis","Retrospectives"],
+  do:`${L("","Topics")}: Adopting XP, Practising XP: Thinking.`,
+  recall:"List the five Thinking practices with one line each. Then the prerequisites for adopting XP."},
+ {d:D1,s:"10:35",e:"10:40",k:"b"},
+ {d:D1,s:"10:40",e:"10:55",k:"c",u:1,id:"1x",kind:"Unit 1 · checkpoint",t:"Write one answer from memory",
+  do:`On paper, outline "Explain the Agile Manifesto and the principles of the agile process": headings and keywords only. Then compare with ${L("-long","Long answers")} and fill the gaps in a different colour.`,
+  recall:null},
+ {d:D1,s:"10:55",e:"11:25",k:"B",req:["1a","1b","1c","1x"],t:"Break, 30 minutes",lock:"Opens when every Unit 1 slot is ticked."},
+ {d:D1,s:"11:25",e:"11:50",k:"s",u:2,id:"2a",kind:"Unit 2 · sprint 1 of 2",t:"Trust, sitting together, real customers",
+  cover:["Trust","Sit together","Real customer involvement","Ubiquitous language"],
+  do:`${L("","Topics")}: the first four Collaborating cards.`,
+  recall:"Write team and organisational ways to build trust, and the five project types for real customer involvement."},
+ {d:D1,s:"11:50",e:"11:55",k:"b"},
+ {d:D1,s:"11:55",e:"12:20",k:"s",u:2,id:"2b",kind:"Unit 2 · sprint 2 of 2",t:"Stand-ups, standards, demos, reports",
+  cover:["Stand-up meetings","Coding standards","Iteration demo","Reporting"],
+  do:`${L("","Topics")}: Stand-up meetings, Iteration demo and reporting.`,
+  recall:"The three stand-up questions. Three reports to give and three to avoid."},
+ {d:D1,s:"12:20",e:"12:25",k:"b"},
+ {d:D1,s:"12:25",e:"12:40",k:"c",u:2,id:"2x",kind:"Spaced recall",t:"Quiz on Units 1 and 2",
+  do:`${L("-quiz","Quiz")}: one Quick quiz round. Every miss goes back into Topics as "Missed" so it returns tonight.`,
+  recall:null},
+ {d:D1,s:"12:40",e:"13:40",k:"m",t:"Lunch and rest",p:"Away from the screen. A nap of up to 20 minutes is fine."},
+ {d:D1,s:"13:40",e:"14:05",k:"s",u:3,id:"3a",kind:"Unit 3 · sprint 1 of 2",t:"Bug-free release and version control",
+  cover:["Done done","Bug-free release","Version control"],
+  do:`${L("","Topics")}: 'Done done' and no bugs, Version control.`,
+  recall:"Write what 'done done' includes, five ways to get near zero bugs, and eight version-control terms."},
+ {d:D1,s:"14:05",e:"14:10",k:"b"},
+ {d:D1,s:"14:10",e:"14:35",k:"s",u:3,id:"3b",kind:"Unit 3 · sprint 2 of 2",t:"Build, integrate, share the code",
+  cover:["Ten-minute build","Continuous integration","Collective ownership","Documentation"],
+  do:`${L("-visuals","Visuals")}: continuous integration, step by step. Then ${L("","Topics")}: Ten-minute build, Collective code ownership.`,
+  recall:"Explain the integration token and the golden rule. Name the three kinds of documentation."},
+ {d:D1,s:"14:35",e:"14:40",k:"b"},
+ {d:D1,s:"14:40",e:"14:55",k:"c",u:3,id:"3x",kind:"Unit 3 · checkpoint",t:"Write one answer from memory",
+  do:`Outline "Explain the ten-minute build and continuous integration". Compare with ${L("-long","Long answers")}.`,
+  recall:null},
+ {d:D1,s:"14:55",e:"15:25",k:"B",req:["2a","2b","2x","3a","3b","3x"],t:"Break, 30 minutes",lock:"Opens when Units 2 and 3 are ticked."},
+ {d:D1,s:"15:25",e:"15:50",k:"s",u:4,id:"4a",kind:"Unit 4 · sprint 1 of 3",t:"Vision, release planning, the planning game",
+  cover:["Vision","Release planning","MMF","Scopeboxed vs timeboxed","The planning game"],
+  do:`${L("-visuals","Visuals")}: the planning game on one grid. ${L("","Topics")}: Vision and release planning.`,
+  recall:"Who knows value, who knows cost? Write the planning-game steps, and scopeboxed vs timeboxed in one line each."},
+ {d:D1,s:"15:50",e:"15:55",k:"b"},
+ {d:D1,s:"15:55",e:"16:20",k:"s",u:4,id:"4b",kind:"Unit 4 · sprint 2 of 3",t:"Risk, iteration planning, velocity, slack",
+  cover:["Risk management","Iteration planning","Velocity","Slack"],
+  do:`${L("-visuals","Visuals")}: velocity, slack and the burn-up chart. ${L("","Topics")}: Risk management.`,
+  recall:"Four responses to a risk. Define velocity. The five steps of iteration planning. Why plan slack?"},
+ {d:D1,s:"16:20",e:"16:25",k:"b"},
+ {d:D1,s:"16:25",e:"16:50",k:"s",u:4,id:"4c",kind:"Unit 4 · sprint 3 of 3",t:"Stories and estimating",
+  cover:["Stories","INVEST","Special stories","Estimating"],
+  do:`${L("","Topics")}: Stories and estimating.`,
+  recall:"Spell out INVEST. Four special kinds of story. How programmers estimate and why consistency matters."},
+ {d:D1,s:"16:50",e:"17:05",k:"m",t:"Tea break",p:"Stand up, walk, water."},
+ {d:D1,s:"17:05",e:"17:20",k:"c",u:4,id:"4x",kind:"Mixed recall",t:"Units 1 to 4, mixed",
+  do:`${L("-quiz","Quiz")}: Look-alikes first, then one Quick quiz round. Mixing units trains you to tell similar ideas apart.`,
+  recall:null},
+ {d:D1,s:"17:20",e:"17:25",k:"b"},
+ {d:D1,s:"17:25",e:"17:50",k:"s",u:5,id:"5a",kind:"Unit 5 · sprint 1 of 3",t:"Requirements, customer tests, TDD",
+  cover:["Incremental requirements","Customer tests","Test-driven development"],
+  do:`${L("-visuals","Visuals")}: TDD, one cycle at a time (the leap-year example). ${L("","Topics")}: Incremental requirements.`,
+  recall:"Draw Red → Green → Refactor with the leap-year example. Customer tests: describe, demonstrate, develop."},
+ {d:D1,s:"17:50",e:"17:55",k:"b"},
+ {d:D1,s:"17:55",e:"18:20",k:"s",u:5,id:"5b",kind:"Unit 5 · sprint 2 of 3",t:"Refactoring and incremental design",
+  cover:["Refactoring","Code smells","Simple design","Incremental design and architecture"],
+  do:`${L("","Topics")}: Refactoring, Simple and incremental design.`,
+  recall:"Define refactoring in one line. Four code smells. Four rules of simple design (YAGNI first)."},
+ {d:D1,s:"18:20",e:"18:25",k:"b"},
+ {d:D1,s:"18:25",e:"18:50",k:"s",u:5,id:"5c",kind:"Unit 5 · sprint 3 of 3",t:"Spikes, performance, exploratory testing",
+  cover:["Spike solutions","Performance optimisation","Exploratory testing"],
+  do:`${L("","Topics")}: Spike solutions, Exploratory testing.`,
+  recall:"What a spike is and why its code is thrown away. 'Measure first'. Four exploratory-testing heuristics."},
+ {d:D1,s:"18:50",e:"19:20",k:"B",req:["4a","4b","4c","4x","5a","5b","5c"],t:"Break, 30 minutes",lock:"Opens when Units 4 and 5 are ticked. That is the whole syllabus."},
+ {d:D1,s:"19:20",e:"20:00",k:"m",t:"Dinner",p:"No new topics after this, only practice."},
+ {d:D1,s:"20:00",e:"20:45",k:"c",u:9,id:"r1",kind:"Exam rehearsal",t:"Two full answers, by hand",
+  do:`20 minutes each, no notes, as in the hall. One from Unit 1 and one from Unit 4 or 5, picked from ${L("-long","Long answers")}: choose the one you would least like to see. Last 5 minutes: check and mark gaps.`,
+  recall:null},
+ {d:D1,s:"20:45",e:"20:50",k:"b"},
+ {d:D1,s:"20:50",e:"21:15",k:"c",u:9,id:"r2",kind:"Consolidate",t:"One page for the whole paper",
+  do:`From memory, one sheet: five unit headings, keywords under each. Then open ${L("-final","Final hour")} and add what is missing. This sheet is tomorrow morning's revision.`,
+  recall:null},
+ {d:D1,s:"21:15",e:"",k:"e",t:"Done for today",p:"Lights out by 11. Sleep is when today's learning gets stored."},
+
+ {d:D2,s:"09:00",e:"09:25",k:"c",u:9,id:"m1",kind:"Morning",t:"Rewrite last night's page from memory",
+  do:"Blank paper, then compare with the sheet. Circle anything you missed.", recall:null},
+ {d:D2,s:"09:25",e:"09:30",k:"b"},
+ {d:D2,s:"09:30",e:"09:55",k:"c",u:9,id:"m2",kind:"Morning",t:"Final hour",
+  do:`${L("-final","Final hour")}: shaky topics, key facts, then the Look-alikes in ${L("-quiz","Quiz")}.`, recall:null},
+ {d:D2,s:"09:55",e:"10:05",k:"b"},
+ {d:D2,s:"10:05",e:"10:50",k:"c",u:9,id:"m3",kind:"Morning",t:"Five outlines, one per unit",
+  do:"About 8 minutes each: headings and keywords for one likely long answer from every unit.", recall:null},
+ {d:D2,s:"10:50",e:"",k:"e",t:"Stop here",p:"No new material. Lunch, then the paper at 2:00 PM."}
+];
+
+const STUDY = P.filter(x => x.id);
+const KEY = "examtides.agileplan";
+let done = {};
+try { done = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} };
+
+const mins = (a, b) => { const [h1, m1] = a.split(":").map(Number), [h2, m2] = b.split(":").map(Number); return (h2 * 60 + m2) - (h1 * 60 + m1); };
+const twelve = s => { let [h, m] = s.split(":").map(Number); h = h % 12 || 12; return `${h}:${String(m).padStart(2, "0")}`; };
+const ist = (d, s) => new Date(`${d}T${s}:00+05:30`).getTime();
+const ICK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const IPLAY = '<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.5 1.5M9.5 3h5"/></svg>';
+
+const unitTotals = [1, 2, 3, 4, 5].map(u => STUDY.filter(x => x.u === u));
+const focusMin = STUDY.filter(x => x.d === D1).reduce((a, x) => a + mins(x.s, x.e), 0);
+
+function rowHTML(x, i) {
+  const dur = x.e ? mins(x.s, x.e) : 0;
+  const time = `<div class="pl-time">${twelve(x.s)}${dur ? `<small>${dur} min</small>` : ""}</div>`;
+  if (x.k === "b") return `<div class="pl-row brk" data-i="${i}">${time.replace(/<small>.*<\/small>/, "")}<div class="pl-brk">Break, ${dur} minutes</div></div>`;
+  if (x.k === "B") return `<div class="pl-row big" data-i="${i}">${time}<div class="pl-card"><h3>${x.t}</h3><div class="pl-lock">${x.lock}</div></div></div>`;
+  if (x.k === "m" || x.k === "e") return `<div class="pl-row ${x.k === "m" ? "meal" : "end"}" data-i="${i}">${time}<div class="pl-card"><h3>${x.t}</h3><p>${x.p}</p></div></div>`;
+  const cover = x.cover ? `<ul class="pl-cover">${x.cover.map(c => `<li>${c}</li>`).join("")}</ul>` : "";
+  const recall = x.recall ? `<p class="pl-recall"><b>Last 5 minutes, book closed:</b> ${x.recall}</p>` : "";
+  return `<div class="pl-row" data-i="${i}" data-id="${x.id}">${time}<div class="pl-card">
+    <div class="pl-head"><div><div class="pl-kind">${x.kind}</div><h3>${x.t}</h3></div>
+    <button class="pl-tick" type="button" data-tick="${x.id}" aria-label="Mark ${x.t} done">${ICK}</button></div>
+    ${cover}<p class="pl-do">${x.do}</p>${recall}
+    <div class="pl-acts"><button class="pl-btn" type="button" data-run="${dur}">${IPLAY}Start ${dur}-min timer</button></div>
+  </div></div>`;
+}
+
+const root = document.getElementById("plan");
+root.innerHTML = `
+  <div class="pl-top"><a class="pl-back" href="${A}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Exam Tides · Agile</a></div>
+  <header class="pl-hero">
+    <h1>Agile in one day</h1>
+    <p>Every topic in the syllabus, in the order that sticks. Short sprints, each ending with writing from memory.</p>
+    <div class="pl-meta"><span>Paper: Wed 25 Nov, 2:00 PM</span><span>${STUDY.filter(x => x.d === D1).length} slots today</span><span>${Math.floor(focusMin / 60)} h ${focusMin % 60} min of focus</span><span>Times in IST</span></div>
+  </header>
+  <section class="pl-prog" aria-label="Progress">
+    <div class="pl-prog-h"><b>Syllabus covered</b><span id="pcount"></span></div>
+    <div class="pl-units">${[1, 2, 3, 4, 5].map(u => `<div class="pl-u" data-u="${u}"><i><b></b></i><small>Unit ${u}</small></div>`).join("")}</div>
+  </section>
+  <section class="pl-now" id="now" aria-live="polite"></section>
+  <div class="pl-day"><h2>Tuesday</h2><span>24 November</span></div>
+  <div class="pl-list">${P.map((x, i) => x.d === D1 ? rowHTML(x, i) : "").join("")}</div>
+  <div class="pl-day"><h2>Wednesday morning</h2><span>25 November</span></div>
+  <div class="pl-list">${P.map((x, i) => x.d === D2 ? rowHTML(x, i) : "").join("")}</div>
+  <div class="pl-foot">
+    <div class="pl-note"><b>Running late?</b> Keep the order and the book-closed minutes. Shorten lunch and tea first; never skip a unit.</div>
+    <details class="pl-note"><summary>Why it is built this way</summary><ul>
+      <li><b>Blank page first.</b> Trying to answer before studying makes the later reading stick better, even when the guesses are wrong.</li>
+      <li><b>25-minute sprints with one clear target.</b> A small, defined task is easier to start and easier to hold attention on.</li>
+      <li><b>Book closed at the end of every sprint.</b> Pulling information out of memory strengthens it far more than reading it again.</li>
+      <li><b>Earlier units come back later.</b> The quizzes at 12:25 and 5:05 and the evening rehearsal space the practice out, which protects against forgetting.</li>
+      <li><b>Visuals after lunch.</b> Diagrams plus words give two routes to the same fact when energy is lowest.</li>
+      <li><b>Writing full answers tonight.</b> Practising in the same form as the exam makes recall in the hall easier.</li>
+      <li><b>Sleep.</b> Memory is consolidated overnight; tomorrow morning is review only.</li>
+    </ul></details>
+  </div>`;
+
+function paint() {
+  root.querySelectorAll(".pl-row[data-id]").forEach(r => r.classList.toggle("done", !!done[r.dataset.id]));
+  const today = STUDY.filter(x => x.d === D1), n = today.filter(x => done[x.id]).length;
+  document.getElementById("pcount").textContent = `${n} of ${today.length} slots`;
+  unitTotals.forEach((list, k) => {
+    const d = list.filter(x => done[x.id]).length, el = root.querySelector(`.pl-u[data-u="${k + 1}"]`);
+    el.querySelector("b").style.width = (list.length ? d / list.length * 100 : 0) + "%";
+    el.classList.toggle("full", list.length && d === list.length);
+  });
+  P.forEach((x, i) => { if (x.k !== "B") return; const r = root.querySelector(`.pl-row[data-i="${i}"]`); const open = x.req.every(id => done[id]); r.classList.toggle("open", open); r.querySelector(".pl-lock").textContent = open ? "Earned. Enjoy it." : x.lock; });
+  paintNow();
+}
+
+function paintNow() {
+  const t = Date.now(), el = document.getElementById("now");
+  root.querySelectorAll(".pl-row.now").forEach(r => r.classList.remove("now"));
+  let cur = -1;
+  P.forEach((x, i) => { if (x.e && t >= ist(x.d, x.s) && t < ist(x.d, x.e)) cur = i; });
+  const nextI = P.findIndex(x => x.k !== "b" && ist(x.d, x.s) > t);
+  const firstOpen = STUDY.find(x => !done[x.id]);
+  if (cur >= 0) {
+    const x = P[cur], r = root.querySelector(`.pl-row[data-i="${cur}"]`); r && r.classList.add("now");
+    const left = Math.max(1, Math.round((ist(x.d, x.e) - t) / 60000));
+    const title = x.k === "b" ? `Break, ${mins(x.s, x.e)} minutes` : x.t;
+    el.innerHTML = `<small>Now · until ${twelve(x.e)} (${left} min left)</small><strong>${title}</strong>${nextI >= 0 ? `<em>Next: ${P[nextI].t} at ${twelve(P[nextI].s)}</em>` : ""}<button type="button" data-jump="${cur}">Go to this slot</button>`;
+  } else if (t < ist(D1, P[0].s)) {
+    el.innerHTML = `<small>Starts Tuesday at 9:00 AM IST</small><strong>${P[0].t}</strong><em>${P[0].do}</em>`;
+  } else if (firstOpen) {
+    const i = P.indexOf(firstOpen);
+    el.innerHTML = `<small>Next unticked slot</small><strong>${firstOpen.t}</strong><em>${firstOpen.kind}</em><button type="button" data-jump="${i}">Go to this slot</button>`;
+  } else {
+    el.innerHTML = `<small>All slots ticked</small><strong>Every topic is covered.</strong><em>Paper: Wednesday, 2:00 PM.</em>`;
+  }
+}
+
+root.addEventListener("click", e => {
+  const tk = e.target.closest("[data-tick]"); if (tk) { const id = tk.dataset.tick; done[id] = !done[id]; if (!done[id]) delete done[id]; save(); return paint(); }
+  const rn = e.target.closest("[data-run]"); if (rn) { if (window.ExamTimer) window.ExamTimer.run(+rn.dataset.run); return; }
+  const j = e.target.closest("[data-jump]"); if (j) { const r = root.querySelector(`.pl-row[data-i="${j.dataset.jump}"]`); r && r.scrollIntoView({ behavior: "smooth", block: "center" }); }
+});
+paint();
+setInterval(paintNow, 30000);
+})();
+</script>
+<script src="js/tools.js?v=20261124"></script>
+</body>
+</html>

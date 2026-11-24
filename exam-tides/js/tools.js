@@ -119,6 +119,9 @@ panel.addEventListener("click", e => {
   if (a === "chime") { T.chime = !T.chime; save(); return draw(); }
 });
 
+/* ---------- public: start a plain countdown of n minutes (used by the study plan) ---------- */
+window.ExamTimer = { run(min) { T.mode = "timer"; T.custom = min; T.running = false; T.left = min * 60; start(); } };
+
 /* ---------- loop ---------- */
 if (T.left > total() || T.left < 0) T.left = total();
 setInterval(() => { if (T.running) { if (remaining() <= 0) finish(); else draw(); } }, 250);
