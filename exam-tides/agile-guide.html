@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E6A78'/%3E%3Cpath d='M5 19c3-3 6-3 9 0s6 3 9 0 4-2 4-2' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=20261124d">
+<link rel="stylesheet" href="css/app.css?v=20261124e">
 <style>
 .gd{max-width:740px;margin:0 auto;padding:0 16px 120px}
 .gd-top{position:sticky;top:0;z-index:20;margin:0 -16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -111,6 +111,11 @@
 .dg-t{font:600 13px var(--font);fill:var(--ink);dominant-baseline:middle;text-anchor:middle}
 .dg-s{font:500 11.5px var(--font);fill:var(--muted);dominant-baseline:middle;text-anchor:middle}
 .dg-a{stroke:var(--ink-2);stroke-width:1.6;fill:none}
+.bu-scope{fill:none;stroke:var(--signal);stroke-width:2.2;stroke-dasharray:6 4}
+.bu-done{fill:none;stroke:var(--tide);stroke-width:2.6}
+.bu-dot{fill:var(--tide)}
+.bu-l1{fill:var(--signal);text-anchor:end}
+.bu-l2{fill:var(--tide-deep);text-anchor:end}
 .dg-ah{fill:var(--ink-2)}
 /* vertical flow (HTML) */
 .vf{display:grid;justify-items:center;gap:0;max-width:420px;margin:0 auto}
@@ -142,19 +147,34 @@
 .learn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .ans.learned .learn{background:var(--good);border-color:var(--good);color:#fff}
 .ans-f a{font-size:14px;font-weight:600;color:var(--muted);text-decoration:none}
+.ans-n{display:inline-block;font:700 12.5px var(--mono);color:var(--tide-deep);background:var(--tide-soft);padding:1px 7px;border-radius:6px;margin-right:4px}
+:root[data-theme="night"] .ans-n{color:var(--tide)}
+.nx{display:grid;justify-items:end;text-align:right;gap:1px;max-width:62%;text-decoration:none;color:var(--ink)!important}
+.nx small{font-size:12.5px;color:var(--muted);font-weight:600}
+.nx span{font-size:14.5px;font-weight:700;line-height:1.3}
+.nx span::after{content:" \2192";color:var(--tide)}
+.gd-how{margin:12px 0 0;padding-left:22px;font-size:15px;color:var(--ink-2);line-height:1.5}
+.gd-how li{margin:3px 0}
+.gd-cont{display:grid;gap:1px;margin:14px 0 0;padding:12px 16px;border-radius:14px;background:var(--ink);color:var(--bg);text-decoration:none}
+:root[data-theme="night"] .gd-cont{background:var(--tide);color:#04171b}
+.gd-cont small{font-size:12.5px;font-weight:600;opacity:.75}
+.gd-cont span{font-size:16.5px;font-weight:700}
+.gd-cont span::after{content:" \2192"}
+.gd-book{font-size:14px!important;color:var(--muted)!important}
+.gd-units em{font-style:normal;font:600 11.5px var(--mono);opacity:.7;margin-left:2px}
 .gd-wait{padding:16px;border:1px dashed var(--line-strong);border-radius:16px;color:var(--muted);font-size:15px}
 </style>
 </head>
 <body>
 <main class="gd" id="guide"></main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="js/viz-core.js?v=20261124d"></script>
-<script src="js/viz-agile.js?v=20261124d"></script>
-<script src="js/guide-agile-1.js?v=20261124d"></script>
-<script src="js/guide-agile-2.js?v=20261124d"></script>
-<script src="js/guide-agile-3.js?v=20261124d"></script>
-<script src="js/guide-agile-4.js?v=20261124d"></script>
-<script src="js/guide-agile-5.js?v=20261124d"></script>
+<script src="js/viz-core.js?v=20261124e"></script>
+<script src="js/viz-agile.js?v=20261124e"></script>
+<script src="js/guide-agile-1.js?v=20261124e"></script>
+<script src="js/guide-agile-2.js?v=20261124e"></script>
+<script src="js/guide-agile-3.js?v=20261124e"></script>
+<script src="js/guide-agile-4.js?v=20261124e"></script>
+<script src="js/guide-agile-5.js?v=20261124e"></script>
 <script>
 (function(){
 "use strict";
@@ -226,7 +246,20 @@ function quad(spec) {
   s += label(x0 + w / 2, y0 + h + 22, xa || "", "dg-s", 40) + `<g transform="translate(18 ${y0 + h / 2}) rotate(-90)">${label(0, 0, ya || "", "dg-s", 40)}</g>`;
   return `<svg viewBox="0 0 ${W} ${H}">${s}</svg>`;
 }
+function burn(spec) {
+  const S = {}; spec.split(" | ").forEach(g => { const i = g.indexOf(": "); S[g.slice(0, i)] = g.slice(i + 2).split(",").map(Number); });
+  const sc = S.scope, dn = S.done, n = sc.length, W = 360, H = 250, x0 = 44, y0 = 16, w = 296, h = 180, mx = Math.max(...sc) * 1.1;
+  const X = i => x0 + i * w / (n - 1), Y = v => y0 + h - v / mx * h;
+  const line = (arr, cls) => `<polyline class="${cls}" points="${arr.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(" ")}"/>`;
+  let s = `<line class="dg-a" x1="${x0}" y1="${y0}" x2="${x0}" y2="${y0 + h}"/><line class="dg-a" x1="${x0}" y1="${y0 + h}" x2="${x0 + w}" y2="${y0 + h}"/>`;
+  sc.forEach((_, i) => s += `<text class="dg-s" x="${X(i)}" y="${y0 + h + 14}">${i}</text>`);
+  s += line(sc, "bu-scope") + line(dn, "bu-done") + dn.map((v, i) => `<circle class="bu-dot" cx="${X(i)}" cy="${Y(v)}" r="3.5"/>`).join("");
+  s += `<text class="dg-s" x="${x0 + w / 2}" y="${H - 8}">Iterations</text><g transform="translate(14 ${y0 + h / 2}) rotate(-90)"><text class="dg-s" x="0" y="0">Story points</text></g>`;
+  s += `<text class="dg-t bu-l1" x="${X(0) + 6}" y="${Y(sc[0]) - 10}" style="text-anchor:start">Total scope</text><text class="dg-t bu-l2" x="${X(Math.floor(n / 2)) + 8}" y="${Y(dn[Math.floor(n / 2)]) + 20}" style="text-anchor:start">Work done</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Burn-up chart">${s}</svg>`;
+}
 function diagram(type, body) {
+  if (type === "burn") return burn(body);
   if (type === "cycle" || type === "hub") body = body.replace(/ ~ /g, " / ");
   if (type === "cycle") { const [it, c] = body.split(" @ "); return cycle(it.split(" | "), c); }
   if (type === "hub") { const [c, it] = body.split(" :: "); return hub(c, it.split(" | ")); }
@@ -240,7 +273,7 @@ function diagram(type, body) {
 function parse(src) {
   const meta = {}, out = []; let list = null, para = [], box = null, table = null;
   const flushP = () => { if (para.length) { (box ? box.items : out).push(`<p>${inl(para.join(" "))}</p>`); para = []; } };
-  const flushL = () => { if (list) { const html = `<${list.t}>${list.items.map(x => `<li>${inl(x)}</li>`).join("")}</${list.t}>`; if (box && box.kind === "pc") box.cur.push(html); else out.push(html); list = null; } };
+  const flushL = () => { if (list) { const html = `<${list.t}${list.start > 1 ? ` start="${list.start}"` : ""}>${list.items.map(x => `<li>${inl(x)}</li>`).join("")}</${list.t}>`; if (box && box.kind === "pc") box.cur.push(html); else out.push(html); list = null; } };
   const flushT = () => { if (table) { const [h, ...rows] = table; out.push(`<div class="tw"><table><thead><tr>${h.map(c => `<th>${inl(c)}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${inl(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`); table = null; } };
   const flushBox = () => { if (box && box.kind === "pc") { flushL(); out.push(`<div class="pc${box.sides.length === 1 ? " one" : ""}">${box.sides.map(s => `<div class="${s.cls}"><h5>${s.h}</h5>${s.html.join("")}</div>`).join("")}</div>`); } box = null; };
   const all = () => { flushP(); flushL(); flushT(); };
@@ -278,7 +311,7 @@ function parse(src) {
     if ((m = l.match(/^(-|\d+\.)\s+(.*)$/))) {
       flushP(); flushT();
       const t = m[1] === "-" ? "ul" : "ol";
-      if (!list || list.t !== t) { flushL(); list = { t, items: [] }; }
+      if (!list || list.t !== t) { flushL(); list = { t, items: [], start: t === "ol" ? parseInt(m[1], 10) : 1 }; }
       list.items.push(m[2]); return;
     }
     flushL(); flushT(); para.push(l);
@@ -293,45 +326,66 @@ const byUnit = u => parsed.filter(p => +p.meta.unit === u);
 const ICK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 const root = document.getElementById("guide");
 let num = {};
+const numOf = p => `${p.meta.unit}.${byUnit(+p.meta.unit).indexOf(p) + 1}`;
+function nextLink(p) {
+  const i = parsed.indexOf(p), n = parsed[i + 1];
+  if (!n) return `<a class="nx" href="#top">Back to the top</a>`;
+  const newUnit = n.meta.unit !== p.meta.unit;
+  return `<a class="nx" href="#g-${n.meta.id}"><small>${newUnit ? `Next: Unit ${n.meta.unit}` : "Next"}</small><span>${numOf(n)} ${inl(n.meta.title)}</span></a>`;
+}
 function card(p) {
   const m = p.meta, id = "g-" + m.id;
   num[m.unit] = (num[m.unit] || 0) + 1;
   return `<article class="ans${learned[m.id] ? " learned" : ""}" id="${id}" data-id="${m.id}">
-    <header class="ans-h"><div class="ans-syl">Unit ${m.unit} · Answer ${num[m.unit]} · Syllabus: ${inl(m.syl || "")}</div>
+    <header class="ans-h"><div class="ans-syl"><span class="ans-n">${m.unit}.${num[m.unit]}</span> Syllabus: ${inl(m.syl || "")}</div>
     <h3>${inl(m.title)}</h3>${m.q ? `<div class="ans-q"><b>Typical question:</b> ${inl(m.q)}</div>` : ""}
     ${m.ff ? `<div class="ans-ff">${m.ff.split(";").map(x => { const [a, b] = x.split("="); return `<b>${esc(a.trim())}</b> ${esc((b || "").trim())}`; }).join(" · ")}</div>` : ""}</header>
     ${m.one ? `<div class="ans-one"><b>In one line</b>${inl(m.one)}</div>` : ""}
     <div class="ans-b">${p.html}</div>
-    <footer class="ans-f"><button class="learn" type="button" data-learn="${m.id}">${ICK}<span>${learned[m.id] ? "Learned" : "Mark as learned"}</span></button><a href="#u${m.unit}">Unit ${m.unit} list</a></footer>
+    <footer class="ans-f"><button class="learn" type="button" data-learn="${m.id}">${ICK}<span>${learned[m.id] ? "Learned" : "Mark as learned"}</span></button>${nextLink(p)}</footer>
   </article>`;
 }
 root.innerHTML = `
   <div class="gd-top"><div class="gd-bar"><a class="gd-back" href="agile-plan.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Today's plan</a></div>
-  <nav class="gd-units">${UNITS.map(([u]) => `<a href="#u${u}" data-u="${u}">Unit ${u}</a>`).join("")}<a href="index.html#agile">Exam Tides</a></nav></div>
-  <header class="gd-hero"><h1>Agile, every answer</h1>
-    <p>Every syllabus topic written as a full exam answer, in syllabus order, with the diagram to draw. Read the one-line definition first, then the answer, then write it once from memory.</p>
-    <div class="gd-key"><span><i style="background:var(--tide-soft)"></i>One line</span><span><i style="background:var(--amber-soft)"></i>Doubt point</span><span><i style="background:var(--good-soft)"></i>Advantages</span><span><i style="background:var(--surface-2)"></i>Exam tip</span></div>
+  <nav class="gd-units">${UNITS.map(([u]) => `<a href="#u${u}" data-u="${u}">Unit ${u} <em data-ccount="${u}"></em></a>`).join("")}<a href="index.html#agile-quiz">Quiz</a></nav></div>
+  <header class="gd-hero" id="top"><h1>Agile, every answer</h1>
+    <p>All 43 syllabus topics as full answers, in syllabus order, each with a diagram to draw. They go deeper than a 10-mark answer needs, so the extra detail helps understanding; the dashed <b>How to write it in the exam</b> box at the end of each answer shows what to put on paper.</p>
+    <ol class="gd-how"><li>Read the <b>In one line</b> box.</li><li>Read the answer and copy the diagram once.</li><li>Close it and write the outline from memory. Then tap <b>Mark as learned</b>.</li></ol>
+    <a class="gd-cont" id="cont" href="#"></a>
+    <p class="gd-book">Textbook: <i>The Art of Agile Development</i>, James Shore and Shane Warden (O'Reilly). "The textbook" in the answers means this book.</p>
+    <div class="gd-key"><span><i style="background:var(--tide-soft)"></i>In one line</span><span><i style="background:var(--amber-soft)"></i>Doubt point</span><span><i style="background:var(--good-soft)"></i>Advantages</span><span><i style="background:var(--surface-2)"></i>Exam tip</span><span><i style="border:1.5px dashed var(--line-strong)"></i>How to write it</span></div>
   </header>
   ${UNITS.map(([u, name, sub]) => { const list = byUnit(u); return `
-  <section class="gd-unit" id="u${u}"><small>Unit ${u}</small><h2>${name}</h2><p>${sub}</p></section>
+  <section class="gd-unit" id="u${u}"><small>Unit ${u} · <span data-ucount="${u}"></span></small><h2>${name}</h2><p>${sub}</p></section>
   ${list.length ? `<ol class="gd-toc">${list.map((p, k) => `<li data-id="${p.meta.id}" class="${learned[p.meta.id] ? "learned" : ""}"><a href="#g-${p.meta.id}"><span>${u}.${k + 1}</span><span>${inl(p.meta.title)}</span><span class="ok"></span></a></li>`).join("")}</ol>${list.map(card).join("")}` : `<div class="gd-wait">This unit's answers are being added and will appear here shortly.</div>`}`; }).join("")}`;
 
+function paintProgress() {
+  UNITS.forEach(([u]) => { const l = byUnit(u), d = l.filter(p => learned[p.meta.id]).length;
+    const a = root.querySelector(`[data-ucount="${u}"]`); if (a) a.textContent = `${d} of ${l.length} learned`;
+    const c = root.querySelector(`[data-ccount="${u}"]`); if (c) c.textContent = `${d}/${l.length}`; });
+  const first = parsed.find(p => !learned[p.meta.id]), cont = document.getElementById("cont");
+  if (first) { cont.href = `#g-${first.meta.id}`; cont.innerHTML = `<small>${Object.keys(learned).length ? "Continue with" : "Start with"}</small><span>${numOf(first)} ${inl(first.meta.title)}</span>`; }
+  else { cont.href = "#u1"; cont.innerHTML = `<small>All 43 learned</small><span>Revise from Unit 1</span>`; }
+}
+paintProgress();
 root.addEventListener("click", e => {
   const b = e.target.closest("[data-learn]"); if (!b) return;
   const id = b.dataset.learn; if (learned[id]) delete learned[id]; else learned[id] = 1; save();
   const a = root.querySelector(`.ans[data-id="${id}"]`); a.classList.toggle("learned", !!learned[id]); b.querySelector("span").textContent = learned[id] ? "Learned" : "Mark as learned";
   const li = root.querySelector(`.gd-toc li[data-id="${id}"]`); if (li) li.classList.toggle("learned", !!learned[id]);
+  paintProgress();
 });
 root.querySelectorAll("details.iv").forEach(d => d.addEventListener("toggle", () => { const body = d.querySelector(".ivbody"); if (d.open && !body.dataset.built) { body.dataset.built = 1; try { VIZ[d.dataset.viz].build(body); } catch (err) { body.textContent = "This diagram could not load."; } } }));
 
 /* highlight the unit chip in view */
 const chips = [...root.querySelectorAll(".gd-units a[data-u]")];
-const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { const u = en.target.dataset.unit; chips.forEach(c => c.classList.toggle("on", c.dataset.u === u)); } }), { rootMargin: "-130px 0px -60% 0px" });
+let curU = null;
+const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { const u = en.target.dataset.unit; if (u === curU) return; curU = u; chips.forEach(c => { const on = c.dataset.u === u; c.classList.toggle("on", on); if (on) { const nav = c.parentNode; nav.scrollTo({ left: c.offsetLeft - 16, behavior: "smooth" }); } }); } }), { rootMargin: "-130px 0px -60% 0px" });
 root.querySelectorAll(".ans").forEach(a => { a.dataset.unit = a.id ? (parsed.find(p => "g-" + p.meta.id === a.id) || { meta: {} }).meta.unit : ""; io.observe(a); });
 root.querySelectorAll(".gd-unit").forEach(s => { s.dataset.unit = s.id.slice(1); io.observe(s); });
 if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) requestAnimationFrame(() => t.scrollIntoView()); }
 })();
 </script>
-<script src="js/tools.js?v=20261124d"></script>
+<script src="js/tools.js?v=20261124e"></script>
 </body>
 </html>

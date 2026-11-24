@@ -45,7 +45,7 @@ String.raw`
 @syl Customer tests
 @title Customer tests
 @q What are customer tests? Explain describe, demonstrate and develop.
-@ff Fit = Framework for Integrated Test
+@ff Fit = Framework for Integrated Test; TDD = Test-Driven Development
 @one Customer tests are concrete examples of business rules, written with the customers, that are automated to confirm the software does what customers want.
 
 ## What they are
@@ -145,6 +145,7 @@ String.raw`
 @syl Refactoring
 @title Refactoring
 @q What is refactoring? Explain code smells and how to refactor safely.
+@ff TDD = Test-Driven Development
 @one Refactoring is improving the design of existing code in small steps without changing its behaviour; code smells are the warning signs that tell you where to refactor.
 
 ## Definition
@@ -188,7 +189,7 @@ String.raw`
 @syl Incremental design and architecture
 @title Incremental design and architecture (with simple design)
 @q Explain simple design and incremental design and architecture in XP.
-@ff YAGNI = You Aren't Gonna Need It; DRY = Don't Repeat Yourself
+@ff YAGNI = You Aren't Gonna Need It; DRY = Don't Repeat Yourself; TDD = Test-Driven Development
 @one XP builds the simplest design that works today and improves it continuously, at the level of methods, classes and the whole architecture, instead of designing everything up front.
 
 ## Simple design
@@ -231,6 +232,7 @@ String.raw`
 @syl Spike solutions
 @title Spike solutions
 @q What is a spike solution? When and how is it used?
+@ff TDD = Test-Driven Development
 @one A spike solution is a small, quick, throw-away experiment that answers one technical question, so the team can estimate or design with confidence.
 
 ## What a spike is

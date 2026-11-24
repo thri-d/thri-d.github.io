@@ -58,7 +58,7 @@ String.raw`
 @syl Introduction to agility · Agile methods: Scrum and XP
 @title Introduction to agility, and the agile methods Scrum and XP
 @q What is agility? Explain Scrum and XP and compare them.
-@ff XP = Extreme Programming; PO = Product Owner; SM = Scrum Master
+@ff XP = Extreme Programming; PO = Product Owner; SM = Scrum Master; FDD = Feature-Driven Development; DSDM = Dynamic Systems Development Method; WIP = Work in Progress; CI = Continuous Integration; TDD = Test-Driven Development
 @one Agility is the ability to respond to change quickly; an agile method is a set of practices built on the Agile Manifesto, and the two best known are Scrum (a project-management framework) and XP (a set of engineering practices).
 
 ## Introduction to agility
@@ -84,6 +84,16 @@ XP was created by **Kent Beck** in the late 1990s. It takes good practices to th
 - **Five values**: Communication, Simplicity, Feedback, Courage, Respect.
 - **Practices** (as in this syllabus): Thinking, Collaborating, Releasing, Planning, Developing.
 - **Short iterations** of one week (in the textbook) with the whole team sitting together.
+
+## Other agile methods (one line each)
+- **Crystal** (Alistair Cockburn) -- a family of methods chosen by team size and how critical the system is; stresses people and frequent communication.
+- **FDD (Feature-Driven Development)** -- builds an overall model, then delivers the system feature by feature in short cycles.
+- **DSDM (Dynamic Systems Development Method)** -- fixed timeboxes with **MoSCoW** prioritisation: Must have, Should have, Could have, Won't have this time.
+- **Lean software development** (Mary and Tom Poppendieck) -- applies Toyota's lean ideas: eliminate waste, deliver fast, build quality in.
+- **Kanban** -- shows work on a board and limits **WIP (Work in Progress)** so work flows smoothly.
+
+## Choosing a method: the road to mastery
+The textbook advises: **do not invent your own method at the start.** Pick one proven method (it recommends XP), **follow all of its practices exactly** until you understand why each one works, then **adapt** them to your situation, and only later **go beyond** the rules. This is like learning to drive: first follow every rule, then develop your own judgement.
 
 ## Scrum vs XP
 | Point | Scrum | XP |
@@ -116,6 +126,7 @@ String.raw`
 @syl Manifesto for Agile Software Development
 @title The Agile Manifesto: four values
 @q Explain the Manifesto for Agile Software Development.
+@ff DSDM = Dynamic Systems Development Method
 @one In 2001, seventeen software practitioners wrote the Agile Manifesto: four value statements of the form "we value X over Y", where both sides matter but the left side matters more.
 
 ## Background
@@ -369,7 +380,7 @@ String.raw`
 - **Final preparation**: set up the shared workspace, version control, an automated build, and agree how to start.
 - **Applying XP to a new project** (recommended): start all practices from the first iteration.
 - **Applying XP to an existing project**: the main problem is **legacy code** with technical debt; improve it gradually, using slack time to pay down the debt.
-- **Applying XP in a phase-based organisation**: if the company works in phases (requirements, design, coding, testing), the team still runs XP iterations inside the project and adapts its reporting.
+- **Applying XP in a phase-based organisation**: if the company insists on phases (requirements, design, coding, testing) with sign-off documents, the team still works in XP iterations inside the project, produces the required documents as **stories**, and reports progress in the format the organisation expects.
 - **Extremities**: taking only bits of XP is possible but risky; the practices depend on each other.
 
 ## 3. Assessing your agility
@@ -398,6 +409,7 @@ String.raw`
 @syl Practicing XP: Thinking · Pair programming
 @title Pair programming
 @q What is pair programming? Explain how it works, with its advantages and challenges.
+@ff TDD = Test-Driven Development
 @one Pair programming is two programmers working together at one computer: the driver types and thinks tactically, the navigator reviews and thinks strategically, and they switch roles often.
 
 ## What it is
@@ -459,6 +471,14 @@ Energized work (Beck's older name: **sustainable pace** or the **40-hour week**)
 - **Avoid heroics**: one person staying all night to save the project hides problems.
 - The organisation should **support** energized work: realistic plans, a calm workspace, no constant pressure.
 
+## How the organisation supports energized work
+- Plans based on real **velocity** and **slack**, not wishful deadlines.
+- A calm, shared workspace with few interruptions.
+- Managers who **send people home** rather than praise late nights.
+- Fewer meetings and outside duties for the programmers.
+
+!ex A team is told to finish a release in two weeks and works 12-hour days. In the second week, tired programmers introduce bugs that take the third week to fix. Working normal hours with a realistic, smaller scope would have released sooner and with fewer defects.
+
 ## Overtime
 Occasional overtime in an emergency is acceptable. **Regular overtime** is a sign of a planning problem. XP fixes the plan (using velocity and slack) instead of asking people to work longer.
 
@@ -496,6 +516,8 @@ The team's workspace should be its **"cockpit"**: it shows the project's state a
 - the **release plan** and **iteration plan** (story cards on the wall);
 - a **burn-up chart** of progress;
 - a chart of **build status** or test results.
+!dia burn: scope: 30,30,34,34,38,38,38 | done: 0,6,12,19,25,31,38 ::cap **Draw this.** A burn-up chart: the dashed line is total scope, the solid line is work done. When they meet, the release is complete.
+A **burn-up chart** plots **iterations** on the x-axis and **story points** on the y-axis. One line shows the **total scope** (it steps up when customers add stories); the other shows **work completed** (it rises by the velocity each iteration). The gap is the work left; the slope of the "done" line predicts when the release will finish.
 3. **Hand-drawn charts** -- preferred over computer printouts because they are quick to change, and the team owns them.
 4. **Process improvement charts** -- temporary charts to track a specific problem, for example "number of times we broke the build this week". Remove them when the problem is solved.
 5. **Avoid gaming** -- charts are for the team's learning, not for judging individuals; otherwise people will "game" the numbers.

@@ -217,6 +217,7 @@ String.raw`
 @syl Collective ownership
 @title Collective code ownership
 @q What is collective code ownership? How do you make it work?
+@ff CI = Continuous Integration; TDD = Test-Driven Development
 @one Collective code ownership means the whole team owns all the code: anyone may improve any part of it at any time, and everyone is responsible for its quality.
 
 ## What it is

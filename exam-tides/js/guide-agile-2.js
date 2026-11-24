@@ -227,6 +227,14 @@ In XP, **everyone works on all the code** (collective ownership) and people swit
 - **Testing conventions** -- how tests are named and organised.
 - **Comments and documentation** -- when to comment; prefer self-explaining code.
 
+## Example: part of a team's coding standard (Java project)
+- Classes in **PascalCase** (OrderService), methods and variables in **camelCase** (calculateTotal).
+- Names come from the ubiquitous language: Loan, Borrower, dueDate.
+- 4-space indentation; braces on the same line; maximum 100 characters per line.
+- No method longer than about 20 lines; extract smaller methods.
+- Every class has unit tests named after the behaviour, for example **returnsZeroDiscountForSmallOrders**.
+- Never swallow exceptions silently; log and rethrow or handle.
+
 ## How to create one
 !dia flow: Start with a discussion ~ the whole team, about an hour | Agree on the minimum ~ only what everyone accepts | Write it down briefly ~ a page or two | Use tools ~ automatic formatters and checkers | Follow it and refine ~ change it in retrospectives ::cap **Draw this.** Creating a coding standard.
 1. **Hold a team discussion** -- everyone contributes, including the programmers who will follow it.
@@ -312,7 +320,7 @@ Stakeholders and managers need to know how the project is going. Because an agil
 - **Vision statement** -- reminds everyone what the project is for.
 - **Weekly demo** -- the most powerful report: working software every iteration.
 - **Release and iteration plans** -- show what is planned and what is done.
-- **Burn-up chart** -- a graph of completed work rising towards the total scope; shows progress and scope changes over time.
+- **Burn-up chart** -- a graph of completed work rising towards the total scope; shows progress and scope changes over time (see the diagram in answer 1.11, Informative workspace).
 
 ## 2. Management reports to consider
 - **Productivity** -- measured in **value delivered** (for example, revenue or cost savings), not effort.

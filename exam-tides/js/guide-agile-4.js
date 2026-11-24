@@ -215,6 +215,8 @@ XP iterations are usually **one week** long and start on the **same day** every 
 4. **Estimate the tasks** -- programmers estimate tasks in hours; check that the total fits the team's capacity.
 5. **Commit** -- the team commits to finishing all chosen stories by the end of the iteration. The plan goes on the wall.
 
+!ex Last iteration the team finished stories worth **12 points**, so velocity = 12. Customers choose, in priority order: "Pay by UPI" (5), "Order history" (3), "Cancel order" (2), "Email receipt" (2) = 12 points. "Pay by UPI" is broken into tasks: payment screen (4 h), connect payment gateway (6 h), handle failed payments (3 h), customer tests (2 h). The team checks that all task hours fit its week, then commits.
+
 ## Tracking the iteration
 - Task cards move across the **iteration plan on the wall** (to do, in progress, done).
 - The **daily stand-up** shows progress and problems.
@@ -258,6 +260,8 @@ Estimates are never perfect and problems always appear. If an iteration is plann
 - The team plans a bit **less work** than it could do in a perfect week.
 - The spare time is filled with **slack activities**: valuable work that can be dropped if needed.
 - If a problem appears, the team **drops slack work first** and still finishes the committed stories.
+
+!ex A team's task estimates show it can finish about 40 hours of planned tasks in a week. It commits to stories worth about 34 hours and keeps the rest as slack, filled with refactoring old code and research. On Wednesday a server problem eats 5 hours: the team drops the refactoring, and still finishes every committed story on time.
 
 ## Slack activities
 !dia cols: Slack activities: Paying down technical debt | Research time (learning, experiments) | Improving tools and the build || When trouble comes: Drop slack work first | Committed stories still finish | No overtime needed ::cap **Draw this.** Slack absorbs surprises.
