@@ -797,3 +797,29 @@ html,body{overflow-x:clip}
 .planlink{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:6px 12px;border-radius:10px;background:var(--tide-soft);color:var(--tide-deep);font-weight:700;font-size:14.5px;text-decoration:none}
 .planlink .ic{width:17px;height:17px}
 :root[data-theme="night"] .planlink{color:var(--tide)}
+/* twelve principles */
+.vz-prin{display:grid;gap:10px;margin-top:10px}
+.vz-prin section{border:1px solid var(--line);border-radius:14px;padding:10px 12px 4px;background:var(--surface)}
+.vz-prin h4{font-size:13.5px;color:var(--tide-deep);margin:0 0 4px}
+:root[data-theme="night"] .vz-prin h4{color:var(--tide)}
+.vz-prin ol{margin:0;padding-left:26px}
+.vz-prin li{padding:5px 0 7px;border-top:1px solid var(--line)}
+.vz-prin li:first-child{border-top:0}
+.vz-prin li::marker{font:600 13px var(--mono);color:var(--muted)}
+.vz-prin li b{display:block;font-size:15px}
+.vz-prin li span{display:block;font-size:14px;color:var(--ink-2);line-height:1.45}
+.vz-prin.quiz li span{filter:blur(5px);user-select:none;transition:filter .2s}
+.vz-prin.quiz li:hover span,.vz-prin.quiz li:active span{filter:none}
+.vz-bar.one{grid-template-columns:1fr}
+.vz-bar.one .vz-btn{justify-self:center}
+.vcard{scroll-margin-top:80px}
+.vz-prin.quiz li{cursor:pointer}
+.vz-prin.quiz li.show span{filter:none}
+.vz-prin.quiz li:hover span,.vz-prin.quiz li:active span{filter:blur(5px)}
+.vz-prin.quiz li.show:hover span{filter:none}
+.vz-bar.top{margin:10px 0 0}
+.vz-chain{list-style:none;counter-reset:ch;margin:10px 0 4px;padding:0;display:grid;gap:0}
+.vz-chain li{counter-increment:ch;position:relative;display:flex;align-items:center;gap:10px;padding:3px 0;font-size:14.5px;font-weight:600;color:var(--ink)}
+.vz-chain li::before{content:counter(ch);display:inline-grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;background:var(--tide-soft);color:var(--tide-deep);font:700 11.5px var(--mono);position:relative;z-index:1}
+.vz-chain li + li::after{content:"";position:absolute;left:10.5px;top:-6px;height:12px;border-left:1.5px solid var(--line-strong)}
+:root[data-theme="night"] .vz-chain li::before{color:var(--tide)}

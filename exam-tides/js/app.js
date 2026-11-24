@@ -23,7 +23,7 @@ const FINAL = {
     marks: ["Protocol answers: draw a six-node network and mark RREQ, RREP or data arrows. The drawing does half the explaining.", "Comparisons (proactive vs reactive, tree vs mesh, PSFQ vs ESRT) go best in a four-row table.", "Expand every acronym once: AODV, ZRP, ODMRP, CEDAR, ESRT."]
   },
   agile: {
-    draw: [["Manifesto values", "ag-manifesto"], ["The five practice families", "ag-xpmap"], ["Scrum 3-3-5", "ag-scrum"], ["TDD cycle", "ag-tdd"], ["Velocity and burn-up", "ag-velocity"], ["Continuous integration cycle", "ag-ci"], ["Planning game grid", "ag-planning"]],
+    draw: [["Manifesto values", "ag-manifesto"], ["The twelve principles", "ag-principles"], ["XP life cycle", "ag-xplife"], ["The five practice families", "ag-xpmap"], ["Scrum 3-3-5", "ag-scrum"], ["TDD cycle", "ag-tdd"], ["Velocity and burn-up", "ag-velocity"], ["Continuous integration cycle", "ag-ci"], ["Planning game grid", "ag-planning"]],
     solve: [],
     marks: ["Use the book's exact terms: done done, slack, velocity, ten-minute build, ubiquitous language. They are the keywords marks attach to.", "Every process answer gets a cycle diagram: TDD, CI, iteration, XP life cycle.", "Two-column tables for Scrum vs XP, release vs iteration planning, scopeboxed vs timeboxed."]
   }
@@ -104,7 +104,16 @@ function toast(m) { const t = document.getElementById("toast"); t.textContent = 
 /* ---------- routing ---------- */
 let view = { s: null, m: "topics", open: null };
 function parseHash() {
-  const [s, m] = (location.hash || "").slice(1).split("-");
+  const raw = decodeURIComponent((location.hash || "").slice(1));
+  /* deep links: #agile:1.2 opens a topic card, #agile:v:ag-tdd opens a visual */
+  const dl = raw.match(/^([a-z]+):(?:(\d+)\.(\d+)|v:([a-z0-9-]+))$/);
+  if (dl && DATA[dl[1]] && DATA[dl[1]].units) {
+    if (dl[4] && VIZ[dl[4]]) { OPENVIZ = dl[4]; return { s: dl[1], m: "visuals", open: null }; }
+    const k = `${dl[1]}.${dl[2]}.${dl[3]}`, U = DATA[dl[1]].units.find(x => x.u === +dl[2]);
+    if (U && U.topics[+dl[3]]) { STUDY.phase = "read"; return { s: dl[1], m: "topics", open: k }; }
+    return { s: dl[1], m: dl[4] ? "visuals" : "topics", open: null };
+  }
+  const [s, m] = raw.split("-");
   if (!DATA[s]) return { s: null, m: "topics", open: null };
   return { s, m: MODES.some(x => x[0] === m) ? m : "topics", open: null };
 }
@@ -221,12 +230,12 @@ function longMode(s) {
 let OPENVIZ = null;
 function vizList(s) {
   const ids = [];
-  topics(s).forEach(x => { if (x.T.viz && VIZ[x.T.viz] && !ids.includes(x.T.viz)) ids.push(x.T.viz); });
+  topics(s).forEach(x => [x.T.viz, x.T.viz2].forEach(v => { if (v && VIZ[v] && !ids.includes(v)) ids.push(v); }));
   Object.keys(VIZ).forEach(k => { if (k.startsWith(PREFIX[s]) && !ids.includes(k)) ids.push(k); });
   return ids;
 }
 function visualsMode(s) {
-  const unitOf = id => { const t = topics(s).find(x => x.T.viz === id); return t ? t.u : null; };
+  const unitOf = id => { const t = topics(s).find(x => x.T.viz === id || x.T.viz2 === id); return t ? t.u : null; };
   return vizList(s).map(id => `<section class="vcard" data-vcard="${id}"><button><span class="vi">${I.visuals}</span><span><b>${esc(VIZ[id].t)}</b><span>${unitOf(id) ? `Unit ${unitOf(id)}` : "Overview"}</span></span>${I.chev}</button><div class="vbody" hidden></div></section>`).join("");
 }
 function openViz(card) {

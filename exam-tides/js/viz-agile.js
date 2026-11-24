@@ -11,6 +11,34 @@ VIZ["ag-manifesto"] = { t: "The four values as balance scales", cap: "Both sides
   box.querySelectorAll("button").forEach(b => b.onclick = () => { box.querySelectorAll("button").forEach(x => x.classList.remove("now")); b.classList.add("now"); const v = V[+b.dataset.i]; n.innerHTML = `<b>${v[0]}</b> over ${v[1]}. ` + fmt(v[2]); });
 }};
 
+VIZ["ag-principles"] = { t: "The twelve principles in five groups", cap: "Learn the keyword first, then the line. Hide the lines to test yourself.", build(host) {
+  const G = [
+    ["The customer and change", [
+      ["Satisfy the customer", "Highest priority: satisfy the customer through early and continuous delivery of valuable software."],
+      ["Welcome change", "Welcome changing requirements, even late in development; change is the customer's competitive advantage."],
+      ["Deliver frequently", "Deliver working software frequently, from a couple of weeks to a couple of months, preferring the shorter."]]],
+    ["People", [
+      ["Work together daily", "Business people and developers work together daily throughout the project."],
+      ["Motivated individuals", "Build projects around motivated individuals; give them the environment and support, and trust them."],
+      ["Face-to-face", "Face-to-face conversation is the most efficient and effective way to share information in a team."]]],
+    ["Progress and pace", [
+      ["Working software", "Working software is the primary measure of progress."],
+      ["Sustainable pace", "Sponsors, developers and users should be able to keep a constant pace indefinitely."]]],
+    ["Quality", [
+      ["Technical excellence", "Continuous attention to technical excellence and good design enhances agility."],
+      ["Simplicity", "Simplicity, the art of maximising the amount of work not done, is essential."]]],
+    ["The team improves itself", [
+      ["Self-organising teams", "The best architectures, requirements and designs emerge from self-organising teams."],
+      ["Reflect and adjust", "At regular intervals the team reflects on how to become more effective, then adjusts its behaviour."]]]];
+  let n = 0;
+  const bar = hx("div", "vz-bar one top", `<button type="button" class="vz-btn vz-primary">Hide the lines</button>`, host);
+  const b = bar.querySelector("button");
+  const nt = note(host); nt.innerHTML = fmt("Group sizes ==3, 3, 2, 2, 2==: customer, people, progress, quality, team.");
+  const box = hx("div", "vz-prin", G.map(([h, xs]) => `<section><h4>${h}</h4><ol start="${n + 1}">${xs.map(([k, l]) => { n++; return `<li><b>${k}</b><span>${l}</span></li>`; }).join("")}</ol></section>`).join(""), host);
+  b.onclick = () => { const on = box.classList.toggle("quiz"); box.querySelectorAll("li").forEach(l => l.classList.remove("show")); b.textContent = on ? "Show the lines" : "Hide the lines"; nt.innerHTML = on ? fmt("Say each line from its keyword, then ==tap it== to check.") : fmt("Group sizes ==3, 3, 2, 2, 2==: customer, people, progress, quality, team."); };
+  box.querySelectorAll("li").forEach(l => l.onclick = () => { if (box.classList.contains("quiz")) l.classList.toggle("show"); });
+}};
+
 VIZ["ag-xpmap"] = { t: "Your syllabus is Shore's book: five practice families", cap: "Unit 1 to Unit 5 follow the chapters Thinking, Collaborating, Releasing, Planning, Developing. Tap a practice.", build(host) {
   const M = [
     ["Thinking", "Unit 1", { "Pair programming": "Driver types, navigator reviews and thinks ahead; swap and rotate often.", "Energized work": "A sustainable pace; tired people make mistakes.", "Informative workspace": "Big visible charts and boards so anyone sees progress at a glance.", "Root-cause analysis": "Ask why repeatedly; fix the process, not the symptom.", "Retrospectives": "End of each iteration: reflect and pick one improvement." }],
@@ -21,6 +49,19 @@ VIZ["ag-xpmap"] = { t: "Your syllabus is Shore's book: five practice families", 
   const g = hx("div", "vz-xp", M.map(([fam, u, P], k) => `<section class="f${k}"><h4>${fam}</h4><span class="vz-dim">${u}</span><div>${Object.keys(P).map(p => `<button type="button" data-f="${k}" data-p="${p}">${p}</button>`).join("")}</div></section>`).join(""), host);
   const n = note(host); n.innerHTML = fmt("Order of the families: ==T C R P D== — ==Teachers Can't Release Papers Daily==.");
   g.querySelectorAll("button").forEach(b => b.onclick = () => { g.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on"); n.innerHTML = `<b>${b.dataset.p}</b> (${M[b.dataset.f][0]}): ${M[b.dataset.f][2][b.dataset.p]}`; });
+}};
+
+VIZ["ag-xplife"] = { t: "The XP life cycle, phase by phase", cap: "Beck's six phases, the version most exam answers draw. Step through them.", build(host) {
+  hx("ol", "vz-chain", ["Exploration", "Planning", "Iterations to release", "Productionising", "Maintenance", "Death"].map(x => `<li>${x}</li>`).join(""), host);
+  flowViz(host, { nodes: [
+    { t: "Exploration", s: "Weeks to a few months", d: "Customers write ==story cards== for the first release. Programmers try out the tools, technology and architecture, often with spikes." },
+    { t: "Planning", s: "A day or two", d: "Customers ==prioritise== the stories; programmers ==estimate== them. Together they agree the smallest, most valuable set for the first release." },
+    { t: "Iterations to release", s: "Iterations of 1 to 4 weeks", d: "Each iteration delivers ==tested, working stories==. The first one sets up the system's skeleton. Customers write functional tests and check every iteration." },
+    { t: "Productionising", s: "Shorter iterations", d: "Extra testing and performance checks before the release goes live. New ideas are either taken in now or noted for later." },
+    { t: "Maintenance", s: "Live system, development continues", d: "The system runs in production while new iterations keep adding stories. The pace slows; new people may join the team." },
+    { t: "Death", s: "The project ends", d: "Either the customer has ==no more stories== (a good ending), or the system can no longer deliver what is needed at a sensible cost. Final documentation is written." }
+  ] });
+  const n = note(host); n.innerHTML = fmt("Memory line: ==Every Programmer Is Pretty Much Done== (Exploration, Planning, Iterations, Productionising, Maintenance, Death). Shore adds: an XP team does ==every activity in every iteration==.");
 }};
 
 VIZ["ag-scrum"] = { t: "Scrum in one picture: 3 roles, 3 artifacts, 5 events", cap: "Step through one sprint.", build(host) {
